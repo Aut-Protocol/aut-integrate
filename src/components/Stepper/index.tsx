@@ -1,152 +1,181 @@
 import { useState } from 'react';
-import StepWizard, { StepWizardChildProps, StepWizardProps } from 'react-step-wizard';
+import StepWizard, { StepWizardChildProps } from 'react-step-wizard';
 import { styled } from '@mui/system';
+import { Container } from '@mui/material';
 import StepperNav from './StepperNav';
-
-export interface StepperChildProps extends Partial<StepWizardChildProps> {
-  stepper: StepWizardProps;
-  children: JSX.Element;
-}
-
-export interface Step {
-  component: any;
-}
-
-export interface StepperProps {
-  steps: Step[];
-}
-
-const First = ({ stepper, children }: StepperChildProps) => {
-  return (
-    <div
-      style={{
-        background: 'red',
-        position: 'absolute',
-        width: '100%',
-      }}
-    >
-      {children}
-    </div>
-  );
-};
+import { StepperProps } from './model';
 
 const StepperWrapper = styled('div')`
   .animated {
+    -webkit-animation-duration: 0.8192s;
     animation-duration: 0.8192s;
+    -webkit-animation-fill-mode: backwards;
     animation-fill-mode: backwards;
-    transform-style: preserve-3d;
   }
 
-  /** intro */
-  @keyframes intro {
+  /** fadeInRight */
+  @-webkit-keyframes fadeInRight {
     from {
       opacity: 0;
-      transform: perspective(500px) translate3d(0, 0, -50px);
+      -webkit-transform: translate3d(100%, 0, 0);
+      transform: translate3d(100%, 0, 0);
     }
 
     to {
       opacity: 1;
+      -webkit-transform: none;
       transform: none;
     }
   }
 
-  .intro {
-    animation: intro 1s ease-out;
-  }
-
-  /** enterRight */
-  @keyframes enterRight {
+  @keyframes fadeInRight {
     from {
       opacity: 0;
-      transform: perspective(500px) translate3d(20%, 0, 0);
+      -webkit-transform: translate3d(100%, 0, 0);
+      transform: translate3d(100%, 0, 0);
     }
 
     to {
       opacity: 1;
+      -webkit-transform: none;
       transform: none;
     }
   }
 
-  .enterRight {
-    animation-name: enterRight;
+  .fadeInRight {
+    -webkit-animation-name: fadeInRight;
+    animation-name: fadeInRight;
   }
 
-  /** enterLeft */
-  @keyframes enterLeft {
+  /** fadeInLeft */
+  @-webkit-keyframes fadeInLeft {
     from {
       opacity: 0;
-      transform: perspective(500px) translate3d(-20%, 0, 0);
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
     }
 
     to {
       opacity: 1;
+      -webkit-transform: none;
       transform: none;
     }
   }
 
-  .enterLeft {
-    animation-name: enterLeft;
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+    }
+
+    to {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none;
+    }
   }
 
-  /** exitRight */
-  @keyframes exitRight {
+  .fadeInLeft {
+    -webkit-animation-name: fadeInLeft;
+    animation-name: fadeInLeft;
+  }
+
+  /** fadeOutRight */
+  @-webkit-keyframes fadeOutRight {
     from {
       opacity: 1;
     }
 
     to {
       opacity: 0;
-      transform: perspective(500px) translate3d(100%, 0, -100px);
+      -webkit-transform: translate3d(100%, 0, 0);
+      transform: translate3d(100%, 0, 0);
     }
   }
 
-  .exitRight {
-    animation-name: exitRight;
-  }
-
-  /** exitLeft */
-  @keyframes exitLeft {
+  @keyframes fadeOutRight {
     from {
       opacity: 1;
     }
 
     to {
       opacity: 0;
-      transform: perspective(500px) translate3d(-100%, 0, -100px);
+      -webkit-transform: translate3d(100%, 0, 0);
+      transform: translate3d(100%, 0, 0);
     }
   }
 
-  .exitLeft {
-    animation-name: exitLeft;
+  .fadeOutRight {
+    -webkit-animation-name: fadeOutRight;
+    animation-name: fadeOutRight;
+  }
+
+  /** fadeOutLeft */
+  @-webkit-keyframes fadeOutLeft {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+
+  @keyframes fadeOutLeft {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+      -webkit-transform: translate3d(-100%, 0, 0);
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+
+  .fadeOutLeft {
+    -webkit-animation-name: fadeOutLeft;
+    animation-name: fadeOutLeft;
   }
 `;
 
+const ActionsWrapper = styled('div')({
+  textAlign: 'center',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
 export default (props: StepperProps) => {
-  const [instance, setInstance] = useState<StepWizardProps>(null);
+  const [instance, setInstance] = useState<StepWizardChildProps & any>();
+  const [actions, setActions] = useState<JSX.Element>();
 
   return (
-    <StepperWrapper>
-      <StepWizard
-        // transitions={{
-        //   enterRight: `animated enterRight`,
-        //   enterLeft: `animated enterLeft`,
-        //   exitRight: `animated exitRight`,
-        //   exitLeft: `animated exitLeft`,
-        //   intro: `animated exitLeft`,
-        // }}
-        isHashEnabled
-        nav={<StepperNav />}
-        instance={setInstance}
-      >
-        {props.steps.map(({ component }, index) => {
-          const Step = component;
-          return (
-            <First key={`top-step-${index}`} hashKey={`Step${index}`} stepper={instance}>
-              <Step />
-            </First>
-          );
-        })}
-      </StepWizard>
-    </StepperWrapper>
+    <Container maxWidth="md" sx={{ width: '100%', flexGrow: 1, boxSizing: 'border-box', position: 'relative' }}>
+      <StepperWrapper>
+        <StepWizard
+          transitions={{
+            enterRight: `animated enterRight`,
+            enterLeft: `animated enterLeft`,
+            exitRight: `animated exitRight`,
+            exitLeft: `animated exitLeft`,
+            intro: `animated exitLeft`,
+          }}
+          isHashEnabled
+          isLazyMount
+          nav={<StepperNav steps={props.steps} />}
+          instance={setInstance}
+        >
+          {props.steps.map(({ component }, index) => {
+            const Step = component;
+            return <Step key={`top-step-${index}`} setActions={setActions} hashKey={`Step${index + 1}`} stepper={instance} />;
+          })}
+        </StepWizard>
+        <ActionsWrapper>{actions}</ActionsWrapper>
+      </StepperWrapper>
+    </Container>
   );
 };
