@@ -3,7 +3,6 @@ import { withRouter, Switch, Route, Redirect as RedirectRoute, useLocation, useH
 import { useSelector } from 'react-redux';
 import { AppBar, Box, CssBaseline, Toolbar } from '@mui/material';
 import { ReactComponent as SwLogo } from '@assets/sw-logo-icon.svg';
-import { setPartnersAgreementCommunity } from '@store/Partner/partner.reducer';
 import Redirect from '@components/Redirect';
 import { resetAuthState, setAuthenticated } from '@auth/auth.reducer';
 import { RootState, useAppDispatch } from '@store/store.model';
@@ -17,7 +16,7 @@ import Partners from './pages/Partners';
 import SWSnackbar from './components/snackbar';
 import GetStarted from './pages/GetStarted/GetStarted';
 import './App.scss';
-import Integrate from './pages/integrate/New/Integrate';
+import Integrate from './pages/integrate/Integrate';
 
 const LoadingMessage = () => (
   <div className="app-loading">

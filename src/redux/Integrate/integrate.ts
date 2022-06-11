@@ -3,50 +3,36 @@ import { ResultState } from '@store/result-status';
 import { openSnackbar } from '@store/ui-reducer';
 import { activatePaCommunity, partnerAgreementAccess } from '@api/skillwallet.api';
 import { ParseSWErrorMessage } from '@utils/error-parser';
-import { createPartnersCommunity, createPartnersAgreement } from '@api/registry.api';
 import { CommunityRole, DefaultRoles } from '@api/community.model';
+import { RoleSet } from '@api/api.model';
 
-export interface IntegrateTaskState {
-  communityInfo: {
+export interface IntegrateState {
+  community: {
     name: string;
-    avatar: string;
+    image: string;
     description: string;
+    market: number;
+    rolesSets: RoleSet[];
+    commitment: number;
+    contractType: number;
   };
-  selectedTemplate: number;
-  roles: string[];
-  numOfActions: number;
-  startFromScratch: boolean;
-  importedContract: boolean;
   status: ResultState;
-  keyStatus: ResultState;
-  communityAddr: string;
   errorMessage: string;
-  agreement: {
-    key: string;
-    communityAddr: string;
-    partnersAddr: string;
-  };
-  isValidKey: boolean;
-  agreementKey: string;
-  isActivationSuccess: boolean;
   loadingMessage: string;
 }
 
-const initialState: IntegrateTaskState = {
-  communityInfo: null,
-  roles: [],
-  selectedTemplate: null,
-  numOfActions: 0,
-  startFromScratch: true,
-  importedContract: false,
+const initialState: IntegrateState = {
+  community: {
+    name: null,
+    image: null,
+    description: null,
+    market: null,
+    rolesSets: [],
+    commitment: null,
+    contractType: null,
+  },
   status: ResultState.Idle,
-  keyStatus: ResultState.Idle,
-  agreement: null,
-  isValidKey: null,
-  agreementKey: null,
-  communityAddr: null,
   errorMessage: null,
-  isActivationSuccess: false,
   loadingMessage: null,
 };
 
@@ -83,106 +69,41 @@ export const integrateSlice = createSlice({
   name: 'integrate',
   initialState,
   reducers: {
-    integrateUpdateCommunityInfo(state, action) {
-      state.communityInfo = action.payload;
+    integrateUpdateCommunity(state: IntegrateState, action) {
+      state.community = {
+        ...state.community,
+        ...action.payload,
+      };
     },
     integrateUpdateStatus(state, action) {
       state.status = action.payload;
-    },
-    integrateSelecteTemplate(state, action) {
-      state.selectedTemplate = action.payload;
-    },
-    integrateSetAgreementKey(state, action) {
-      state.agreementKey = action.payload;
-    },
-    integrateUpdateRolesAndAction(state, action) {
-      const { roles, numOfActions } = action.payload;
-      state.roles = roles;
-      state.numOfActions = numOfActions;
-    },
-    integrateCommunityInfo(state, action) {
-      state.communityInfo = action.payload;
-    },
-    integrateUpdateStartFromScratch(state, action) {
-      state.startFromScratch = action.payload;
     },
     resetIntegrateState: () => initialState,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createPartnersCommunity.pending, (state) => {
-        state.status = ResultState.Updating;
-      })
-      .addCase(createPartnersCommunity.fulfilled, (state, action) => {
-        state.status = ResultState.Success;
-        state.communityAddr = action.payload;
-      })
-      .addCase(createPartnersCommunity.rejected, (state, action) => {
-        state.status = ResultState.Failed;
-        state.errorMessage = action.payload as string;
-      })
-      .addCase(createPartnersAgreement.pending, (state) => {
-        state.status = ResultState.Updating;
-      })
-      .addCase(createPartnersAgreement.fulfilled, (state, action) => {
-        state.status = ResultState.Success;
-        state.agreement = action.payload;
-      })
-      .addCase(createPartnersAgreement.rejected, (state, action) => {
-        state.status = ResultState.Failed;
-        state.errorMessage = action.payload as string;
-      })
-      .addCase(validatePartnerAgreementKey.pending, (state) => {
-        state.keyStatus = ResultState.Loading;
-      })
-      .addCase(validatePartnerAgreementKey.fulfilled, (state, action) => {
-        if (action.payload) {
-          state.keyStatus = ResultState.Idle;
-        } else {
-          state.keyStatus = ResultState.Success;
-        }
-        state.isValidKey = action.payload;
-      })
-      .addCase(validatePartnerAgreementKey.rejected, (state) => {
-        state.keyStatus = ResultState.Failed;
-        state.isValidKey = false;
-      })
       .addCase(activatePartnersAgreement.pending, (state) => {
         state.status = ResultState.Updating;
         state.loadingMessage = 'Initiating SkillWallet.';
       })
-      .addCase(activatePartnersAgreement.fulfilled, (state, action) => {
+      .addCase(activatePartnersAgreement.fulfilled, (state) => {
         state.status = ResultState.Idle;
         state.loadingMessage = null;
-        state.isActivationSuccess = true;
-        // state.communityAddr = action.payload;
       })
       .addCase(activatePartnersAgreement.rejected, (state, action) => {
         state.status = ResultState.Failed;
-        state.isActivationSuccess = false;
         state.errorMessage = action.payload as string;
       });
   },
 });
 
-export const {
-  integrateUpdateStatus,
-  integrateUpdateRolesAndAction,
-  integrateSelecteTemplate,
-  integrateSetAgreementKey,
-  resetIntegrateState,
-  integrateUpdateStartFromScratch,
-  integrateCommunityInfo,
-} = integrateSlice.actions;
+export const { integrateUpdateStatus, integrateUpdateCommunity, resetIntegrateState } = integrateSlice.actions;
 
 const roles = (state) => state.integrate.roles;
 export const IntegrateStatus = (state: any) => state.integrate.status as ResultState;
-export const ActivationSucessful = (state: any) => state.integrate.isActivationSuccess as boolean;
+export const IntegrateCommunity = (state: any) => state.integrate.community as typeof initialState.community;
 export const IntegrateLoadingMessage = (state: any) => state.integrate.loadingMessage as boolean;
 export const IntegrateErrorMessage = (state: any) => state.integrate.errorMessage as string;
-export const IntegrateKeyStatus = (state: any) => state.integrate.keyStatus as ResultState;
-export const IntegrateAgreement = (state: any) => state.integrate.agreement as any;
-export const IntegrateAgreementCommunityAddr = (state: any) => state.integrate.communityAddr as string;
 export const getRoles = createSelector(roles, (x1): CommunityRole[] => {
   const [role1, role2, role3] = x1;
   return [

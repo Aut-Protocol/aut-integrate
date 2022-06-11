@@ -91,3 +91,12 @@ interface Skill {
   name: string;
   value: number;
 }
+
+export interface Role {
+  roleName: string;
+  id: number;
+}
+export interface RoleSet {
+  roleSetName: string;
+  roles: Role[];
+}
