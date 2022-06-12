@@ -4,7 +4,6 @@ import { Button, styled } from '@mui/material';
 import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
 import { useAppDispatch } from '@store/store.model';
 import { pxToRem } from '@utils/text-size';
-import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -19,7 +18,7 @@ const StepWrapper = styled('form')({
 const SelectMarketStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
   const { market } = useSelector(IntegrateCommunity);
-  const { control, getValues } = useForm({
+  const { control, handleSubmit, getValues, formState } = useForm({
     mode: 'onChange',
     defaultValues: {
       market,
@@ -27,8 +26,7 @@ const SelectMarketStep = (props: StepperChildProps) => {
   });
 
   const updateState = () => {
-    const values = getValues();
-    return dispatch(integrateUpdateCommunity(values));
+    return dispatch(integrateUpdateCommunity(getValues()));
   };
 
   const onSubmit = async () => {
@@ -41,23 +39,8 @@ const SelectMarketStep = (props: StepperChildProps) => {
     props?.stepper?.previousStep();
   };
 
-  useEffect(() => {
-    props.setActions(() => {
-      return (
-        <>
-          <Button variant="contained" disableElevation onClick={previous}>
-            Previous {props?.stepper?.currentStep}
-          </Button>
-          <Button variant="contained" disableElevation onClick={onSubmit}>
-            Next
-          </Button>
-        </>
-      );
-    });
-  }, [props?.stepper?.currentStep]);
-
   return (
-    <StepWrapper>
+    <StepWrapper onSubmit={handleSubmit(onSubmit)}>
       <Controller
         name="market"
         control={control}
@@ -100,6 +83,13 @@ const SelectMarketStep = (props: StepperChildProps) => {
           );
         }}
       />
+
+      <Button type="button" variant="contained" disabled={!formState.isValid} disableElevation onClick={previous}>
+        Previous {props?.stepper?.currentStep}
+      </Button>
+      <Button type="submit" variant="contained" disableElevation>
+        Next
+      </Button>
     </StepWrapper>
   );
 };
