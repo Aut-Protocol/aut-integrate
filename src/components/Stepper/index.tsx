@@ -2,6 +2,7 @@ import { useState } from 'react';
 import StepWizard, { StepWizardChildProps } from 'react-step-wizard';
 import { styled } from '@mui/system';
 import { Container } from '@mui/material';
+import { SwScrollbar } from 'sw-web-shared';
 import StepperNav from './StepperNav';
 import { StepperProps } from './model';
 
@@ -154,6 +155,15 @@ export default (props: StepperProps) => {
   const [actions, setActions] = useState<JSX.Element>();
 
   return (
+    // <SwScrollbar
+    //   sx={{
+    //     height: `100%`,
+    //     flex: 1,
+    //     p: 0,
+    //   }}
+    // >
+
+    // </SwScrollbar>
     <Container maxWidth="md" sx={{ width: '100%', flexGrow: 1, boxSizing: 'border-box', position: 'relative' }}>
       <StepperWrapper>
         <StepWizard

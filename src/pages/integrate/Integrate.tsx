@@ -1,5 +1,7 @@
 import Stepper from '@components/Stepper';
 import { Step } from '@components/Stepper/model';
+import CommunityInfoStep from './CommunityInfoStep';
+import ImportContractStep from './ImportContractStep';
 import SelectMarketStep from './SelectMarketStep';
 
 // useEffect(() => {
@@ -20,28 +22,28 @@ import SelectMarketStep from './SelectMarketStep';
 
 const steps: Step[] = [
   {
-    component: SelectMarketStep,
-    title: 'Test title 0',
+    component: ImportContractStep,
+    title: 'Import Contract',
     description: <div>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</div>,
   },
   {
-    component: SelectMarketStep,
-    title: 'Test title 1',
+    component: CommunityInfoStep,
+    title: 'Community Details',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
   },
   {
     component: SelectMarketStep,
-    title: 'Test title 2',
+    title: 'Select Market',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
   },
   {
     component: SelectMarketStep,
-    title: 'Test title 3',
+    title: 'Roles',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
   },
   {
     component: SelectMarketStep,
-    title: 'Test title 4',
+    title: 'Commitment',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
   },
 ];
