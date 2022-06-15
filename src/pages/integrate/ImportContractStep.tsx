@@ -124,8 +124,8 @@ const ImportContractStep = (props: StepperChildProps) => {
                 required
                 onChange={onChange}
               >
-                <MenuItem color="primary" value="SkillWallet Legacy Community">
-                  SkillWallet Legacy Community
+                <MenuItem color="primary" value="Aut Legacy Community">
+                  Aut Legacy Community
                 </MenuItem>
               </AutSelectField>
               <FormHelperText value={value} name={name} errors={formState.errors}>

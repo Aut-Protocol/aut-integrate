@@ -10,8 +10,8 @@ import { Community } from './community.model';
 import { generatePartnersKey } from './dito.api';
 import { environment, EnvMode } from './environment';
 import { Web3ThunkProviderFactory } from './ProviderFactory/web3-thunk.provider';
-import { getSkillwalletAddress } from './skillwallet.api';
-import { storeMetadata } from './textile.api';
+import { getAutAddress } from './aut.api';
+import { storeAsBlob, storeMetadata } from './textile.api';
 
 const communityRegistryThunkProvider = Web3ThunkProviderFactory('CommunityRegistry', {
   provider: Web3CommunityRegistryProvider,
@@ -29,33 +29,10 @@ export const createPartnersCommunity = communityRegistryThunkProvider(
   () => {
     return Promise.resolve(environment.communityRegistryAddress);
   },
-  async (contract, requestBody: { metadata: Community; selectedTemplate: number }, { getState }) => {
-    const swAddress = await getSkillwalletAddress();
-    const swContract = await Web3SkillWalletProvider(swAddress);
-    const { selectedAddress } = window.ethereum;
-    let tokenId: number;
-    try {
-      tokenId = await swContract.getSkillWalletIdByOwner(selectedAddress);
-    } catch (error) {
-      console.error(error);
-    }
-    if (tokenId) {
-      throw new Error('SkillWallet already belongs to a community.');
-    }
-
-    const { metadata, selectedTemplate } = requestBody;
-    const url = await storeMetadata(metadata);
-    const isPermissioned = environment.env === EnvMode.Production;
-    const totalMembersAllowed = 100;
-    const coreTeamMembersCount = 10;
-    const response = await contract.createCommunity(
-      url,
-      selectedTemplate,
-      totalMembersAllowed,
-      coreTeamMembersCount,
-      isPermissioned,
-      ethers.constants.AddressZero
-    );
+  async (contract, requestBody: { metadata: Community; contractType: number; daoAddr: string }) => {
+    const { metadata, contractType, daoAddr } = requestBody;
+    const cid = await storeAsBlob(metadata);
+    const response = await contract.createCommunity(contractType, daoAddr, metadata.properties.market, cid, metadata.properties.commitment);
     return response[0];
   }
 );
@@ -80,10 +57,12 @@ export const createPartnersAgreement = partnersRegistryThunkProvider(
     const { integrate } = getState();
     const { community, numOfActions, contractAddress } = requestBody;
 
-    const totalRoles = community.properties.skills.roles.slice(0, 3).reduce((prev, curr) => {
-      prev += curr.roleName ? 1 : 0;
-      return prev;
-    }, 0);
+    // const totalRoles = community.properties.skills.roles.slice(0, 3).reduce((prev, curr) => {
+    //   prev += curr.roleName ? 1 : 0;
+    //   return prev;
+    // }, 0);
+
+    const totalRoles = 10;
 
     const response = await contract.create(
       integrate.communityAddr,

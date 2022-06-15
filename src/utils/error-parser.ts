@@ -130,7 +130,7 @@ export const ParseSWErrorMessage = (error: any) => {
   }
 
   const [mainMsg, fullSwMsg] = error.split('execution reverted:');
-  const [swMainMsg, parsedMsg] = (fullSwMsg || '').split('SkillWallet:');
+  const [swMainMsg, parsedMsg] = (fullSwMsg || '').split('Aut:');
 
   return (parsedMsg || swMainMsg || fullSwMsg || mainMsg || 'Internal JSON-RPC error.').toString();
 };

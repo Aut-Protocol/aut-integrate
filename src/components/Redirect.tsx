@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { getUser, oauthGetToken } from '@api/discord.api';
 import { SkillWalletABI, SkillWalletContractEventType, Web3SkillWalletProvider } from '@skill-wallet/sw-abi-types';
-import { getSkillwalletAddress, skillWalletExists } from '@api/skillwallet.api';
+import { getAutAddress, AutExists } from '@api/aut.api';
 import { useDispatch } from 'react-redux';
 import { openSnackbar } from '@store/ui-reducer';
 import { Box } from '@mui/system';
@@ -21,17 +21,17 @@ function Redirect() {
     return user.id;
   };
 
-  const addDiscordIDToSkillWallet = async (discordId) => {
-    const skillWalletAddress = await getSkillwalletAddress();
+  const addDiscordIDToAut = async (discordId) => {
+    const AutAddress = await getAutAddress();
 
-    const contract = await Web3SkillWalletProvider(skillWalletAddress, {
+    const contract = await Web3SkillWalletProvider(AutAddress, {
       event: SkillWalletContractEventType.DiscordIDConnectedToSkillWallet,
     });
     const response = await contract.addDiscordIDToSkillWallet(discordId);
     if (response) {
       dispatch(
         openSnackbar({
-          message: `Congrats, you've connected your SkillWallet to your Discord ID!`,
+          message: `Congrats, you've connected your Aut to your Discord ID!`,
           severity: 'success',
           duration: 30000,
         })
@@ -52,14 +52,14 @@ function Redirect() {
     // await changeNetwork();
     const userID = await getUserID(code);
     if (userID) {
-      const exists = await skillWalletExists();
+      const exists = await AutExists();
       if (exists) {
-        await addDiscordIDToSkillWallet(userID);
+        await addDiscordIDToAut(userID);
       } else {
         setLoading(false);
         dispatch(
           openSnackbar({
-            message: `SkillWallet not found. Make sure the correct address is selected.`,
+            message: `Aut not found. Make sure the correct address is selected.`,
             severity: 'error',
             duration: 30000,
           })
