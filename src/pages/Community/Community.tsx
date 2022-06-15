@@ -30,13 +30,13 @@ const Community = (props) => {
     return () => promise.abort();
   }, [dispatch]);
 
-  const shareMessage = `Hey there! We've just deployed ${community?.name} on SkillWallet - choose your Role in our Community, pick your Skills, and let's build something great together!`;
+  const shareMessage = `Hey there! We've just deployed ${community?.name} on Aut - choose your Role in our Community, pick your Skills, and let's build something great together!`;
 
   return (
     <>
       <SwShare
         mode="light"
-        url={paUrl || 'https://skillwallet.id/'}
+        url={paUrl || 'https://Aut.id/'}
         title="with friends"
         sx={{
           '.MuiTypography-h2': {
@@ -45,12 +45,12 @@ const Community = (props) => {
         }}
         twitterProps={{
           title: shareMessage,
-          hashtags: ['SkillWallet', 'DAO', 'Blockchain'],
+          hashtags: ['Aut', 'DAO', 'Blockchain'],
         }}
         linkedinProps={{
           title: shareMessage,
           summary: 'Do more with DAO',
-          source: paUrl || 'https://skillwallet.id/',
+          source: paUrl || 'https://Aut.id/',
         }}
         telegramProps={{
           title: shareMessage,

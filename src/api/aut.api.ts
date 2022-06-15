@@ -45,14 +45,14 @@ export const addDiscordUrl = async (partnerKey, discordWebhook) => {
     .then(() => discordWebhook);
 };
 
-export const getSkillwalletAddress = (): Promise<string> => {
-  return axios.get(`${environment.apiUrl}/skillwallet/config`, {}).then((res) => res.data.skillWalletAddress);
+export const getAutAddress = (): Promise<string> => {
+  return axios.get(`${environment.apiUrl}/Aut/config`, {}).then((res) => res.data.AutAddress);
 };
 
 export const partnerAgreementAccess = (partnerKey: string): Promise<boolean> => {
   return axios
     .post(
-      `${environment.apiUrl}/skillwallet/access`,
+      `${environment.apiUrl}/Aut/access`,
       {},
       {
         headers: {
@@ -65,21 +65,21 @@ export const partnerAgreementAccess = (partnerKey: string): Promise<boolean> => 
 };
 
 export const activatePaCommunity = (data) => {
-  const event = new CustomEvent('activateSkillwalletCommunity', {
+  const event = new CustomEvent('activateAutCommunity', {
     detail: data,
   });
   window.dispatchEvent(event);
   return new Promise((resolve, reject) => {
     const handleResponse = ({ detail }: any) => {
       resolve(detail);
-      window.removeEventListener('activateSkillWalletCommunitySuccess', handleResponse);
+      window.removeEventListener('activateAutCommunitySuccess', handleResponse);
     };
     const handleError = ({ detail }: any) => {
       reject(detail || 'Could not activate community, please try again');
-      window.removeEventListener('activateSkillWalletCommunityError', handleError);
+      window.removeEventListener('activateAutCommunityError', handleError);
     };
-    window.addEventListener('activateSkillWalletCommunitySuccess', handleResponse);
-    window.addEventListener('activateSkillWalletCommunityError', handleError);
+    window.addEventListener('activateAutCommunitySuccess', handleResponse);
+    window.addEventListener('activateAutCommunityError', handleError);
   });
 };
 
@@ -139,11 +139,11 @@ export const getLogs = (): Promise<any[]> => {
   });
 };
 
-export const skillWalletExists = async () => {
+export const AutExists = async () => {
   try {
-    const skillWalletAddress = await getSkillwalletAddress();
+    const AutAddress = await getAutAddress();
 
-    const contract = await Web3SkillWalletProvider(skillWalletAddress, { beforeRequest: () => EnableAndChangeNetwork() });
+    const contract = await Web3SkillWalletProvider(AutAddress, { beforeRequest: () => EnableAndChangeNetwork() });
 
     if (window.ethereum.selectedAddress) {
       const { selectedAddress } = window.ethereum;

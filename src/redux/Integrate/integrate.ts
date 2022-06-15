@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { ResultState } from '@store/result-status';
 import { openSnackbar } from '@store/ui-reducer';
-import { activatePaCommunity, partnerAgreementAccess } from '@api/skillwallet.api';
+import { activatePaCommunity, partnerAgreementAccess } from '@api/aut.api';
 import { ParseSWErrorMessage } from '@utils/error-parser';
 import { CommunityRole, DefaultRoles } from '@api/community.model';
 import { RoleSet } from '@api/api.model';
+import { createPartnersCommunity } from '@api/registry.api';
 
 export interface IntegrateState {
   community: {
@@ -84,15 +85,13 @@ export const integrateSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(activatePartnersAgreement.pending, (state) => {
+      .addCase(createPartnersCommunity.pending, (state) => {
         state.status = ResultState.Updating;
-        state.loadingMessage = 'Initiating SkillWallet.';
       })
-      .addCase(activatePartnersAgreement.fulfilled, (state) => {
+      .addCase(createPartnersCommunity.fulfilled, (state) => {
         state.status = ResultState.Idle;
-        state.loadingMessage = null;
       })
-      .addCase(activatePartnersAgreement.rejected, (state, action) => {
+      .addCase(createPartnersCommunity.rejected, (state, action) => {
         state.status = ResultState.Failed;
         state.errorMessage = action.payload as string;
       });

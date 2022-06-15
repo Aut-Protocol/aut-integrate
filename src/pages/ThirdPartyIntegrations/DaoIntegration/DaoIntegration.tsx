@@ -92,7 +92,7 @@ const DaoIntegration = () => {
           fontSize={pxToRem(50)}
           color="primary.main"
         >
-          Your SkillWallet Auth
+          Your Aut Auth
         </Typography>
         <Typography fontSize={pxToRem(25)} color="primary.main">
           This is where your DAO lives. Add the URL where you’ll be integrating
@@ -104,7 +104,7 @@ const DaoIntegration = () => {
           fontSize={pxToRem(25)}
           color="primary.main"
         >
-          SkillWallet’s Decentralized Authentication System using your Partner Key.
+          Aut’s Decentralized Authentication System using your Partner Key.
         </Typography>
 
         <div className="sw-dao-form">

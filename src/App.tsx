@@ -76,19 +76,20 @@ function App(props) {
     const onSWInit = async () => setLoading(false);
     onSWInit();
 
-    window.addEventListener('initSkillwalletAuth', onSWInit);
-    window.addEventListener('onSkillwalletLogin', onSWLogin);
+    window.addEventListener('initAutAuth', onSWInit);
+    window.addEventListener('onAutLogin', onSWLogin);
 
     InitSwAuth({ container: document.querySelector('#connect-wallet-container') });
 
     return () => {
-      window.removeEventListener('initSkillwalletAuth', onSWInit);
-      window.removeEventListener('onSkillwalletLogin', onSWLogin);
+      window.removeEventListener('initAutAuth', onSWInit);
+      window.removeEventListener('onAutLogin', onSWLogin);
     };
   }, [dispatch, history, location.pathname, location.state?.from]);
 
   const isIntegrateFlow = location?.pathname?.includes('integrate');
   const isRedirect = location?.pathname?.includes('redirect');
+  const isGetStarted = location?.pathname === '/';
   const hideDashboard = !environment.hideDashboard || environment.hideDashboard === 'true';
 
   return (
@@ -97,13 +98,21 @@ function App(props) {
       <CssBaseline />
       <SWSnackbar />
       <AppBar elevation={0} position="relative" sx={{ p: 0, zIndex: (s) => s.zIndex.drawer + 1, backgroundColor: '#000', border: 0 }}>
-        <Toolbar sx={{ p: '0px !important', minHeight: `${pxToRem(95)} !important`, justifyContent: 'center' }}>
-          <AutLogo width="80" height="80" />
+        <Toolbar
+          sx={{
+            p: '0px !important',
+            height: `${pxToRem(150)}`,
+            minHeight: `${pxToRem(150)}`,
+            maxHeight: `${pxToRem(150)}, !important`,
+            justifyContent: 'center',
+          }}
+        >
+          {!isGetStarted && <AutLogo width="80" height="80" />}
         </Toolbar>
       </AppBar>
       <Box
         sx={{
-          height: '100%',
+          height: `calc(100% - ${pxToRem(150)} - 5px)`,
           backgroundColor: '#000',
         }}
         className={isLoading ? 'sw-loading' : ''}

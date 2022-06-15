@@ -112,7 +112,7 @@ const Dashboard = () => {
                   {community?.name}
                 </Typography>
                 <Typography sx={{ color: 'primary.main' }} component="div" variant="h3">
-                  Community Type: {community?.properties?.template}
+                  {/* Community Type: {community?.properties?.template} */}
                 </Typography>
               </>
             }

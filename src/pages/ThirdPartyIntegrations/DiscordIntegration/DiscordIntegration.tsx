@@ -68,7 +68,7 @@ const DiscordIntegration = () => {
           fontSize={pxToRem(25)}
           color="primary.main"
         >
-          SkillWallet's Discord Bot is a bridge between Web2 and Web3 - to track like a wizard, and react like a 🧙
+          Aut's Discord Bot is a bridge between Web2 and Web3 - to track like a wizard, and react like a 🧙
         </Typography>
 
         <div className="sw-dao-form">

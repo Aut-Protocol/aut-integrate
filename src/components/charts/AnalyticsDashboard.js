@@ -44,7 +44,7 @@ const AnalyticsDashboard = () => {
 
   useEffect(() => {
     if (loggingOff) {
-      const keys = ['header', 'imageUrl', 'header', 'contractAddress', 'username', 'tokenId', 'skillWallet'];
+      const keys = ['header', 'imageUrl', 'header', 'contractAddress', 'username', 'tokenId', 'Aut'];
       keys.forEach((k) => {
         window.sessionStorage.removeItem(k);
       });

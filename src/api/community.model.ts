@@ -1,4 +1,4 @@
-import { BaseNFTModel } from './api.model';
+import { BaseNFTModel, RoleSet } from './api.model';
 
 export interface CommunityRoleSkill {
   name: string;
@@ -20,20 +20,19 @@ export interface CommunityRole {
 }
 
 export class CommunityProperties {
-  skills: {
-    roles: CommunityRole[];
-  };
+  market: number;
 
-  template: string;
+  rolesSets: RoleSet[];
+
+  commitment: number;
 
   constructor(data: CommunityProperties) {
     if (!data) {
-      this.skills = {
-        roles: [],
-      };
+      this.rolesSets = [];
     } else {
-      this.skills = data.skills;
-      this.template = data.template;
+      this.market = data.market;
+      this.commitment = data.commitment;
+      this.rolesSets = data.rolesSets;
     }
   }
 }
@@ -43,41 +42,40 @@ export class Community extends BaseNFTModel<CommunityProperties> {
     super(data);
     this.properties = new CommunityProperties(data.properties);
 
-    if ((data as unknown as OldCommunity).skills) {
-      this.properties.skills = (data as unknown as OldCommunity).skills as unknown as typeof this.properties.skills;
+    // if ((data as unknown as OldCommunity).skills) {
+    //   this.properties.skills = (data as unknown as OldCommunity).skills as unknown as typeof this.properties.skills;
 
-      /* Sort by  isCoreTeamMember=false so that community roles are first 
-         to make use of index as Id
+    //   /* Sort by  isCoreTeamMember=false so that community roles are first
+    //      to make use of index as Id
 
-          Example of old roles:
-          [
-            {
-              credits: 20,
-              roleName: 'Role 1,
-              isCoreTeamMember: false,
-            }
-          ]
+    //       Example of old roles:
+    //       [
+    //         {
+    //           credits: 20,
+    //           roleName: 'Role 1,
+    //           isCoreTeamMember: false,
+    //         }
+    //       ]
 
-          becomes:
-          [
-            {
-              id: 1,
-              roleName: 'Role 1,
-              isCoreTeamMember: false,
-            }
-          ]
-      
-      */
-      this.properties.skills.roles = this.properties.skills.roles
-        .sort((a, b) => (a.isCoreTeamMember === b.isCoreTeamMember ? 0 : a.isCoreTeamMember ? 1 : -1))
-        .map((role, index) => {
-          delete (role as unknown as OldCommunityRoles).credits;
-          return {
-            ...role,
-            id: index + 1,
-          };
-        });
-    }
+    //       becomes:
+    //       [
+    //         {
+    //           id: 1,
+    //           roleName: 'Role 1,
+    //           isCoreTeamMember: false,
+    //         }
+    //       ]
+    //   */
+    //   this.properties.skills.roles = this.properties.skills.roles
+    //     .sort((a, b) => (a.isCoreTeamMember === b.isCoreTeamMember ? 0 : a.isCoreTeamMember ? 1 : -1))
+    //     .map((role, index) => {
+    //       delete (role as unknown as OldCommunityRoles).credits;
+    //       return {
+    //         ...role,
+    //         id: index + 1,
+    //       };
+    //     });
+    // }
   }
 }
 

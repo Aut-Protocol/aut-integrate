@@ -71,7 +71,7 @@ const StepWrapper = styled('form')({
 const CommunityInfoStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
   const { name, image, description, contractType, daoAddr } = useSelector(IntegrateCommunity);
-  const { control, handleSubmit, getValues, formState, watch } = useForm({
+  const { control, handleSubmit, getValues, formState } = useForm({
     mode: 'onChange',
     defaultValues: {
       name,
@@ -82,15 +82,39 @@ const CommunityInfoStep = (props: StepperChildProps) => {
     },
   });
 
-  const values = watch();
-
   const updateState = () => {
-    console.log(getValues(), 'getValues()');
     return dispatch(integrateUpdateCommunity(getValues()));
   };
 
   const onSubmit = async () => {
     await updateState();
+    const data = getValues();
+    // const result = await dispatch(
+    //   createPartnersCommunity({
+    //     contractType: 1,
+    //     daoAddr,
+    //     metadata: new Community({
+    //       name: data.name,
+    //       image: data.image,
+    //       description: data.description,
+    //       properties: new CommunityProperties({
+    //         market: 1,
+    //         commitment: 2,
+    //         rolesSets: [
+    //           {
+    //             roleSetName: 'Test',
+    //             roles: [
+    //               {
+    //                 roleName: 'Test',
+    //                 id: 1,
+    //               },
+    //             ],
+    //           },
+    //         ],
+    //       }),
+    //     }),
+    //   })
+    // );
     props?.stepper?.nextStep();
   };
 

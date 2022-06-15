@@ -12,7 +12,7 @@ import { sendDiscordNotification, sendDiscordPoll } from '@store/ui-reducer';
 import { format } from 'date-fns';
 import { ActivityTypes } from './api.model';
 import { ipfsCIDToHttpUrl, storeAsBlob, storeMetadata } from './textile.api';
-import { getSkillwalletAddress } from './skillwallet.api';
+import { getAutAddress } from './aut.api';
 import { deployActivities } from './ProviderFactory/deploy-activities';
 import { Web3ThunkProviderFactory } from './ProviderFactory/web3-thunk.provider';
 import { Community } from './community.model';
@@ -47,8 +47,9 @@ export const addActivityTask = activitiesThunkProvider(
     const { userInfo } = state.auth;
     const { role, isCoreTeamMembersOnly, allParticipants, participants, description, title } = task;
     const community = state.community.community as Community;
-    const selectedRole = community.properties.skills.roles.find(({ roleName }) => roleName === role);
+    // const selectedRole = community.properties.skills.roles.find(({ roleName }) => roleName === role);
 
+    const selectedRole = null;
     if (!selectedRole) {
       throw new Error('Role is missing!');
     }
@@ -59,7 +60,7 @@ export const addActivityTask = activitiesThunkProvider(
       image: community.image,
       properties: {
         creator: userInfo.nickname,
-        creatorSkillWalletId: window.ethereum.selectedAddress,
+        creatorAutId: window.ethereum.selectedAddress,
         role: selectedRole,
         roleId: role,
         participants,
@@ -153,8 +154,9 @@ export const addGroupCall = activitiesThunkProvider(
     const state = getState();
     const { startDate, startTime, duration, allParticipants, participants, role } = callData;
     const community = state.community.community as Community;
-    const selectedRole = community.properties.skills.roles.find(({ roleName }) => roleName === role);
+    // const selectedRole = community.properties.skills.roles.find(({ roleName }) => roleName === role);
 
+    const selectedRole = null;
     if (!selectedRole) {
       throw new Error('Role is missing!');
     }
@@ -214,7 +216,8 @@ export const addPoll = activitiesThunkProvider(
     const { title, description, duration, options, emojis, role, allRoles } = callData;
 
     const community = state.community.community as Community;
-    const selectedRole = community.properties.skills.roles.find(({ roleName }) => roleName === role);
+    const selectedRole: any = {};
+    // const selectedRole = community.properties.skills.roles.find(({ roleName }) => roleName === role);
     let roleId = 0;
     let roleName = 'All';
     if (!allRoles) {
@@ -346,7 +349,7 @@ export const getTaskById = activitiesThunkProvider(
     };
 
     if (taskDetails.task.status > 0) {
-      const swAddress = await getSkillwalletAddress();
+      const swAddress = await getAutAddress();
       const swContract = await Web3SkillWalletProvider(swAddress);
       const takerTokenId = await swContract.getSkillWalletIdByOwner(taskDetails.task.taker);
       const jsonUriCID = await swContract.tokenURI(takerTokenId);

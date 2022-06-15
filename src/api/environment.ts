@@ -11,7 +11,7 @@ export const swEnvVariables = {
   env: 'REACT_APP_NODE_ENV',
   hideDashboard: 'REACT_APP_HIDE_DASHBOARD',
 
-  // skillwallet
+  // Aut
   apiUrl: 'REACT_APP_API_URL',
   partnersRegistryAdress: 'REACT_APP_PARTNERS_REGISTRY_ADDRESS',
   communityRegistryAddress: 'REACT_APP_COMMUNITY_REGISTRY_ADDRESS',
