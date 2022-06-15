@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { withRouter, Switch, Route, Redirect as RedirectRoute, useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AppBar, Box, CssBaseline, Toolbar } from '@mui/material';
-import { ReactComponent as SwLogo } from '@assets/sw-logo-icon.svg';
+import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
+import { ReactComponent as CutLogo } from '@assets/aut/cut.svg';
 import Redirect from '@components/Redirect';
 import { resetAuthState, setAuthenticated } from '@auth/auth.reducer';
 import { RootState, useAppDispatch } from '@store/store.model';
@@ -20,7 +21,7 @@ import Integrate from './pages/integrate/Integrate';
 
 const LoadingMessage = () => (
   <div className="app-loading">
-    <SwLogo width="80" height="80" />
+    <AutLogo width="80" height="80" />
   </div>
 );
 
@@ -95,12 +96,15 @@ function App(props) {
       <div id="connect-wallet-container" />
       <CssBaseline />
       <SWSnackbar />
-      <AppBar position="relative" sx={{ p: 0, zIndex: (s) => s.zIndex.drawer + 1 }}>
-        <Toolbar sx={{ p: '0px !important', minHeight: `${pxToRem(95)} !important`, justifyContent: 'space-between' }}>Logo</Toolbar>
+      <AppBar elevation={0} position="relative" sx={{ p: 0, zIndex: (s) => s.zIndex.drawer + 1, backgroundColor: '#000', border: 0 }}>
+        <Toolbar sx={{ p: '0px !important', minHeight: `${pxToRem(95)} !important`, justifyContent: 'center' }}>
+          <AutLogo width="80" height="80" />
+        </Toolbar>
       </AppBar>
       <Box
         sx={{
           height: '100%',
+          backgroundColor: '#000',
         }}
         className={isLoading ? 'sw-loading' : ''}
       >

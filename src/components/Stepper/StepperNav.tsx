@@ -4,7 +4,9 @@
 import { pxToRem } from '@utils/text-size';
 import { styled } from '@mui/system';
 import { Fragment } from 'react';
-import { Typography } from '@mui/material';
+import { ReactComponent as CutLogo } from '@assets/aut/cut.svg';
+// import { ReactComponent as CircleLogo } from '@assets/aut/icon.svg';
+import mySvg from '@assets/aut/icon.svg';
 import { StepperNavProps } from './model';
 
 interface DotProps {
@@ -16,6 +18,7 @@ const Dot = styled('div')<DotProps>(({ isActive, title }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  width: '100%',
   position: 'relative',
   '&::after': {
     content: `" "`,
@@ -23,14 +26,15 @@ const Dot = styled('div')<DotProps>(({ isActive, title }) => ({
     width: pxToRem(85),
     height: pxToRem(85),
     borderRadius: '50%',
-    backgroundColor: '#FFF',
+    backgroundColor: 'transparent',
     ...(isActive && {
-      backgroundColor: '#2699FB',
+      background: `url(${mySvg})`,
     }),
+    zIndex: 1,
   },
   '&::before': {
     content: `"${title}"`,
-    color: 'black',
+    color: '#fff',
     position: 'absolute',
     width: pxToRem(120),
     height: '2rem',
@@ -42,18 +46,18 @@ const DotInner = styled('div')<DotProps>(({ isActive }) => ({
   width: pxToRem(12),
   height: pxToRem(12),
   borderRadius: '50%',
-  backgroundColor: '#2699FB',
-  zIndex: 1,
+  backgroundColor: '#009FE3',
+  zIndex: 2,
   ...(isActive && {
-    backgroundColor: '#FFF',
+    backgroundColor: '#000',
   }),
 }));
 
 const StepperLine = styled('div')({
   width: pxToRem(235),
-  height: '4px',
+  height: '0',
   position: 'relative',
-  backgroundColor: '#2699FB',
+  backgroundColor: '#009FE3',
   zIndex: 1,
   margin: `0 ${pxToRem(10)}`,
 });
@@ -64,15 +68,20 @@ const NavWrapper = styled('div')({
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
+  width: pxToRem(950),
+  margin: '0 auto',
 });
 
 const DotWrapper = styled('div')({
   textAlign: 'center',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'space-around',
+  flexDirection: 'column',
   minHeight: pxToRem(120),
-  marginBottom: pxToRem(25),
+  marginBottom: pxToRem(100),
+  position: 'relative',
+  width: '100%',
 });
 
 const StepperNav = (props: StepperNavProps) => {
@@ -84,20 +93,38 @@ const StepperNav = (props: StepperNavProps) => {
 
     dots.push(
       <Fragment key={`nav-step-top-${i}`}>
-        <span key={`nav-step-${i}`}>
+        <span key={`nav-step-${i}`} onClick={() => isComplete && props.goToStep(i)}>
           <Dot key={`nav-dot-${i}`} isActive={isActive || isComplete} title={title || ' '}>
             <DotInner isActive={isActive || isComplete} />
           </Dot>
         </span>
-        {props.totalSteps !== i && <StepperLine key={`nav-stepper-line-${i}`} />}
+        {/* {props.totalSteps !== i && <StepperLine key={`nav-stepper-line-${i}`} />} */}
       </Fragment>
     );
   }
 
   return (
     <NavWrapper>
-      <DotWrapper>{dots}</DotWrapper>
-      <Typography
+      <DotWrapper>
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          {dots}
+        </div>
+        <CutLogo
+          style={{
+            position: 'absolute',
+          }}
+          width="100%"
+          height="5"
+        />
+      </DotWrapper>
+      {/* <Typography
         component="div"
         sx={{
           display: 'flex',
@@ -109,7 +136,7 @@ const StepperNav = (props: StepperNavProps) => {
         }}
       >
         {props.steps[props.currentStep - 1].description}
-      </Typography>
+      </Typography> */}
     </NavWrapper>
   );
 };

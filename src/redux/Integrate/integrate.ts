@@ -15,6 +15,7 @@ export interface IntegrateState {
     rolesSets: RoleSet[];
     commitment: number;
     contractType: number;
+    daoAddr: string;
   };
   status: ResultState;
   errorMessage: string;
@@ -30,6 +31,7 @@ const initialState: IntegrateState = {
     rolesSets: [],
     commitment: null,
     contractType: null,
+    daoAddr: null,
   },
   status: ResultState.Idle,
   errorMessage: null,

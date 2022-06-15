@@ -1,5 +1,5 @@
 import { DatePicker, CalendarPicker } from '@mui/lab';
-import { TextField } from '@mui/material';
+import { Select, SelectProps, TextField, TextFieldProps } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { pxToRem } from '@utils/text-size';
 import { Controller } from 'react-hook-form';
@@ -104,3 +104,120 @@ export const SwCalendarPicker = ({ control, name, minDate, maxDate = null, other
     />
   );
 };
+
+export const AutTextField = styled((props: TextFieldProps & { width: string }) => <TextField {...props} />)(
+  ({ theme, width, multiline }) => ({
+    width: pxToRem(width),
+    '.MuiInputLabel-root': {
+      top: '-2px',
+    },
+    '.MuiFormHelperText-root': {
+      marginRight: 0,
+      marginLeft: 0,
+      textAlign: 'right',
+    },
+    '.MuiOutlinedInput-root': {
+      fieldset: {
+        border: '1px solid #439EDD',
+      },
+      '&:hover fieldset': {
+        border: '2px solid #439EDD',
+      },
+      color: '#fff',
+      ...(!multiline && {
+        padding: 0,
+        height: pxToRem(65),
+      }),
+      '.MuiInputBase-input': {
+        paddingTop: 0,
+        paddingBottom: 0,
+      },
+      '&::placeholder': {
+        opacity: 1,
+        color: '#707070',
+      },
+      '&::-webkit-input-placeholder': {
+        color: '#707070',
+        opacity: 1,
+        fontSize: pxToRem(18),
+      },
+      '&::-moz-placeholder': {
+        color: '#707070',
+        opacity: 1,
+      },
+    },
+  })
+);
+
+export const AutSelectField = styled((props: SelectProps & { width: string }) => {
+  return (
+    <Select
+      MenuProps={{
+        sx: {
+          borderTop: 0,
+          '& ul': {
+            color: '#000',
+            padding: 0,
+          },
+          '& li': {
+            fontSize: pxToRem(18),
+            '&:hover:not(.Mui-selected)': {
+              backgroundColor: '#009FE3',
+              color: '#fff',
+            },
+            '&.Mui-selected:hover, &.Mui-selected': {
+              backgroundColor: 'rgb(0 159 227 / 50%)',
+              color: '#000',
+            },
+          },
+        },
+      }}
+      {...props}
+    />
+  );
+})(({ width }) => ({
+  '.MuiFormHelperText-root': {
+    marginRight: 0,
+    marginLeft: 0,
+    textAlign: 'right',
+  },
+  '&.MuiOutlinedInput-root': {
+    width: pxToRem(width),
+    fieldset: {
+      border: '1px solid #439EDD',
+    },
+    '&:hover fieldset': {
+      border: '2px solid #439EDD',
+    },
+    '.MuiSvgIcon-root': {
+      fontSize: '20px',
+      color: '#fff',
+    },
+    '.MuiSelect-select, .MuiSelect-nativeInput': {
+      height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    color: '#fff',
+    padding: 0,
+    height: pxToRem(65),
+    '.MuiInputBase-input': {
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+    '&::placeholder': {
+      opacity: 1,
+      color: '#707070',
+    },
+    '&::-webkit-input-placeholder': {
+      color: '#707070',
+      opacity: 1,
+      fontSize: pxToRem(18),
+    },
+    '&::-moz-placeholder': {
+      color: '#707070',
+      opacity: 1,
+    },
+  },
+}));
