@@ -5,8 +5,8 @@ import { pxToRem } from '@utils/text-size';
 import { styled } from '@mui/system';
 import { Fragment } from 'react';
 import { ReactComponent as CutLogo } from '@assets/aut/cut.svg';
-// import { ReactComponent as CircleLogo } from '@assets/aut/icon.svg';
 import mySvg from '@assets/aut/icon.svg';
+import { Typography } from '@mui/material';
 import { StepperNavProps } from './model';
 
 interface DotProps {
@@ -43,14 +43,15 @@ const Dot = styled('div')<DotProps>(({ isActive, title }) => ({
 }));
 
 const DotInner = styled('div')<DotProps>(({ isActive }) => ({
-  width: pxToRem(12),
-  height: pxToRem(12),
+  width: pxToRem(20),
+  height: pxToRem(20),
   borderRadius: '50%',
-  backgroundColor: '#009FE3',
+  // backgroundColor: '#009FE3',
+  background: `url(${mySvg})`,
   zIndex: 2,
-  ...(isActive && {
-    backgroundColor: '#000',
-  }),
+  // ...(isActive && {
+  //   backgroundColor: '#000',
+  // }),
 }));
 
 const StepperLine = styled('div')({
@@ -79,7 +80,7 @@ const DotWrapper = styled('div')({
   justifyContent: 'space-around',
   flexDirection: 'column',
   minHeight: pxToRem(120),
-  marginBottom: pxToRem(100),
+  marginBottom: pxToRem(70),
   position: 'relative',
   width: '100%',
 });
@@ -94,7 +95,7 @@ const StepperNav = (props: StepperNavProps) => {
     dots.push(
       <Fragment key={`nav-step-top-${i}`}>
         <span key={`nav-step-${i}`} onClick={() => isComplete && props.goToStep(i)}>
-          <Dot key={`nav-dot-${i}`} isActive={isActive || isComplete} title={title || ' '}>
+          <Dot key={`nav-dot-${i}`} isActive={isActive} title={title || ' '}>
             <DotInner isActive={isActive || isComplete} />
           </Dot>
         </span>
@@ -121,10 +122,9 @@ const StepperNav = (props: StepperNavProps) => {
             position: 'absolute',
           }}
           width="100%"
-          height="5"
         />
       </DotWrapper>
-      {/* <Typography
+      <Typography
         component="div"
         sx={{
           display: 'flex',
@@ -132,11 +132,12 @@ const StepperNav = (props: StepperNavProps) => {
           alignItems: 'center',
           color: 'primary.main',
           my: pxToRem(20),
-          fontSize: pxToRem(30),
+          maxWidth: '85%',
+          fontSize: pxToRem(16),
         }}
       >
         {props.steps[props.currentStep - 1].description}
-      </Typography> */}
+      </Typography>
     </NavWrapper>
   );
 };

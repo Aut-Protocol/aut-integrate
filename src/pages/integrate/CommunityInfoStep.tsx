@@ -88,33 +88,6 @@ const CommunityInfoStep = (props: StepperChildProps) => {
 
   const onSubmit = async () => {
     await updateState();
-    const data = getValues();
-    // const result = await dispatch(
-    //   createPartnersCommunity({
-    //     contractType: 1,
-    //     daoAddr,
-    //     metadata: new Community({
-    //       name: data.name,
-    //       image: data.image,
-    //       description: data.description,
-    //       properties: new CommunityProperties({
-    //         market: 1,
-    //         commitment: 2,
-    //         rolesSets: [
-    //           {
-    //             roleSetName: 'Test',
-    //             roles: [
-    //               {
-    //                 roleName: 'Test',
-    //                 id: 1,
-    //               },
-    //             ],
-    //           },
-    //         ],
-    //       }),
-    //     }),
-    //   })
-    // );
     props?.stepper?.nextStep();
   };
 
@@ -218,7 +191,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
         sx={{
           width: pxToRem(450),
           height: pxToRem(90),
-          mt: pxToRem(50),
+          my: pxToRem(50),
         }}
         type="submit"
         color="primary"

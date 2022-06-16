@@ -3,7 +3,6 @@ import { withRouter, Switch, Route, Redirect as RedirectRoute, useLocation, useH
 import { useSelector } from 'react-redux';
 import { AppBar, Box, CssBaseline, Toolbar } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
-import { ReactComponent as CutLogo } from '@assets/aut/cut.svg';
 import Redirect from '@components/Redirect';
 import { resetAuthState, setAuthenticated } from '@auth/auth.reducer';
 import { RootState, useAppDispatch } from '@store/store.model';
@@ -17,7 +16,7 @@ import Partners from './pages/Partners';
 import SWSnackbar from './components/snackbar';
 import GetStarted from './pages/GetStarted/GetStarted';
 import './App.scss';
-import Integrate from './pages/integrate/Integrate';
+import Integrate from './pages/Integrate/Integrate';
 
 const LoadingMessage = () => (
   <div className="app-loading">
@@ -101,9 +100,9 @@ function App(props) {
         <Toolbar
           sx={{
             p: '0px !important',
-            height: `${pxToRem(150)}`,
-            minHeight: `${pxToRem(150)}`,
-            maxHeight: `${pxToRem(150)}, !important`,
+            height: `${pxToRem(120)}`,
+            minHeight: `${pxToRem(120)}`,
+            maxHeight: `${pxToRem(120)}, !important`,
             justifyContent: 'center',
           }}
         >
@@ -112,7 +111,7 @@ function App(props) {
       </AppBar>
       <Box
         sx={{
-          height: `calc(100% - ${pxToRem(150)} - 5px)`,
+          height: `calc(100% - ${pxToRem(120)} - 5px)`,
           backgroundColor: '#000',
         }}
         className={isLoading ? 'sw-loading' : ''}

@@ -1,14 +1,13 @@
 /* eslint-disable max-len */
 import { AutSelectField, AutTextField } from '@components/Fields';
 import { StepperChildProps } from '@components/Stepper/model';
-import { Button, Link, MenuItem, Select, styled, Typography } from '@mui/material';
+import { Button, Link, MenuItem, styled, Typography } from '@mui/material';
 import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
 import { useAppDispatch } from '@store/store.model';
 import { countWords } from '@utils/helpers';
 import { pxToRem } from '@utils/text-size';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { toBase64 } from 'sw-web-shared';
 
 function FormHelperText({ errors, name, children, value }) {
   if (errors[name]) {
@@ -59,6 +58,13 @@ function FormHelperText({ errors, name, children, value }) {
   );
 }
 
+const ContractTypes = [
+  {
+    label: 'SkillWallet Legacy Community',
+    value: 1,
+  },
+];
+
 const StepWrapper = styled('form')({
   textAlign: 'center',
   display: 'flex',
@@ -78,10 +84,7 @@ const ImportContractStep = (props: StepperChildProps) => {
     },
   });
 
-  const values = watch();
-
   const updateState = () => {
-    console.log(getValues(), 'getValues()');
     return dispatch(integrateUpdateCommunity(getValues()));
   };
 
@@ -114,7 +117,8 @@ const ImportContractStep = (props: StepperChildProps) => {
                   if (!selected) {
                     return 'Select contract type';
                   }
-                  return selected;
+                  const type = ContractTypes.find((t) => t.value === selected);
+                  return type?.label || selected;
                 }}
                 width="450"
                 name={name}
@@ -124,9 +128,11 @@ const ImportContractStep = (props: StepperChildProps) => {
                 required
                 onChange={onChange}
               >
-                <MenuItem color="primary" value="Aut Legacy Community">
-                  Aut Legacy Community
-                </MenuItem>
+                {ContractTypes.map((type) => (
+                  <MenuItem key={`contract-type-${type.value}`} color="primary" value={type.value}>
+                    {type.label}
+                  </MenuItem>
+                ))}
               </AutSelectField>
               <FormHelperText value={value} name={name} errors={formState.errors}>
                 <Link target="_blank" href="https://distributedtown.gitbook.io/v2/integrations/add-new-dao-type">
@@ -168,7 +174,7 @@ const ImportContractStep = (props: StepperChildProps) => {
         sx={{
           width: pxToRem(450),
           height: pxToRem(90),
-          mt: pxToRem(50),
+          my: pxToRem(50),
         }}
         type="submit"
         color="primary"
