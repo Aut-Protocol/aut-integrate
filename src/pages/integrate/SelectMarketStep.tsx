@@ -1,11 +1,9 @@
 /* eslint-disable max-len */
-import PartnerButton from '@components/Button';
 import { StepperChildProps } from '@components/Stepper/model';
-import { Button, Card, CardContent, CardHeader, Grid, styled, Typography } from '@mui/material';
+import { Button, Card, CardContent, Grid, styled, Typography } from '@mui/material';
 import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
 import { useAppDispatch } from '@store/store.model';
 import { pxToRem } from '@utils/text-size';
-import { Fragment } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -55,7 +53,6 @@ export const SelectMarketTemplates = [
     title: 'Art, Events & NFTs',
     market: 2,
   },
-
   {
     title: 'Local Projects & DAOs',
     market: 3,
@@ -65,16 +62,12 @@ export const SelectMarketTemplates = [
 const SelectMarketStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
   const { market } = useSelector(IntegrateCommunity);
-  const { control, handleSubmit, getValues, formState, watch } = useForm({
+  const { control, handleSubmit, getValues } = useForm({
     mode: 'onChange',
     defaultValues: {
       market,
     },
   });
-
-  const values = watch();
-
-  console.log('VALUES: ', values);
 
   const updateState = () => {
     return dispatch(integrateUpdateCommunity(getValues()));
@@ -137,7 +130,7 @@ const SelectMarketStep = (props: StepperChildProps) => {
         sx={{
           width: pxToRem(450),
           height: pxToRem(90),
-          mt: pxToRem(50),
+          my: pxToRem(50),
         }}
         type="submit"
         color="primary"

@@ -1,20 +1,20 @@
-import { CircularProgress, Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
-import { SwButton } from 'sw-web-shared';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
+import { pxToRem } from '@utils/text-size';
 
 const LoadingDialog = ({ mode = 'light', open, handleClose, subtitle, message, fullScreen = false }: any) => {
   const dialogSize = fullScreen
     ? {}
     : {
-        maxWidth: '400px',
-        minWidth: '400px',
-        minHeight: '300px',
+        maxWidth: pxToRem(600),
+        minWidth: pxToRem(600),
+        minHeight: pxToRem(400),
       };
   return (
     <Dialog open={open} fullScreen={fullScreen}>
       <DialogContent
         sx={{
           ...dialogSize,
-          bgcolor: mode === 'light' ? 'background.paper' : 'background.default',
+          bgcolor: 'background.default',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -53,10 +53,24 @@ const LoadingDialog = ({ mode = 'light', open, handleClose, subtitle, message, f
       </DialogContent>
       <DialogActions
         sx={{
-          backgroundColor: mode !== 'light' ? 'primary.main' : 'text.primary',
+          backgroundColor: 'background.default',
+          py: pxToRem(30),
+          justifyContent: 'center',
+          height: pxToRem(130),
         }}
       >
-        <SwButton type="button" mode={mode} onClick={handleClose} label="Cancel" />
+        <Button
+          onClick={handleClose}
+          sx={{
+            width: pxToRem(350),
+            height: pxToRem(70),
+          }}
+          type="submit"
+          color="primary"
+          variant="outlined"
+        >
+          Cancel
+        </Button>
       </DialogActions>
     </Dialog>
   );

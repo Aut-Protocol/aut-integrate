@@ -99,7 +99,7 @@ export const integrateSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createPartnersCommunity.pending, (state) => {
-        state.status = ResultState.Updating;
+        state.status = ResultState.Loading;
       })
       .addCase(createPartnersCommunity.fulfilled, (state) => {
         state.status = ResultState.Idle;
