@@ -26,7 +26,7 @@ export const sendDiscordNotification = createAsyncThunk('discord/notification', 
       },
       message,
       footer: {
-        text: `${community.name}@SkillWallet`,
+        text: `${community.name}@Aut`,
         image: community.image as string,
       },
     });
@@ -51,7 +51,7 @@ export const sendDiscordPoll = createAsyncThunk('discord/poll', async (input: Di
       },
       message: input.message,
       footer: {
-        text: `${community.name}@SkillWallet`,
+        text: `${community.name}@Aut`,
         image: community.image as string,
       },
     });

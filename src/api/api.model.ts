@@ -31,7 +31,7 @@ export interface ActivityTask {
   image: File;
   properties: {
     creator: string;
-    creatorSkillWalletId: string;
+    creatorAutId: string;
     role: string;
     roleId: number;
     participants: number;
@@ -51,7 +51,7 @@ export interface CommunityContractError {
   };
 }
 
-export interface SkillWallet {
+export interface Aut {
   tokenId: string;
   nickname: string;
   imageUrl: string;
@@ -61,20 +61,20 @@ export interface SkillWallet {
   pastCommunities: CommunityList[];
   skills: Skill[];
 }
-export interface SkillWalletTask {
+export interface AutTask {
   tokenId: string;
   nickname: string;
   imageUrl: string;
   timestamp: string;
 }
-export interface SkillWalletList {
+export interface AutList {
   tokenId: string;
   nickname: string;
   imageUrl: string;
 }
-export interface SkillWalletListPerRole {
+export interface AutListPerRole {
   role: string;
-  skillWallets: SkillWalletList[];
+  Auts: AutList[];
 }
 
 interface CommunityList {

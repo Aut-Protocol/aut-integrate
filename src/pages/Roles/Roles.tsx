@@ -36,22 +36,22 @@ const Roles = (props) => {
   const values = watch();
 
   const onSubmit = async (data: typeof values) => {
-    const allRoles = community.properties.skills.roles.map((r) => {
-      const role = data.roles.find((updatedRole) => updatedRole.id === r.id);
-      if (role) {
-        return role;
-      }
-      return r;
-    });
+    // const allRoles = community.properties.skills.roles.map((r) => {
+    //   const role = data.roles.find((updatedRole) => updatedRole.id === r.id);
+    //   if (role) {
+    //     return role;
+    //   }
+    //   return r;
+    // });
     await dispatch(
       updatePartnersCommunity(
         new Community({
           ...community,
           properties: {
             ...community.properties,
-            skills: {
-              roles: allRoles,
-            },
+            // skills: {
+            //   roles: allRoles,
+            // },
           },
         })
       )
