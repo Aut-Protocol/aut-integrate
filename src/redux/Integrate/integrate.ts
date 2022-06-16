@@ -4,7 +4,7 @@ import { openSnackbar } from '@store/ui-reducer';
 import { activatePaCommunity, partnerAgreementAccess } from '@api/skillwallet.api';
 import { ParseSWErrorMessage } from '@utils/error-parser';
 import { CommunityRole, DefaultRoles } from '@api/community.model';
-import { RoleSet } from '@api/api.model';
+import { Role, RoleSet } from '@api/api.model';
 
 export interface IntegrateState {
   community: {
@@ -12,7 +12,7 @@ export interface IntegrateState {
     image: string;
     description: string;
     market: number;
-    rolesSets: RoleSet[];
+    roles: Role[];
     commitment: number;
     contractType: number;
     daoAddr: string;
@@ -28,7 +28,20 @@ const initialState: IntegrateState = {
     image: null,
     description: null,
     market: null,
-    rolesSets: [],
+    roles: [
+      {
+        id: 1,
+        roleName: '',
+      },
+      {
+        id: 2,
+        roleName: '',
+      },
+      {
+        id: 3,
+        roleName: '',
+      },
+    ],
     commitment: null,
     contractType: null,
     daoAddr: null,

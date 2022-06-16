@@ -3,6 +3,7 @@ import { Step } from '@components/Stepper/model';
 import CommunityInfoStep from './CommunityInfoStep';
 import ImportContractStep from './ImportContractStep';
 import SelectMarketStep from './SelectMarketStep';
+import RoleStep from './RoleStep';
 
 // useEffect(() => {
 //   console.log(formState.isValid, 'formState');
@@ -37,12 +38,12 @@ const steps: Step[] = [
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
   },
   {
-    component: SelectMarketStep,
+    component: RoleStep,
     title: 'Roles',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
   },
   {
-    component: SelectMarketStep,
+    component: RoleStep,
     title: 'Commitment',
     description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
   },
