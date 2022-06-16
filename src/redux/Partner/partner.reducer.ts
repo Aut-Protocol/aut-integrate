@@ -4,10 +4,10 @@ import { LockDatatableItems } from '@components/datatable/DatatableHelpers';
 import { openSnackbar } from '@store/ui-reducer';
 import { createSelector } from 'reselect';
 import { getPartnersAgreementByCommunity } from '@api/dito.api';
-import { addDiscordUrl } from '@api/skillwallet.api';
 import { ErrorParser } from '@utils/error-parser';
 import { getPAContracts, getPAUrl, addPAUrl, addPAContracts } from '@api/agreement.api';
 import { getWhitelistedAddresses, addNewWhitelistedAddresses } from '@api/community.api';
+import { addDiscordUrl } from '@api/aut.api';
 
 export const fetchPartnersAgreementByCommunity = createAsyncThunk('partner/agreement/community', async (address: string, { dispatch }) => {
   try {
@@ -78,9 +78,9 @@ export const partnerSlice = createSlice({
         };
 
         try {
-          const authState = JSON.parse(sessionStorage.getItem('skillWallet'));
+          const authState = JSON.parse(sessionStorage.getItem('Aut'));
           sessionStorage.setItem(
-            'skillWallet',
+            'Aut',
             JSON.stringify({
               ...authState,
               partnersAgreementKey: {

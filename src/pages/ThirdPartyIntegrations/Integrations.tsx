@@ -11,7 +11,7 @@ import PartnerButton from '@components/Button';
 const IntegrationCards = [
   {
     icon: SwAuthIcon,
-    title: 'SkillWallet Auth',
+    title: 'Aut Auth',
     description: `This is where your DAO lives. Add the URL where you’ll be
         integrating our Decentralized Authentication System using your
         Partner Key.`,
@@ -30,7 +30,7 @@ const IntegrationCards = [
     icon: DiscordBotIcon,
     title: 'Discord Bot',
     description: `Manage your Tasks and let your community contribute - directly from your Discord Server.
-    SkillWallet's Discord Bot is a bridge between Web2 and Web3 - to track like a wizard, and react like a 🧙`,
+    Aut's Discord Bot is a bridge between Web2 and Web3 - to track like a wizard, and react like a 🧙`,
     action: (
       <PartnerButton
         mode="light"

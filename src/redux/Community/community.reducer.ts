@@ -1,7 +1,7 @@
 import { ResultState } from '@store/result-status';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { ErrorParser } from '@utils/error-parser';
-import { getLogs } from '@api/skillwallet.api';
+import { getLogs } from '@api/aut.api';
 import { fetchCommunity, fetchMembers, updatePartnersCommunity } from '@api/community.api';
 import { createSelector } from 'reselect';
 import { Community, CommunityRole } from '@api/community.model';
@@ -106,16 +106,17 @@ const generateSkills = (skills: any[] = []) =>
 export const CommunityData = (state) => state.community.community as Community;
 
 export const allRoles = createSelector(CommunityData, (c) => {
-  return (c.properties?.skills?.roles || []).reduce((prev, curr) => {
-    prev = [
-      ...prev,
-      {
-        ...curr,
-        skills: generateSkills(curr.skills),
-      },
-    ];
-    return prev;
-  }, []) as CommunityRole[];
+  // return (c.properties?.skills?.roles || []).reduce((prev, curr) => {
+  //   prev = [
+  //     ...prev,
+  //     {
+  //       ...curr,
+  //       skills: generateSkills(curr.skills),
+  //     },
+  //   ];
+  //   return prev;
+  // }, []) as CommunityRole[];
+  return [];
 });
 
 export const getCommunityRoles = (isCoreTeam: boolean) =>

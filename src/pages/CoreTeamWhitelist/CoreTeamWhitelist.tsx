@@ -190,7 +190,7 @@ const CoreTeamWhitelist = () => {
     }
   }, [apiRef, whitelistedAddresses]);
 
-  const shareMessage = `Hey there! We've just deployed ${community?.name} on SkillWallet - choose your Role in our Community, pick your Skills, and let's build something great together!`;
+  const shareMessage = `Hey there! We've just deployed ${community?.name} on Aut - choose your Role in our Community, pick your Skills, and let's build something great together!`;
 
   return (
     <Container maxWidth="md" className="sw-core-team">
@@ -200,7 +200,7 @@ const CoreTeamWhitelist = () => {
         <ErrorDialog open={open} handleClose={handleClose} message=" No new members were added to whitelist!" />
         <SwShare
           mode="light"
-          url={paUrl || 'https://skillwallet.id/'}
+          url={paUrl || 'https://Aut.id/'}
           title="with your team"
           sx={{
             '.MuiTypography-h2': {
@@ -209,12 +209,12 @@ const CoreTeamWhitelist = () => {
           }}
           twitterProps={{
             title: shareMessage,
-            hashtags: ['SkillWallet', 'DAO', 'Blockchain'],
+            hashtags: ['Aut', 'DAO', 'Blockchain'],
           }}
           linkedinProps={{
             title: shareMessage,
             summary: 'Do more with DAO',
-            source: paUrl || 'https://skillwallet.id/',
+            source: paUrl || 'https://Aut.id/',
           }}
           telegramProps={{
             title: shareMessage,
