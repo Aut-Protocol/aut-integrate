@@ -1,19 +1,58 @@
-import { Button, Typography } from '@mui/material';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/no-unstable-nested-components */
+import { Avatar, Button, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { pxToRem } from '@utils/text-size';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { ReactComponent as UploadIcon } from '@assets/aut/upload-icon.svg';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const UploadWrapper = styled('div')({
-  height: pxToRem(65),
+  height: pxToRem(100),
+  width: pxToRem(100),
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   border: '1px solid #439EDD',
+  marginBottom: '13px',
+  marginRight: pxToRem(20),
+  cursor: 'pointer',
+  position: 'relative',
 });
+
+const Action = styled('div')(({ theme }) => ({
+  opacity: 0,
+  '&.show': {
+    opacity: 1,
+  },
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  display: 'flex',
+  top: 0,
+  left: 0,
+  alignItems: 'center',
+  justifyContent: 'center',
+  transition: `${(theme.transitions as any).create(['opacity', 'transform'])}`,
+  '.MuiAvatar-fallback': {
+    fill: theme.palette.text.primary,
+  },
+  '.MuiSvgIcon-root': {
+    width: '1.5em',
+    height: '1.5em',
+    '&.remove': {
+      color: theme.palette.error.main,
+    },
+    '&.upload': {
+      fill: theme.palette.primary.main,
+    },
+  },
+}));
 
 const AFileUpload = ({ fileChange = (file: File) => null, initialPreviewUrl = null }) => {
   const [preview, setPreview] = useState(initialPreviewUrl);
+  const [showAction, setShowAction] = useState(false);
   const { getRootProps, getInputProps, open } = useDropzone({
     noClick: true,
     multiple: false,
@@ -38,8 +77,17 @@ const AFileUpload = ({ fileChange = (file: File) => null, initialPreviewUrl = nu
     }
   };
 
+  const toggleActions = (show: boolean) => {
+    setShowAction(show);
+  };
+
   return (
-    <UploadWrapper className="container">
+    <UploadWrapper
+      onMouseEnter={() => toggleActions(true)}
+      onMouseLeave={() => toggleActions(false)}
+      onClick={handleActionClick}
+      className="container"
+    >
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
       </div>
@@ -51,36 +99,30 @@ const AFileUpload = ({ fileChange = (file: File) => null, initialPreviewUrl = nu
           alignItems: 'center',
         }}
       >
-        <Typography
+        <Avatar
+          alt="Avatar"
+          variant="square"
+          src={preview}
           sx={{
-            fontSize: pxToRem(18),
-            paddingLeft: '14px',
-            color: '#fff',
-          }}
-        >
-          Logo
-        </Typography>
-      </div>
-      <div
-        style={{
-          height: '100%',
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}
-      >
-        <Button
-          sx={{
+            cursor: 'pointer',
+            background: 'transparent',
             height: '100%',
-            width: pxToRem(200),
+            width: '100%',
+            '&.MuiAvatar-root': {
+              justifyContent: 'center',
+            },
           }}
-          variant="contained"
-          disableElevation
-          color="primary"
-          onClick={handleActionClick}
+          imgProps={{
+            style: {
+              maxHeight: '100%',
+              maxWidth: '100%',
+              objectFit: 'cover',
+            },
+          }}
         >
-          Upload
-        </Button>
+          <UploadIcon height={pxToRem(32)} />
+        </Avatar>
+        <Action className={`${showAction ? 'show' : ''}`}>{preview ? <HighlightOffIcon className="remove" /> : null}</Action>
       </div>
     </UploadWrapper>
   );

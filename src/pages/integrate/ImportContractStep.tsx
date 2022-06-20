@@ -1,69 +1,19 @@
-/* eslint-disable max-len */
-import { AutSelectField, AutTextField } from '@components/Fields';
+import { AutSelectField, AutTextField, FormHelperText } from '@components/Fields';
+import { StepperButton } from '@components/Stepper';
 import { StepperChildProps } from '@components/Stepper/model';
-import { Button, Link, MenuItem, styled, Typography } from '@mui/material';
+import { Link, MenuItem, styled } from '@mui/material';
 import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
 import { useAppDispatch } from '@store/store.model';
-import { countWords } from '@utils/helpers';
 import { pxToRem } from '@utils/text-size';
+import { isAddress } from 'ethers/lib/utils';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { ContractTypes } from './misc';
 
-function FormHelperText({ errors, name, children, value }) {
-  if (errors[name]) {
-    let message = '';
-    const { type } = errors[name];
-    switch (type) {
-      case 'maxWords':
-        message = `Words cannot be more than 3`;
-        break;
-      case 'maxLength':
-        message = `Characters cannot be more than 280`;
-        break;
-      case 'required':
-        message = 'Field is required!';
-        break;
-      default:
-        return null;
-    }
-    return (
-      <Typography
-        whiteSpace="nowrap"
-        color="red"
-        align="right"
-        component="span"
-        variant="body2"
-        sx={{
-          width: '100%',
-          marginTop: '3px',
-        }}
-      >
-        {message}
-      </Typography>
-    );
-  }
-  return (
-    <Typography
-      sx={{
-        width: '100%',
-        marginTop: '3px',
-      }}
-      color="info.main"
-      align="right"
-      component="span"
-      variant="body2"
-    >
-      {children}
-    </Typography>
-  );
-}
-
-const ContractTypes = [
-  {
-    label: 'SkillWallet Legacy Community',
-    value: 1,
-  },
-];
+const errorTypes = {
+  validAddress: `Not a valid address`,
+  selected: 'Field is required!',
+};
 
 const StepWrapper = styled('form')({
   textAlign: 'center',
@@ -76,7 +26,7 @@ const StepWrapper = styled('form')({
 const ImportContractStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
   const { contractType, daoAddr } = useSelector(IntegrateCommunity);
-  const { control, handleSubmit, getValues, formState, watch } = useForm({
+  const { control, handleSubmit, getValues, formState } = useForm({
     mode: 'onChange',
     defaultValues: {
       contractType,
@@ -93,16 +43,16 @@ const ImportContractStep = (props: StepperChildProps) => {
     props?.stepper?.nextStep();
   };
 
-  const previous = async () => {
-    await updateState();
-    props?.stepper?.previousStep();
-  };
-
   return (
     <StepWrapper autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       <Controller
         name="contractType"
         control={control}
+        rules={{
+          validate: {
+            selected: (v: number) => !!v,
+          },
+        }}
         render={({ field: { name, value, onChange } }) => {
           return (
             <div
@@ -113,9 +63,11 @@ const ImportContractStep = (props: StepperChildProps) => {
               }}
             >
               <AutSelectField
+                variant="standard"
+                autoFocus
                 renderValue={(selected) => {
                   if (!selected) {
-                    return 'Select contract type';
+                    return 'DAO Type';
                   }
                   const type = ContractTypes.find((t) => t.value === selected);
                   return type?.label || selected;
@@ -135,7 +87,7 @@ const ImportContractStep = (props: StepperChildProps) => {
                 ))}
               </AutSelectField>
               <FormHelperText value={value} name={name} errors={formState.errors}>
-                <Link target="_blank" href="https://distributedtown.gitbook.io/v2/integrations/add-new-dao-type">
+                <Link sx={{ color: 'white' }} target="_blank" href="https://distributedtown.gitbook.io/v2/integrations/add-new-dao-type">
                   Want to add a new DAO type?
                 </Link>
               </FormHelperText>
@@ -149,15 +101,15 @@ const ImportContractStep = (props: StepperChildProps) => {
         rules={{
           required: true,
           validate: {
-            maxWords: (v: string) => countWords(v) <= 3,
+            validAddress: (v: string) => isAddress(v),
           },
         }}
         render={({ field: { name, value, onChange } }) => {
           return (
             <AutTextField
               width="450"
+              variant="standard"
               required
-              autoFocus
               name={name}
               value={value || ''}
               onChange={onChange}
@@ -165,23 +117,13 @@ const ImportContractStep = (props: StepperChildProps) => {
               sx={{
                 mb: pxToRem(45),
               }}
+              helperText={<FormHelperText errorTypes={errorTypes} value={value} name={name} errors={formState.errors} />}
             />
           );
         }}
       />
 
-      <Button
-        sx={{
-          width: pxToRem(450),
-          height: pxToRem(90),
-          my: pxToRem(50),
-        }}
-        type="submit"
-        color="primary"
-        variant="outlined"
-      >
-        Verify Ownership & Continue
-      </Button>
+      <StepperButton disabled={!formState.isValid} label="Verify Ownership & Continue" />
     </StepWrapper>
   );
 };

@@ -4,13 +4,13 @@ import { openSnackbar } from '@store/ui-reducer';
 import { activatePaCommunity, partnerAgreementAccess } from '@api/aut.api';
 import { ParseSWErrorMessage } from '@utils/error-parser';
 import { CommunityRole, DefaultRoles } from '@api/community.model';
-import { Role, RoleSet } from '@api/api.model';
+import { Role } from '@api/api.model';
 import { createPartnersCommunity } from '@api/registry.api';
 
 export interface IntegrateState {
   community: {
     name: string;
-    image: string;
+    image: string | File;
     description: string;
     market: number;
     roles: Role[];

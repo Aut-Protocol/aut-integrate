@@ -1,11 +1,13 @@
 /* eslint-disable max-len */
+import { StepperButton } from '@components/Stepper';
 import { StepperChildProps } from '@components/Stepper/model';
-import { Button, Card, CardContent, Grid, styled, Typography } from '@mui/material';
+import { Card, CardContent, Grid, styled, Typography } from '@mui/material';
 import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
 import { useAppDispatch } from '@store/store.model';
 import { pxToRem } from '@utils/text-size';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { MarketTemplates } from './misc';
 
 const StepWrapper = styled('form')({
   textAlign: 'center',
@@ -44,25 +46,10 @@ const AutCard = styled(Card)({
   },
 });
 
-export const SelectMarketTemplates = [
-  {
-    title: 'Open-Source and DeFi',
-    market: 1,
-  },
-  {
-    title: 'Art, Events & NFTs',
-    market: 2,
-  },
-  {
-    title: 'Local Projects & DAOs',
-    market: 3,
-  },
-];
-
 const SelectMarketStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
   const { market } = useSelector(IntegrateCommunity);
-  const { control, handleSubmit, getValues } = useForm({
+  const { control, handleSubmit, getValues, formState } = useForm({
     mode: 'onChange',
     defaultValues: {
       market,
@@ -78,15 +65,10 @@ const SelectMarketStep = (props: StepperChildProps) => {
     props?.stepper?.nextStep();
   };
 
-  const previous = async () => {
-    await updateState();
-    props?.stepper?.previousStep();
-  };
-
   return (
     <StepWrapper onSubmit={handleSubmit(onSubmit)}>
       <Grid container justifyContent="space-around" alignItems="center" spacing={5} sx={{ marginBottom: pxToRem(45) }}>
-        {SelectMarketTemplates.map(({ title, market }, index) => (
+        {MarketTemplates.map(({ title, market }, index) => (
           <Grid item key={index}>
             <Controller
               name="market"
@@ -126,18 +108,7 @@ const SelectMarketStep = (props: StepperChildProps) => {
         ))}
       </Grid>
 
-      <Button
-        sx={{
-          width: pxToRem(450),
-          height: pxToRem(90),
-          my: pxToRem(50),
-        }}
-        type="submit"
-        color="primary"
-        variant="outlined"
-      >
-        Next
-      </Button>
+      <StepperButton label="Next" disabled={!formState.isValid} />
     </StepWrapper>
   );
 };

@@ -16,10 +16,15 @@ const isValidUrl = (uri: string) => {
 export function ipfsCIDToHttpUrl(url: string, isJson = false) {
   if (!url.includes('https://'))
     return isJson
-      ? `https://skillwallet.infura-ipfs.io/ipfs/${url.replace('ipfs://', '')}/metadata.json`
-      : `https://skillwallet.infura-ipfs.io/ipfs/${url.replace('ipfs://', '')}`;
+      ? `https://infura-ipfs.io/ipfs/${url.replace('ipfs://', '')}/metadata.json`
+      : `https://infura-ipfs.io/ipfs/${url.replace('ipfs://', '')}`;
   return url;
 }
+
+export const storeImageAsBlob = async (file: File): Promise<string> => {
+  const cid = await client.storeBlob(file);
+  return cid;
+};
 
 export const storeAsBlob = async (json: any): Promise<string> => {
   const encodedJson = new TextEncoder().encode(JSON.stringify(json));
@@ -32,14 +37,11 @@ export const storeAsBlob = async (json: any): Promise<string> => {
 };
 
 const storeAsJson = async (json: any): Promise<string> => {
-  debugger;
   const metadata = await client.store(json as any);
-  debugger;
   return metadata.ipnft;
 };
 
 export async function storeMetadata(json: any, convertImageBlobToFile: (blob: Blob) => File = null) {
-  debugger;
   if (convertImageBlobToFile && isValidUrl(json.image)) {
     const result = await axios.get(json.image, {
       responseType: 'blob',

@@ -17,6 +17,7 @@ export interface Step {
 
 export interface StepperProps {
   steps: Step[];
+  instance?: (fn: () => StepWizardChildProps & any) => void;
 }
 
 export interface StepperNavProps extends Partial<StepWizardChildProps> {
