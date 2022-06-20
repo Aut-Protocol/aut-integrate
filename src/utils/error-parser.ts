@@ -108,11 +108,7 @@ export const ParseSWErrorMessage = (error: any) => {
     return metamaskError.message;
   }
 
-  if (error?.code === 'CALL_EXCEPTION') {
-    return error?.reason?.toString();
-  }
-
-  if (error?.code === 'UNEXPECTED_ARGUMENT') {
+  if (error?.reason) {
     return error?.reason?.toString();
   }
 

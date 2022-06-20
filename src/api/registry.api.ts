@@ -11,7 +11,7 @@ import { generatePartnersKey } from './dito.api';
 import { environment, EnvMode } from './environment';
 import { Web3ThunkProviderFactory } from './ProviderFactory/web3-thunk.provider';
 import { getAutAddress } from './aut.api';
-import { ipfsCIDToHttpUrl, storeAsBlob, storeMetadata } from './textile.api';
+import { ipfsCIDToHttpUrl, storeAsBlob, storeImageAsBlob, storeMetadata } from './textile.api';
 
 const communityRegistryThunkProvider = Web3ThunkProviderFactory('CommunityRegistry', {
   provider: Web3CommunityRegistryProvider,
@@ -34,6 +34,9 @@ export const createPartnersCommunity = communityRegistryThunkProvider(
     console.log('Metadata -> ', metadata);
     console.log('ContractType -> ', contractType);
     console.log('DaoAddr -> ', daoAddr);
+    if (metadata.image) {
+      metadata.image = await storeImageAsBlob(metadata.image as File);
+    }
     const cid = await storeAsBlob(metadata);
     console.log('Metadata url -> ', ipfsCIDToHttpUrl(cid));
     const response = await contract.createCommunity(contractType, daoAddr, metadata.properties.market, cid, metadata.properties.commitment);

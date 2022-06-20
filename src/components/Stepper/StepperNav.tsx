@@ -5,7 +5,8 @@ import { pxToRem } from '@utils/text-size';
 import { styled } from '@mui/system';
 import { Fragment } from 'react';
 import { ReactComponent as CutLogo } from '@assets/aut/cut.svg';
-import mySvg from '@assets/aut/icon.svg';
+import Circle from '@assets/aut/icon.svg';
+import SmCircle from '@assets/aut/small-icon.svg';
 import { Typography } from '@mui/material';
 import { StepperNavProps } from './model';
 
@@ -23,23 +24,23 @@ const Dot = styled('div')<DotProps>(({ isActive, title }) => ({
   '&::after': {
     content: `" "`,
     position: 'absolute',
-    width: pxToRem(85),
-    height: pxToRem(85),
+    width: pxToRem(60),
+    height: pxToRem(60),
     borderRadius: '50%',
     backgroundColor: 'transparent',
     ...(isActive && {
-      background: `url(${mySvg})`,
+      background: `url(${Circle})`,
     }),
     zIndex: 1,
   },
-  '&::before': {
-    content: `"${title}"`,
-    color: '#fff',
-    position: 'absolute',
-    width: pxToRem(120),
-    height: '2rem',
-    top: pxToRem(70),
-  },
+  // '&::before': {
+  //   content: `"${title}"`,
+  //   color: '#fff',
+  //   position: 'absolute',
+  //   width: pxToRem(120),
+  //   height: '2rem',
+  //   top: pxToRem(70),
+  // },
 }));
 
 const DotInner = styled('div')<DotProps>(({ isActive }) => ({
@@ -47,21 +48,12 @@ const DotInner = styled('div')<DotProps>(({ isActive }) => ({
   height: pxToRem(20),
   borderRadius: '50%',
   // backgroundColor: '#009FE3',
-  background: `url(${mySvg})`,
+  background: `url(${SmCircle})`,
   zIndex: 2,
   // ...(isActive && {
   //   backgroundColor: '#000',
   // }),
 }));
-
-const StepperLine = styled('div')({
-  width: pxToRem(235),
-  height: '0',
-  position: 'relative',
-  backgroundColor: '#009FE3',
-  zIndex: 1,
-  margin: `0 ${pxToRem(10)}`,
-});
 
 const NavWrapper = styled('div')({
   textAlign: 'center',
@@ -79,8 +71,8 @@ const DotWrapper = styled('div')({
   alignItems: 'center',
   justifyContent: 'space-around',
   flexDirection: 'column',
-  minHeight: pxToRem(120),
-  marginBottom: pxToRem(70),
+  minHeight: pxToRem(80),
+  // marginBottom: pxToRem(20),
   position: 'relative',
   width: '100%',
 });
@@ -124,20 +116,23 @@ const StepperNav = (props: StepperNavProps) => {
           width="100%"
         />
       </DotWrapper>
-      <Typography
-        component="div"
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'primary.main',
-          my: pxToRem(20),
-          maxWidth: '85%',
-          fontSize: pxToRem(16),
-        }}
-      >
-        {props.steps[props.currentStep - 1].description}
-      </Typography>
+      {props.steps[props.currentStep - 1].description && (
+        <Typography
+          component="div"
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: 'white',
+            mt: pxToRem(30),
+            mb: pxToRem(80),
+            maxWidth: '85%',
+            fontSize: pxToRem(16),
+          }}
+        >
+          {props.steps[props.currentStep - 1].description}
+        </Typography>
+      )}
     </NavWrapper>
   );
 };

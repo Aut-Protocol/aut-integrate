@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import StepWizard, { StepWizardChildProps } from 'react-step-wizard';
 import { styled } from '@mui/system';
-import { Container } from '@mui/material';
-import { SwScrollbar } from 'sw-web-shared';
+import { ButtonProps, Container } from '@mui/material';
+import { AutButton } from '@components/buttons';
+import { pxToRem } from '@utils/text-size';
 import StepperNav from './StepperNav';
 import { StepperProps } from './model';
 
@@ -150,20 +151,33 @@ const ActionsWrapper = styled('div')({
   justifyContent: 'center',
 });
 
+export const StepperButton = ({ label, ...props }: ButtonProps & { label: string }) => {
+  return (
+    <AutButton
+      sx={{
+        minWidth: pxToRem(400),
+        height: pxToRem(70),
+        my: pxToRem(50),
+      }}
+      type="submit"
+      color="primary"
+      variant="outlined"
+      {...props}
+    >
+      {label}
+    </AutButton>
+  );
+};
+
 export default (props: StepperProps) => {
   const [instance, setInstance] = useState<StepWizardChildProps & any>();
   const [actions, setActions] = useState<JSX.Element>();
 
-  return (
-    // <SwScrollbar
-    //   sx={{
-    //     height: `100%`,
-    //     flex: 1,
-    //     p: 0,
-    //   }}
-    // >
+  useEffect(() => {
+    props.instance(() => instance);
+  }, [instance]);
 
-    // </SwScrollbar>
+  return (
     <Container maxWidth="md" sx={{ width: '100%', flexGrow: 1, boxSizing: 'border-box', position: 'relative' }}>
       <StepperWrapper>
         <StepWizard

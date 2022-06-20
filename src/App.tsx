@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { withRouter, Switch, Route, Redirect as RedirectRoute, useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { AppBar, Box, CssBaseline, Toolbar } from '@mui/material';
+import { AppBar, Box, Button, CssBaseline, Toolbar } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
+import { ReactComponent as BackIcon } from '@assets/aut/back.svg';
 import Redirect from '@components/Redirect';
 import { resetAuthState, setAuthenticated } from '@auth/auth.reducer';
 import { RootState, useAppDispatch } from '@store/store.model';
@@ -24,7 +25,7 @@ const LoadingMessage = () => (
   </div>
 );
 
-function App(props) {
+function App() {
   const dispatch = useAppDispatch();
   const location = useLocation<any>();
   const history = useHistory();
@@ -96,22 +97,11 @@ function App(props) {
       <div id="connect-wallet-container" />
       <CssBaseline />
       <SWSnackbar />
-      <AppBar elevation={0} position="relative" sx={{ p: 0, zIndex: (s) => s.zIndex.drawer + 1, backgroundColor: '#000', border: 0 }}>
-        <Toolbar
-          sx={{
-            p: '0px !important',
-            height: `${pxToRem(120)}`,
-            minHeight: `${pxToRem(120)}`,
-            maxHeight: `${pxToRem(120)}, !important`,
-            justifyContent: 'center',
-          }}
-        >
-          {!isGetStarted && <AutLogo width="80" height="80" />}
-        </Toolbar>
-      </AppBar>
+      {/* <AppBar elevation={0} position="relative" sx={{ p: 0, zIndex: (s) => s.zIndex.drawer + 1, backgroundColor: '#000', border: 0 }}>
+      </AppBar> */}
       <Box
         sx={{
-          height: `calc(100% - ${pxToRem(120)} - 5px)`,
+          height: `calc(100%)`,
           backgroundColor: '#000',
         }}
         className={isLoading ? 'sw-loading' : ''}
@@ -128,10 +118,10 @@ function App(props) {
           <LoadingMessage />
         ) : (
           <Switch>
-            <Route exact component={GetStarted} path="/" {...props} />
-            {!isAutheticated && <Route path="/integrate" component={Integrate} {...props} />}
-            <Route path="/redirect" component={Redirect} {...props} />
-            <Route path="/partner" component={Partners} {...props} />
+            <Route exact component={GetStarted} path="/" />
+            {!isAutheticated && <Route path="/integrate" component={Integrate} />}
+            <Route path="/redirect" component={Redirect} />
+            <Route path="/partner" component={Partners} />
             {isAutheticated ? <Route component={NotFound} /> : <RedirectRoute to={{ pathname: '/', state: { from: location.pathname } }} />}
           </Switch>
         )}

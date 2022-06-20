@@ -131,7 +131,7 @@ export const SwTheme = responsiveFontSizes(
       xxl: {
         fontSize: '6.25rem',
       },
-      fontFamily: ['Josefin Sans', ' sans-serif'].join(','),
+      fontFamily: ['Source Sans Pro', ' sans-serif'].join(','),
     },
   })
 );
