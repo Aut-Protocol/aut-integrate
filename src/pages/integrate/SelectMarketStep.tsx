@@ -74,12 +74,12 @@ const SelectMarketStep = (props: StepperChildProps) => {
               name="market"
               key={market}
               control={control}
-              render={({ field: { name, value, onChange } }) => {
+              render={({ field: { value, onChange } }) => {
                 return (
                   <AutCard
                     sx={{
-                      height: pxToRem(290),
-                      width: pxToRem(350),
+                      height: pxToRem(325),
+                      width: pxToRem(305),
                       p: pxToRem(45),
                     }}
                     square
@@ -93,11 +93,15 @@ const SelectMarketStep = (props: StepperChildProps) => {
                         p: 0,
                         pb: 0,
                         flexDirection: 'column',
-                        justifyContent: 'center',
+                        justifyContent: 'space-between',
                       }}
                     >
-                      <Typography color="white" fontSize={pxToRem(46)} component="div">
+                      <Typography color="white" fontSize={pxToRem(30)} component="div">
                         {title}
+                      </Typography>
+                      <Typography textAlign="left" color="white" fontSize={pxToRem(14)} component="div">
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+                        magna aliquyam erat, sed diam voluptua.
                       </Typography>
                     </CardContent>
                   </AutCard>

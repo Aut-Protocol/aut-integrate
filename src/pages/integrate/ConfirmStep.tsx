@@ -5,15 +5,21 @@ import { createPartnersCommunity } from '@api/registry.api';
 import ErrorDialog from '@components/ErrorPopup';
 import LoadingDialog from '@components/LoadingPopup';
 import { StepperButton } from '@components/Stepper';
-import { StepperChildProps } from '@components/Stepper/model';
 import { Avatar, styled, Typography } from '@mui/material';
-import { IntegrateCommunity, IntegrateErrorMessage, IntegrateStatus, integrateUpdateStatus } from '@store/Integrate/integrate';
+import {
+  IntegrateCommunity,
+  IntegrateErrorMessage,
+  IntegrateStatus,
+  integrateUpdateStatus,
+  resetIntegrateState,
+} from '@store/Integrate/integrate';
 import { ResultState } from '@store/result-status';
 import { useAppDispatch } from '@store/store.model';
 import { trimAddress } from '@utils/helpers';
 import { pxToRem } from '@utils/text-size';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { base64toFile } from 'sw-web-shared';
 import { CommitmentMessages, MarketTemplates } from './misc';
 
@@ -25,8 +31,9 @@ const StepWrapper = styled('div')({
   flexDirection: 'column',
 });
 
-const ConfirmStep = (props: StepperChildProps) => {
+const ConfirmStep = () => {
   const dispatch = useAppDispatch();
+  const history = useHistory();
   const data = useSelector(IntegrateCommunity);
   const status = useSelector(IntegrateStatus);
   const errorMessage = useSelector(IntegrateErrorMessage);
@@ -59,7 +66,7 @@ const ConfirmStep = (props: StepperChildProps) => {
     );
 
     if (result.meta.requestStatus === 'fulfilled') {
-      props?.stepper?.nextStep();
+      history.push('integrate/success');
     }
   };
 
@@ -68,7 +75,10 @@ const ConfirmStep = (props: StepperChildProps) => {
   };
 
   useEffect(() => {
-    return () => handleDialogClose();
+    return () => {
+      handleDialogClose();
+      dispatch(resetIntegrateState());
+    };
   }, []);
 
   return (
@@ -89,31 +99,33 @@ const ConfirmStep = (props: StepperChildProps) => {
             marginBottom: pxToRem(60),
           }}
         >
-          <div>
-            <Avatar
-              alt="Avatar"
-              variant="square"
-              src={data.image as string}
-              sx={{
-                cursor: 'pointer',
-                background: 'transparent',
-                height: pxToRem(110),
-                width: pxToRem(110),
-                border: '1px solid #439EDD',
-                mr: pxToRem(45),
-                '&.MuiAvatar-root': {
-                  justifyContent: 'center',
-                },
-              }}
-              imgProps={{
-                style: {
-                  maxHeight: '100%',
-                  maxWidth: '100%',
-                  objectFit: 'cover',
-                },
-              }}
-            />
-          </div>
+          {data.image && (
+            <div>
+              <Avatar
+                alt="Avatar"
+                variant="square"
+                src={data.image as string}
+                sx={{
+                  cursor: 'pointer',
+                  background: 'transparent',
+                  height: pxToRem(110),
+                  width: pxToRem(110),
+                  border: '1px solid #439EDD',
+                  mr: pxToRem(45),
+                  '&.MuiAvatar-root': {
+                    justifyContent: 'center',
+                  },
+                }}
+                imgProps={{
+                  style: {
+                    maxHeight: '100%',
+                    maxWidth: '100%',
+                    objectFit: 'cover',
+                  },
+                }}
+              />
+            </div>
+          )}
           <div
             style={{
               textAlign: 'left',

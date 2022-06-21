@@ -33,9 +33,11 @@ export function FormHelperText({ errors, name, errorTypes, children = null, valu
         align="right"
         component="span"
         variant="body2"
+        className="auto-helper-error"
         sx={{
           width: '100%',
-          marginTop: '3px',
+          position: 'absolute',
+          left: '0',
         }}
       >
         {message}
@@ -47,8 +49,10 @@ export function FormHelperText({ errors, name, errorTypes, children = null, valu
       <Typography
         sx={{
           width: '100%',
-          marginTop: '3px',
+          position: 'absolute',
+          left: '0',
         }}
+        className="auto-helper-info"
         color="white"
         align="right"
         component="span"
@@ -171,6 +175,7 @@ export const AutTextField = styled((props: TextFieldProps & { width: string }) =
       marginRight: 0,
       marginLeft: 0,
       textAlign: 'right',
+      position: 'relative',
     },
     '.MuiInput-underline': {
       '&:after': {
@@ -216,7 +221,7 @@ export const AutTextField = styled((props: TextFieldProps & { width: string }) =
   })
 );
 
-export const AutSelectField = styled((props: SelectProps & { width: string }) => {
+const StyledSelectField = styled((props: SelectProps & { width: string }) => {
   return (
     <Select
       MenuProps={{
@@ -252,6 +257,7 @@ export const AutSelectField = styled((props: SelectProps & { width: string }) =>
     marginRight: 0,
     marginLeft: 0,
     textAlign: 'right',
+    position: 'relative',
   },
   '&.MuiInput-underline': {
     '&:after': {
@@ -304,3 +310,26 @@ export const AutSelectField = styled((props: SelectProps & { width: string }) =>
     },
   },
 }));
+
+const SelectWrapper = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  marginBottom: pxToRem(45),
+  position: 'relative',
+  '.auto-helper-info, .auto-helper-error': {
+    bottom: '-18px',
+  },
+});
+
+interface AutSelectProps extends Partial<SelectProps> {
+  width: string;
+  helperText: JSX.Element;
+}
+export const AutSelectField = ({ helperText, ...props }: AutSelectProps) => {
+  return (
+    <SelectWrapper>
+      <StyledSelectField {...props} />
+      {helperText}
+    </SelectWrapper>
+  );
+};

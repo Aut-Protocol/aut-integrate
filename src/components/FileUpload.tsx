@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-unstable-nested-components */
-import { Avatar, Button, Typography } from '@mui/material';
+import { Avatar } from '@mui/material';
 import { styled } from '@mui/system';
 import { pxToRem } from '@utils/text-size';
 import { useState } from 'react';
@@ -15,7 +15,7 @@ const UploadWrapper = styled('div')({
   alignItems: 'center',
   justifyContent: 'space-between',
   border: '1px solid #439EDD',
-  marginBottom: '13px',
+  marginBottom: '3px',
   marginRight: pxToRem(20),
   cursor: 'pointer',
   position: 'relative',

@@ -5,9 +5,9 @@ const LoadingDialog = ({ mode = 'light', open, handleClose, subtitle, message, f
   const dialogSize = fullScreen
     ? {}
     : {
-        maxWidth: pxToRem(600),
-        minWidth: pxToRem(600),
-        minHeight: pxToRem(400),
+        maxWidth: pxToRem(400),
+        minWidth: pxToRem(400),
+        minHeight: pxToRem(250),
       };
   return (
     <Dialog open={open} fullScreen={fullScreen}>
@@ -51,7 +51,7 @@ const LoadingDialog = ({ mode = 'light', open, handleClose, subtitle, message, f
           </Typography>
         </div>
       </DialogContent>
-      <DialogActions
+      {/* <DialogActions
         sx={{
           backgroundColor: 'background.default',
           py: pxToRem(30),
@@ -71,7 +71,7 @@ const LoadingDialog = ({ mode = 'light', open, handleClose, subtitle, message, f
         >
           Cancel
         </Button>
-      </DialogActions>
+      </DialogActions> */}
     </Dialog>
   );
 };

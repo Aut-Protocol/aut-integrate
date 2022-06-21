@@ -19,7 +19,7 @@ export const ContractTypes = [
 
 export const MarketTemplates = [
   {
-    title: 'Open-Source and DeFi',
+    title: 'Open-Source & DeFi',
     market: 1,
   },
   {

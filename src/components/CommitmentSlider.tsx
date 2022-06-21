@@ -74,12 +74,16 @@ const errorTypes = {
 
 export const AutSlider = (props: AutSliderProps) => {
   return (
-    <div>
+    <div
+      style={{
+        position: 'relative',
+      }}
+    >
       <CommitmentMessage value={props.value} />
       <div style={{ position: 'relative' }}>
         <StyledSlider {...props.sliderProps} />
       </div>
-      <div style={{ marginTop: '4px', display: 'flex', justifyContent: 'flex-end' }}>
+      <div style={{ marginTop: '-3px', display: 'flex', justifyContent: 'flex-end' }}>
         <FormHelperText errorTypes={errorTypes} value={props.value} name={props.name} errors={props.errors}>
           <Typography color="white" variant="body1">
             You can change your commitment at any time

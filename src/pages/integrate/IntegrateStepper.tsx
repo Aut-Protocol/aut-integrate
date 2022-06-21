@@ -1,11 +1,7 @@
 import Stepper from '@components/Stepper';
 import { Step } from '@components/Stepper/model';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StepWizardChildProps } from 'react-step-wizard';
-import { Button, Toolbar } from '@mui/material';
-import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
-import { ReactComponent as BackIcon } from '@assets/aut/back.svg';
-import { pxToRem } from '@utils/text-size';
 import CommunityInfoStep from './CommunityInfoStep';
 import ImportContractStep from './ImportContractStep';
 import SelectMarketStep from './SelectMarketStep';
@@ -52,44 +48,14 @@ const steps: Step[] = [
   },
 ];
 
-const Integrate = () => {
+const IntegrateStepper = (props) => {
   const [instance, setInstance] = useState<StepWizardChildProps & any>();
 
-  const goBack = () => {
-    console.log('goBack: ', goBack);
-    instance?.previousStep();
-  };
+  useEffect(() => {
+    props.instance(() => instance);
+  }, [instance]);
 
-  return (
-    <>
-      <Toolbar
-        sx={{
-          p: '0px !important',
-          height: `${pxToRem(120)}`,
-          minHeight: `${pxToRem(120)}`,
-          maxHeight: `${pxToRem(120)}, !important`,
-          justifyContent: 'center',
-        }}
-      >
-        <Button
-          sx={{
-            color: 'white',
-            position: 'absolute',
-            left: pxToRem(140),
-            top: pxToRem(40),
-          }}
-          type="button"
-          onClick={goBack}
-          startIcon={<BackIcon style={{ height: pxToRem(34), width: pxToRem(28) }} />}
-          variant="text"
-        >
-          Back
-        </Button>
-        <AutLogo width="80" height="80" />
-      </Toolbar>
-      <Stepper instance={setInstance} steps={steps} />
-    </>
-  );
+  return <Stepper instance={setInstance} steps={steps} />;
 };
 
-export default Integrate;
+export default IntegrateStepper;
