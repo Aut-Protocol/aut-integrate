@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { withRouter, Switch, Route, Redirect as RedirectRoute, useLocation, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { AppBar, Box, Button, CssBaseline, Toolbar } from '@mui/material';
+import { Box, CssBaseline } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
-import { ReactComponent as BackIcon } from '@assets/aut/back.svg';
 import Redirect from '@components/Redirect';
 import { resetAuthState, setAuthenticated } from '@auth/auth.reducer';
 import { RootState, useAppDispatch } from '@store/store.model';
@@ -12,12 +11,11 @@ import { environment } from '@api/environment';
 import { InitSwAuth } from '@skill-wallet/auth';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { openSnackbar } from '@store/ui-reducer';
-import { pxToRem } from '@utils/text-size';
 import Partners from './pages/Partners';
 import SWSnackbar from './components/snackbar';
 import GetStarted from './pages/GetStarted/GetStarted';
 import './App.scss';
-import Integrate from './pages/Integrate/Integrate';
+import Integrate from './pages/Integrate';
 
 const LoadingMessage = () => (
   <div className="app-loading">

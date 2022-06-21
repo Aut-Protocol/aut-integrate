@@ -55,43 +55,37 @@ const ImportContractStep = (props: StepperChildProps) => {
         }}
         render={({ field: { name, value, onChange } }) => {
           return (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                marginBottom: pxToRem(45),
+            <AutSelectField
+              variant="standard"
+              autoFocus
+              renderValue={(selected) => {
+                if (!selected) {
+                  return 'DAO Type';
+                }
+                const type = ContractTypes.find((t) => t.value === selected);
+                return type?.label || selected;
               }}
+              width="450"
+              name={name}
+              color="primary"
+              value={value || ''}
+              displayEmpty
+              required
+              onChange={onChange}
+              helperText={
+                <FormHelperText value={value} name={name} errors={formState.errors}>
+                  <Link sx={{ color: 'white' }} target="_blank" href="https://distributedtown.gitbook.io/v2/integrations/add-new-dao-type">
+                    Want to add a new DAO type?
+                  </Link>
+                </FormHelperText>
+              }
             >
-              <AutSelectField
-                variant="standard"
-                autoFocus
-                renderValue={(selected) => {
-                  if (!selected) {
-                    return 'DAO Type';
-                  }
-                  const type = ContractTypes.find((t) => t.value === selected);
-                  return type?.label || selected;
-                }}
-                width="450"
-                name={name}
-                color="primary"
-                value={value || ''}
-                displayEmpty
-                required
-                onChange={onChange}
-              >
-                {ContractTypes.map((type) => (
-                  <MenuItem key={`contract-type-${type.value}`} color="primary" value={type.value}>
-                    {type.label}
-                  </MenuItem>
-                ))}
-              </AutSelectField>
-              <FormHelperText value={value} name={name} errors={formState.errors}>
-                <Link sx={{ color: 'white' }} target="_blank" href="https://distributedtown.gitbook.io/v2/integrations/add-new-dao-type">
-                  Want to add a new DAO type?
-                </Link>
-              </FormHelperText>
-            </div>
+              {ContractTypes.map((type) => (
+                <MenuItem key={`contract-type-${type.value}`} color="primary" value={type.value}>
+                  {type.label}
+                </MenuItem>
+              ))}
+            </AutSelectField>
           );
         }}
       />

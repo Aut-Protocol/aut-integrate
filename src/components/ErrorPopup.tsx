@@ -1,14 +1,15 @@
 import { Button, Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
 import { pxToRem } from '@utils/text-size';
 import { SwButton } from 'sw-web-shared';
+import { AutButton } from './buttons';
 
 const ErrorDialog = ({ mode = 'light', open, hasRetry = false, handleClose, subtitle, message, fullScreen = false }: any) => {
   const dialogSize = fullScreen
     ? {}
     : {
-        maxWidth: pxToRem(600),
-        minWidth: pxToRem(600),
-        minHeight: pxToRem(400),
+        maxWidth: pxToRem(400),
+        minWidth: pxToRem(400),
+        minHeight: pxToRem(250),
       };
   return (
     <Dialog open={open} fullScreen={fullScreen}>
@@ -52,18 +53,18 @@ const ErrorDialog = ({ mode = 'light', open, hasRetry = false, handleClose, subt
           height: pxToRem(130),
         }}
       >
-        <Button
+        <AutButton
           onClick={() => handleClose('close')}
           sx={{
-            width: pxToRem(350),
-            height: pxToRem(70),
+            width: pxToRem(250),
+            height: pxToRem(50),
           }}
           type="submit"
           color="primary"
           variant="outlined"
         >
           Dismiss
-        </Button>
+        </AutButton>
       </DialogActions>
     </Dialog>
   );
