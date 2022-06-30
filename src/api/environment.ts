@@ -13,8 +13,7 @@ export const swEnvVariables = {
 
   // Aut
   apiUrl: 'REACT_APP_API_URL',
-  partnersRegistryAdress: 'REACT_APP_PARTNERS_REGISTRY_ADDRESS',
-  communityRegistryAddress: 'REACT_APP_COMMUNITY_REGISTRY_ADDRESS',
+  registryAddress: 'REACT_APP_COMMUNITY_REGISTRY_ADDRESS',
   partnersKey: 'REACT_APP_PARTNERS_KEY',
 
   // dito
