@@ -27,7 +27,7 @@ export const createPartnersCommunity = communityRegistryThunkProvider(
     event: CommunityRegistryContractEventType.CommunityCreated,
   },
   () => {
-    return Promise.resolve(environment.communityRegistryAddress);
+    return Promise.resolve(environment.registryAddress);
   },
   async (contract, requestBody: { metadata: Community; contractType: number; daoAddr: string }) => {
     const { metadata, contractType, daoAddr } = requestBody;
@@ -50,7 +50,7 @@ export const createPartnersAgreement = partnersRegistryThunkProvider(
     event: PartnersRegistryContractEventType.PartnersAgreementCreated,
   },
   () => {
-    return Promise.resolve(environment.partnersRegistryAdress);
+    return Promise.resolve(environment.registryAddress);
   },
   async (
     contract,

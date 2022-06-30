@@ -23,7 +23,7 @@ export function ipfsCIDToHttpUrl(url: string, isJson = false) {
 
 export const storeImageAsBlob = async (file: File): Promise<string> => {
   const cid = await client.storeBlob(file);
-  return cid;
+  return `ipfs://${cid}`;
 };
 
 export const storeAsBlob = async (json: any): Promise<string> => {
@@ -38,7 +38,7 @@ export const storeAsBlob = async (json: any): Promise<string> => {
 
 const storeAsJson = async (json: any): Promise<string> => {
   const metadata = await client.store(json as any);
-  return metadata.ipnft;
+  return metadata.url;
 };
 
 export async function storeMetadata(json: any, convertImageBlobToFile: (blob: Blob) => File = null) {
