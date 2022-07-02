@@ -1,23 +1,16 @@
 /* eslint-disable max-len */
 
 import { Community, CommunityProperties } from '@api/community.model';
-import { createPartnersCommunity } from '@api/registry.api';
-import ErrorDialog from '@components/ErrorPopup';
-import LoadingDialog from '@components/LoadingPopup';
+import { createCommunity } from '@api/registry.api';
+import CopyAddress from '@components/CopyAddress';
+import ErrorDialog from '@components/Dialog/ErrorPopup';
+import LoadingDialog from '@components/Dialog/LoadingPopup';
 import { StepperButton } from '@components/Stepper';
 import { Avatar, styled, Typography } from '@mui/material';
-import {
-  IntegrateCommunity,
-  IntegrateErrorMessage,
-  IntegrateStatus,
-  integrateUpdateStatus,
-  resetIntegrateState,
-} from '@store/Integrate/integrate';
+import { IntegrateCommunity, IntegrateErrorMessage, IntegrateStatus, integrateUpdateStatus } from '@store/Integrate/integrate';
 import { ResultState } from '@store/result-status';
 import { useAppDispatch } from '@store/store.model';
-import { trimAddress } from '@utils/helpers';
 import { pxToRem } from '@utils/text-size';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { base64toFile } from 'sw-web-shared';
@@ -43,8 +36,9 @@ const ConfirmStep = () => {
     if (state.image) {
       state.image = await base64toFile(state.image as string, 'community_image');
     }
+    debugger;
     const result = await dispatch(
-      createPartnersCommunity({
+      createCommunity({
         contractType: state.contractType,
         daoAddr: state.daoAddr,
         metadata: new Community({
@@ -66,20 +60,13 @@ const ConfirmStep = () => {
     );
 
     if (result.meta.requestStatus === 'fulfilled') {
-      history.push('integrate/success');
+      history.push(`integrate/success/${result.payload}`);
     }
   };
 
   const handleDialogClose = () => {
     dispatch(integrateUpdateStatus(ResultState.Idle));
   };
-
-  useEffect(() => {
-    return () => {
-      handleDialogClose();
-      dispatch(resetIntegrateState());
-    };
-  }, []);
 
   return (
     <StepWrapper>
@@ -210,9 +197,13 @@ const ConfirmStep = () => {
             >
               DAO Address
             </Typography>
-            <Typography fontSize={pxToRem(16)} color="white">
-              {trimAddress(data.daoAddr)}
-            </Typography>
+
+            <CopyAddress
+              textStyles={{
+                fontSize: pxToRem(16),
+              }}
+              address={data.daoAddr}
+            />
           </div>
         </div>
       </div>

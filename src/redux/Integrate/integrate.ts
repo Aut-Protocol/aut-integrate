@@ -1,11 +1,7 @@
-import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { ResultState } from '@store/result-status';
-import { openSnackbar } from '@store/ui-reducer';
-import { activatePaCommunity, partnerAgreementAccess } from '@api/aut.api';
-import { ParseSWErrorMessage } from '@utils/error-parser';
-import { CommunityRole, DefaultRoles } from '@api/community.model';
-import { Role } from '@api/api.model';
-import { createPartnersCommunity } from '@api/registry.api';
+import { DefaultRoles, Role } from '@api/community.model';
+import { createCommunity } from '@api/registry.api';
 
 export interface IntegrateState {
   community: {
@@ -52,35 +48,6 @@ const initialState: IntegrateState = {
   loadingMessage: null,
 };
 
-export const validatePartnerAgreementKey = createAsyncThunk(
-  'integrate/partner-agreement/validate-key',
-  async (key: string, { dispatch, rejectWithValue }) => {
-    try {
-      const isKeyValid = await partnerAgreementAccess(key);
-      if (isKeyValid) {
-        dispatch(openSnackbar({ message: 'Valid Key', severity: 'success' }));
-      }
-      return Promise.resolve(isKeyValid);
-    } catch (error) {
-      const message = ParseSWErrorMessage(error);
-      dispatch(openSnackbar({ message, severity: 'error' }));
-      return rejectWithValue(message);
-    }
-  }
-);
-
-export const activatePartnersAgreement = createAsyncThunk(
-  'integrate/partner-agreement/activate',
-  async (requestBody: { communityAddr: string; partnersAddr: string; partnerKey: string }, { dispatch, getState, rejectWithValue }) => {
-    try {
-      return await activatePaCommunity(requestBody);
-    } catch (error) {
-      const message = error;
-      return rejectWithValue(message);
-    }
-  }
-);
-
 export const integrateSlice = createSlice({
   name: 'integrate',
   initialState,
@@ -98,13 +65,13 @@ export const integrateSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createPartnersCommunity.pending, (state) => {
+      .addCase(createCommunity.pending, (state) => {
         state.status = ResultState.Loading;
       })
-      .addCase(createPartnersCommunity.fulfilled, (state) => {
+      .addCase(createCommunity.fulfilled, (state) => {
         state.status = ResultState.Idle;
       })
-      .addCase(createPartnersCommunity.rejected, (state, action) => {
+      .addCase(createCommunity.rejected, (state, action) => {
         state.status = ResultState.Failed;
         state.errorMessage = action.payload as string;
       });
@@ -118,26 +85,20 @@ export const IntegrateStatus = (state: any) => state.integrate.status as ResultS
 export const IntegrateCommunity = (state: any) => state.integrate.community as typeof initialState.community;
 export const IntegrateLoadingMessage = (state: any) => state.integrate.loadingMessage as boolean;
 export const IntegrateErrorMessage = (state: any) => state.integrate.errorMessage as string;
-export const getRoles = createSelector(roles, (x1): CommunityRole[] => {
+export const getRoles = createSelector(roles, (x1): Role[] => {
   const [role1, role2, role3] = x1;
   return [
     {
       id: 4,
       roleName: role1?.value,
-      skills: [],
-      isCoreTeamMember: false,
     },
     {
       id: 5,
       roleName: role2?.value,
-      skills: [],
-      isCoreTeamMember: false,
     },
     {
       id: 6,
       roleName: role3?.value,
-      skills: [],
-      isCoreTeamMember: false,
     },
     ...DefaultRoles,
   ];
