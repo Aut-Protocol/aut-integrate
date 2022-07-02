@@ -188,7 +188,6 @@ export default (props: StepperProps) => {
             exitLeft: `animated exitLeft`,
             intro: `animated exitLeft`,
           }}
-          isHashEnabled
           isLazyMount
           nav={<StepperNav steps={props.steps} />}
           instance={setInstance}

@@ -1,6 +1,4 @@
-import { Box, Button, styled, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { RootState } from '@store/store.model';
+import { Box, styled, Typography } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
 import { pxToRem } from '@utils/text-size';
 import { Link } from 'react-router-dom';
@@ -16,8 +14,6 @@ const Wrapper = styled('div')({
 });
 
 const GetStarted = () => {
-  const { isAutheticated } = useSelector((state: RootState) => state.auth);
-
   return (
     <Wrapper>
       <Box

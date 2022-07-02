@@ -1,24 +1,10 @@
 import { combineReducers } from 'redux';
-import activityTaskReducer from '@store/Activity/create-task.reducer';
-import communityReducer from './Community/community.reducer';
-import authSliceReducer from '../auth/auth.reducer';
 import uiSliceReducer from './ui-reducer';
-import partnerReducer from './Partner/partner.reducer';
 import integrateReducer from './Integrate/integrate';
-import tasksReducer from './Activity/tasks.reducer';
-import activityGroupCallReducer from './Activity/group-call.reducer';
-import createPollReducer from './Activity/create-poll.reducer';
 
 export const reducers = combineReducers({
-  community: communityReducer,
-  partner: partnerReducer,
-  auth: authSliceReducer,
   ui: uiSliceReducer,
-  activityTask: activityTaskReducer,
   integrate: integrateReducer,
-  tasks: tasksReducer,
-  groupCall: activityGroupCallReducer,
-  createPoll: createPollReducer,
 });
 
 const rootReducer = (state, action) => {
