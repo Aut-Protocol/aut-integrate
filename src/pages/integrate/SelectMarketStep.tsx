@@ -68,7 +68,7 @@ const SelectMarketStep = (props: StepperChildProps) => {
   return (
     <StepWrapper onSubmit={handleSubmit(onSubmit)}>
       <Grid container justifyContent="space-around" alignItems="center" spacing={5} sx={{ marginBottom: pxToRem(45) }}>
-        {MarketTemplates.map(({ title, market }, index) => (
+        {MarketTemplates.map(({ title, market, description }, index) => (
           <Grid item key={index}>
             <Controller
               name="market"
@@ -100,8 +100,7 @@ const SelectMarketStep = (props: StepperChildProps) => {
                         {title}
                       </Typography>
                       <Typography textAlign="left" color="white" fontSize={pxToRem(14)} component="div">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                        magna aliquyam erat, sed diam voluptua.
+                        {description}
                       </Typography>
                     </CardContent>
                   </AutCard>

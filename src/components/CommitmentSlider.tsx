@@ -9,14 +9,7 @@ import { FormHelperText } from './Fields';
 export function CommitmentMessage({ value, children = null }) {
   const message = CommitmentMessages(value);
   return (
-    <Typography
-      color="white"
-      whiteSpace="nowrap"
-      align="left"
-      component="span"
-      variant="h4"
-      sx={{ display: 'flex', mb: '4px', height: '15px' }}
-    >
+    <Typography color="white" whiteSpace="nowrap" align="left" component="span" fontSize="20px" sx={{ display: 'flex', mb: '4px' }}>
       {message}
     </Typography>
   );
@@ -86,7 +79,7 @@ export const AutSlider = (props: AutSliderProps) => {
       <div style={{ marginTop: '-3px', display: 'flex', justifyContent: 'flex-end' }}>
         <FormHelperText errorTypes={errorTypes} value={props.value} name={props.name} errors={props.errors}>
           <Typography color="white" variant="body1">
-            You can change your commitment at any time
+            No worries, you’ll be able to change this later.
           </Typography>
         </FormHelperText>
       </div>
