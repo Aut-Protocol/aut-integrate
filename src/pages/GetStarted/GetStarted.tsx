@@ -24,22 +24,66 @@ const GetStarted = () => {
       >
         <AutLogo height={pxToRem(300)} />
       </Box>
-      <Typography
-        component="div"
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'white',
-          mt: pxToRem(50),
-          mb: pxToRem(50),
-          maxWidth: pxToRem(650),
-          fontSize: pxToRem(16),
-        }}
-      >
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-        erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-      </Typography>
+      <Box>
+        <Typography
+          component="div"
+          sx={{
+            color: 'white',
+            mt: pxToRem(50),
+            mb: pxToRem(30),
+            textAlign: 'left',
+            fontWeight: 'bold',
+            fontSize: pxToRem(20),
+          }}
+        >
+          Do more with your DAO.
+        </Typography>
+        <Typography
+          component="div"
+          sx={{
+            color: 'white',
+            mb: pxToRem(20),
+            textAlign: 'left',
+            fontSize: pxToRem(20),
+          }}
+        >
+          Āut is an expandable Community protocol, powering the next level of collective coordination 🤝🫂
+        </Typography>
+        <Typography
+          component="div"
+          sx={{
+            color: 'white',
+            mb: pxToRem(20),
+            textAlign: 'left',
+            fontSize: pxToRem(20),
+          }}
+        >
+          By integrating it, you can expand your DAO contract - adding the concepts of Members Roles & <br /> Interactions directly
+          on-chain.
+        </Typography>
+        <Typography
+          component="div"
+          sx={{
+            color: 'white',
+            mb: pxToRem(20),
+            textAlign: 'left',
+            fontSize: pxToRem(20),
+          }}
+        >
+          Assign Roles to your Community - and kick off role-based working routines and role-weighted governance <br /> in seconds.
+        </Typography>
+        <Typography
+          component="div"
+          sx={{
+            color: 'white',
+            mb: pxToRem(50),
+            textAlign: 'left',
+            fontSize: pxToRem(20),
+          }}
+        >
+          There is no community like yours - create your own Standards. Opt Āut.
+        </Typography>
+      </Box>
       <Box sx={{ gridGap: '30px', display: 'flex', justifyContent: 'center' }} className="right-box">
         <AutButton
           sx={{

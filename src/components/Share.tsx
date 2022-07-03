@@ -7,7 +7,7 @@ import { AutButton } from './buttons';
 export interface SimpleDialogProps {
   title: string;
   url: string;
-  description?: string;
+  description?: JSX.Element;
   open?: boolean;
   onClose?: () => void;
   twitterProps?: any;
@@ -56,40 +56,19 @@ const AutShare = (props: SimpleDialogProps) => {
             flexDirection: 'column',
             textAlign: 'left',
             flex: 1,
-            width: '50%',
           }}
         >
-          <Typography color="white" component="span" fontSize={pxToRem(40)}>
-            Share
-          </Typography>
-
-          <Typography
-            sx={{
-              mt: '20px',
-            }}
-            color="white"
-            component="span"
-            fontSize={pxToRem(25)}
-          >
+          <Typography color="white" marginBottom={pxToRem(20)} component="span" fontSize={pxToRem(35)}>
             {title}
           </Typography>
 
-          <Typography
-            sx={{
-              mt: '20px',
-            }}
-            color="white"
-            component="span"
-            fontSize={pxToRem(18)}
-          >
-            {description}
-          </Typography>
+          {description}
 
           <div
             className="links"
             style={{
               display: 'flex',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               width: '330px',
               margin: '10px auto 0 auto',
             }}
@@ -115,7 +94,7 @@ const AutShare = (props: SimpleDialogProps) => {
           </div>
         </div>
 
-        <div
+        {/* <div
           style={{
             flex: 1,
             width: '50%',
@@ -125,7 +104,7 @@ const AutShare = (props: SimpleDialogProps) => {
           }}
         >
           {props.rightSide}
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -137,11 +116,15 @@ export function AutShareDialog(props: SimpleDialogProps) {
       onClose={props.onClose}
       open={props.open}
       sx={{
-        maxWidth: 'auto',
+        maxWidth: 'none',
+        '.MuiPaper-root': {
+          maxWidth: 'none',
+        },
       }}
     >
       <DialogContent
         sx={{
+          minWidth: 'inherit',
           border: 0,
           padding: 0,
         }}

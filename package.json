@@ -1,8 +1,8 @@
 {
-  "name": "aut-role",
+  "name": "aut-integrate",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://skillwallet.github.io/aut-role/",
+  "homepage": "https://Aut-Protocol.github.io/aut-integrate/",
   "scripts": {
     "build": "react-app-rewired build",
     "deploy": "gh-pages -d build",

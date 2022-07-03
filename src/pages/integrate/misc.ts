@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export const ContractTypes = [
   {
     label: 'Moloch DAO V1',
@@ -19,15 +20,21 @@ export const ContractTypes = [
 
 export const MarketTemplates = [
   {
-    title: 'Open-Source & DeFi',
+    title: 'Infrastructure, & Web3 Tools',
+    description:
+      'For researchers & web3, open-source teams, that innovate in a liberal fashion - creating the tools and technology to power a more collaborative world.',
     market: 1,
   },
   {
     title: 'Art, Events & NFTs',
+    description:
+      'Art movements, writers & creative collectives of all kind - who use Art & provable ownership for purer, more disruptive forms of human interaction.',
     market: 2,
   },
   {
-    title: 'Local Projects & DAOs',
+    title: 'Governance & Public Goods',
+    description:
+      'From support for people in need, to innovative local hubs - to get together & create something greater than oneself, to build a fairer & more meritocratic world.',
     market: 3,
   },
 ];
@@ -55,6 +62,6 @@ export const CommitmentMessages = (value: number) => {
     case 10:
       return '“After all this time?" "Always...”';
     default:
-      return ``;
+      return `Minimum Commitment Level for new Members.`;
   }
 };

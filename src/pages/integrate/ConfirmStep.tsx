@@ -127,7 +127,7 @@ const ConfirmStep = () => {
             <Typography
               sx={{
                 maxWidth: pxToRem(400),
-                mt: pxToRem(25),
+                mt: pxToRem(15),
               }}
               fontSize={pxToRem(14)}
               color="white"

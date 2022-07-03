@@ -14,32 +14,53 @@ const steps: Step[] = [
     component: ImportContractStep,
     title: 'Import Contract',
     description: (
-      <div>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-        erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-        est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet
-      </div>
+      <>
+        It all starts with your Genesis Contract. Add the address of your DAO, verify you’re <br /> part of it - and start giving it the
+        superpowers it deserves ✨
+      </>
     ),
   },
   {
     component: CommunityInfoStep,
     title: 'Community Details',
-    description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
+    description: (
+      <>
+        Time to customize your Community. Add some details, its name, its logo, its story. <br /> Tell your community members why it exists,
+        and why it matters.
+      </>
+    ),
   },
   {
     component: SelectMarketStep,
     title: 'Select Market',
-    description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
+    description: (
+      <>
+        Markets can be as niche-y as you need them to be. These are our 3 default Markets, <br /> choose the one that best represents your
+        Community - and partner with other <br /> DAOs in the same field!
+      </>
+    ),
   },
   {
     component: RoleStep,
     title: 'Roles',
-    description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
+    description: (
+      <>
+        These are Roles you envision in your community (i.e.: dev, curator, DAO operator, …) <br /> They always come in sets of 3 to keep
+        balance between members. <br /> Use Roles to create new Guilds, Projects, operational groups - let your Members & <br /> DAO grow
+        with you 🙌
+      </>
+    ),
   },
   {
     component: CommitmentStep,
     title: 'Commitment',
-    description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam',
+    description: (
+      <>
+        The minimum level of Commitment you expect from Members joining your <br /> Community. You can see Commitment as the amount of
+        “time/dedication” that <br /> Members pledge to your DAO. Based on their Commitment, they will receive more <br /> or less tasks -
+        and grow or lose their Reputation.
+      </>
+    ),
   },
   {
     component: ConfirmStep,
