@@ -1,4 +1,4 @@
-import { CommunityRegistryContractEventType, Web3CommunityRegistryProvider } from '@skill-wallet/sw-abi-types';
+import { CommunityRegistryContractEventType, Web3CommunityRegistryProvider } from '@aut-protocol/abi-types';
 import { Community } from './community.model';
 import { environment } from './environment';
 import { Web3ThunkProviderFactory } from './ProviderFactory/web3-thunk.provider';
