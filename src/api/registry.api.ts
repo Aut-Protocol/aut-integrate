@@ -1,17 +1,17 @@
-import { CommunityRegistryContractEventType, Web3CommunityRegistryProvider } from '@aut-protocol/abi-types';
+import { DAOExpanderRegistryContractEventType, Web3DAOExpanderRegistryProvider } from '@aut-protocol/abi-types';
 import { Community } from './community.model';
 import { environment } from './environment';
 import { Web3ThunkProviderFactory } from './ProviderFactory/web3-thunk.provider';
 import { ipfsCIDToHttpUrl, storeAsBlob, storeImageAsBlob } from './storage.api';
 
 const communityRegistryThunkProvider = Web3ThunkProviderFactory('CommunityRegistry', {
-  provider: Web3CommunityRegistryProvider,
+  provider: Web3DAOExpanderRegistryProvider,
 });
 
 export const createCommunity = communityRegistryThunkProvider(
   {
     type: 'integrate/create/community',
-    event: CommunityRegistryContractEventType.CommunityCreated,
+    event: DAOExpanderRegistryContractEventType.DAOExpanderDeployed,
   },
   () => {
     return Promise.resolve(environment.registryAddress);
@@ -26,7 +26,7 @@ export const createCommunity = communityRegistryThunkProvider(
     }
     const cid = await storeAsBlob(metadata);
     console.log('Metadata url -> ', ipfsCIDToHttpUrl(cid));
-    const response = await contract.createCommunity(
+    const response = await contract.deployDAOExpander(
       contractType,
       daoAddr,
       metadata.properties.market as number,
