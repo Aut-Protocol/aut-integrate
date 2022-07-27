@@ -2,8 +2,8 @@ version: '3.7'
 
 services:
 
-  partners-app:
-    container_name: partners-app
+  aut-integrate-app:
+    container_name: aut-integrate-app
     build:
       context: .
       dockerfile: Dockerfile
