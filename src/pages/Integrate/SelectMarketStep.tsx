@@ -4,10 +4,10 @@ import { StepperChildProps } from '@components/Stepper/model';
 import { Card, CardContent, Grid, styled, Typography } from '@mui/material';
 import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
 import { useAppDispatch } from '@store/store.model';
+import { MarketTemplates } from '@utils/misc';
 import { pxToRem } from '@utils/text-size';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { MarketTemplates } from './misc';
 
 const StepWrapper = styled('form')({
   textAlign: 'center',
