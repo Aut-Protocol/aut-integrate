@@ -10,11 +10,11 @@ import { Avatar, styled, Typography } from '@mui/material';
 import { IntegrateCommunity, IntegrateErrorMessage, IntegrateStatus, integrateUpdateStatus } from '@store/Integrate/integrate';
 import { ResultState } from '@store/result-status';
 import { useAppDispatch } from '@store/store.model';
+import { MarketTemplates, CommitmentMessages } from '@utils/misc';
 import { pxToRem } from '@utils/text-size';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { base64toFile } from 'sw-web-shared';
-import { CommitmentMessages, MarketTemplates } from './misc';
 
 const StepWrapper = styled('div')({
   textAlign: 'center',

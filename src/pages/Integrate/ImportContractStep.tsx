@@ -4,11 +4,11 @@ import { StepperChildProps } from '@components/Stepper/model';
 import { Link, MenuItem, styled } from '@mui/material';
 import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
 import { useAppDispatch } from '@store/store.model';
+import { ContractTypes } from '@utils/misc';
 import { pxToRem } from '@utils/text-size';
 import { isAddress } from 'ethers/lib/utils';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { ContractTypes } from './misc';
 
 const errorTypes = {
   validAddress: `Not a valid address`,
