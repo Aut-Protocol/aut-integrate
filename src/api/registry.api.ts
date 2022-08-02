@@ -1,6 +1,6 @@
 import { DAOExpanderRegistryContractEventType, Web3DAOExpanderRegistryProvider } from '@aut-protocol/abi-types';
+import { NetworkConfig } from '@store/model';
 import { Community } from './community.model';
-import { environment } from './environment';
 import { Web3ThunkProviderFactory } from './ProviderFactory/web3-thunk.provider';
 import { ipfsCIDToHttpUrl, storeAsBlob, storeImageAsBlob } from './storage.api';
 
@@ -13,8 +13,10 @@ export const createCommunity = communityRegistryThunkProvider(
     type: 'integrate/create/community',
     event: DAOExpanderRegistryContractEventType.DAOExpanderDeployed,
   },
-  () => {
-    return Promise.resolve(environment.registryAddress);
+  (thunkAPI) => {
+    const state = thunkAPI.getState() as any;
+    const config: NetworkConfig = state.walletProvider.networkConfig;
+    return Promise.resolve(config.registryAddress);
   },
   async (contract, requestBody: { metadata: Community; contractType: number; daoAddr: string }) => {
     const { metadata, contractType, daoAddr } = requestBody;

@@ -58,7 +58,7 @@ interface AutSliderProps {
   sliderProps: SliderProps;
   value: any;
   name: string;
-  errors: FieldErrors<any>;
+  errors: any;
 }
 
 const errorTypes = {

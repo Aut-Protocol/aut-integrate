@@ -1,20 +1,16 @@
 /* eslint-disable max-len */
 export const ContractTypes = [
   {
-    label: 'Moloch DAO V1',
+    label: 'SW (Legacy)',
+    value: 1,
+  },
+  {
+    label: 'Moloch V1',
     value: 2,
   },
   {
-    label: 'Moloch DAO V2',
+    label: 'Moloch V2',
     value: 3,
-  },
-  {
-    label: 'Moloch DAO V3',
-    value: 4,
-  },
-  {
-    label: 'SkillWallet (Legacy)',
-    value: 1,
   },
 ];
 

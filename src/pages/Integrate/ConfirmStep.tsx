@@ -36,7 +36,6 @@ const ConfirmStep = () => {
     if (state.image) {
       state.image = await base64toFile(state.image as string, 'community_image');
     }
-    debugger;
     const result = await dispatch(
       createCommunity({
         contractType: state.contractType,
