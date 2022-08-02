@@ -8,11 +8,14 @@ import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import { integrateUpdateStatus, resetIntegrateState } from '@store/Integrate/integrate';
 import { ResultState } from '@store/result-status';
 import { useAppDispatch } from '@store/store.model';
+import { useWeb3React } from '@web3-react/core';
+import { setProviderIsOpen } from '@store/WalletProvider/WalletProvider';
 import IntegrateSuccess from './IntegrateSuccess';
 import IntegrateStepper from './IntegrateStepper';
 
 const Integrate = () => {
   const dispatch = useAppDispatch();
+  const { isActive } = useWeb3React();
   const { path } = useRouteMatch();
   const history = useHistory();
   const [instance, setInstance] = useState<StepWizardChildProps>();
@@ -32,6 +35,12 @@ const Integrate = () => {
       dispatch(resetIntegrateState());
     };
   }, []);
+
+  useEffect(() => {
+    if (!isActive) {
+      dispatch(setProviderIsOpen(true));
+    }
+  }, [isActive]);
 
   return (
     <>
