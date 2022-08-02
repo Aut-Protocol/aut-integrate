@@ -59,12 +59,6 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
     }
   }, [chainId, lastChainId, provider]);
 
-  useEffect(() => {
-    if (!isActive) {
-      dispatch(setProviderIsOpen(true));
-    }
-  }, [isActive]);
-
   return (
     <DialogWrapper open={isOpen} fullScreen={fullScreen}>
       <>

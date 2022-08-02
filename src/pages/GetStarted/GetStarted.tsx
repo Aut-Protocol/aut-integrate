@@ -1,8 +1,13 @@
 import { Box, styled, Typography } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
 import { pxToRem } from '@utils/text-size';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { AutButton } from '@components/buttons';
+import { useAppDispatch } from '@store/store.model';
+import { SelectedNetworkConfig, setProviderIsOpen } from '@store/WalletProvider/WalletProvider';
+import { useWeb3React } from '@web3-react/core';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const Wrapper = styled('div')({
   textAlign: 'center',
@@ -14,6 +19,17 @@ const Wrapper = styled('div')({
 });
 
 const GetStarted = () => {
+  const dispatch = useAppDispatch();
+  const { isActive } = useWeb3React();
+  const networkConfig = useSelector(SelectedNetworkConfig);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (isActive && networkConfig) {
+      history.push('/integrate');
+    }
+  }, [isActive, networkConfig]);
+
   return (
     <Wrapper>
       <Box
@@ -93,8 +109,7 @@ const GetStarted = () => {
           type="submit"
           color="primary"
           variant="outlined"
-          component={Link}
-          to="/integrate"
+          onClick={() => dispatch(setProviderIsOpen(true))}
         >
           Integrate
         </AutButton>
