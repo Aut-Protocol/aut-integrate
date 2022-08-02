@@ -5,7 +5,7 @@ import { pxToRem } from '@utils/text-size';
 import { Controller, FieldErrors } from 'react-hook-form';
 
 interface FormHelperTextProps {
-  errors: FieldErrors<any>;
+  errors: any;
   name: string;
   children?: string | JSX.Element;
   errorTypes?: any;

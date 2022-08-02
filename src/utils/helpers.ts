@@ -62,3 +62,8 @@ export const trimAddress = (address: string) => {
   right = right.substr(right.length - 4);
   return `${left}...${right}`.toUpperCase();
 };
+
+export const toHex = (num) => {
+  const val = Number(num);
+  return `0x${val.toString(16)}`;
+};

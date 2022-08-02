@@ -27,17 +27,17 @@ const StepWrapper = styled('form')({
 
 const CommunityInfoStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
-  const { name, image, description, contractType, daoAddr } = useSelector(IntegrateCommunity);
-  const { control, handleSubmit, getValues, formState } = useForm({
+  const { name, image, description } = useSelector(IntegrateCommunity);
+  const { control, handleSubmit, getValues, watch, formState } = useForm({
     mode: 'onChange',
     defaultValues: {
       name,
       image,
       description,
-      contractType,
-      daoAddr,
     },
   });
+
+  const values = watch();
 
   const updateState = () => {
     return dispatch(integrateUpdateCommunity(getValues()));
@@ -141,7 +141,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
           }}
         />
       </div>
-      <StepperButton label="Next" disabled={!formState.isValid} />
+      <StepperButton label="Next" disabled={!formState.isValid || !values.image} />
     </StepWrapper>
   );
 };
