@@ -15,8 +15,10 @@ import { styled, Typography } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
 import AutLoading from '@components/AutLoading';
 import DialogWrapper from '@components/Dialog/DialogWrapper';
+import { getNetworkVariables } from '@api/environment';
 import ConnectorBtn, { ConnectorTypes } from './ConnectorBtn';
 import { NetworkSelectors } from './NetworkSelectors';
+import { EnableAndChangeNetwork } from '../web3.network';
 
 const Title = styled(Typography)({
   mt: pxToRem(25),
@@ -90,9 +92,11 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
 
               {wallet && (
                 <NetworkSelectors
-                  onSelect={(foundChainId: number, networkName: string) => {
+                  onSelect={async (foundChainId: number, networkName: string) => {
                     setLastChainId(foundChainId);
-                    connector.activate(foundChainId);
+                    await connector.activate();
+                    const config = getNetworkVariables(networkName);
+                    await EnableAndChangeNetwork(connector.provider, config);
                     dispatch(setNetwork(networkName));
                   }}
                 />
