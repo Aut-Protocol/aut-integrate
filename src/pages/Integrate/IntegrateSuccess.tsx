@@ -37,15 +37,15 @@ const IntegrateSuccess = (props: StepperChildProps) => {
         description={
           <>
             <Typography marginBottom={pxToRem(15)} fontSize={pxToRem(18)} color="white">
-              [Community name] 2.0 is now live on @opt_aut - with on-chain Roles & Interactions for all our Members 🙌 <br />
+              {community?.name} 2.0 is now live on @opt_aut - with on-chain Roles & Interactions for all our Members 🙌 <br />
             </Typography>
 
-            <Typography marginBottom={pxToRem(15)} fontSize={pxToRem(18)} color="white">
+            {/* <Typography marginBottom={pxToRem(15)} fontSize={pxToRem(18)} color="white">
               Have a look at the Contract {'—> '} <br />
               <Link sx={{ color: 'white' }} target="_blank" href={`https://blockscout.com/xdai/mainnet/address/${params.address}`}>
                 https://blockscout.com/xdai/mainnet/address/${trimAddress(params.address)}
               </Link>
-            </Typography>
+            </Typography> */}
 
             <Typography marginBottom={pxToRem(15)} fontSize={pxToRem(18)} color="white">
               Let’s coordinate, change things - break things. Together 🫂
@@ -130,6 +130,7 @@ const IntegrateSuccess = (props: StepperChildProps) => {
           type="button"
           color="primary"
           variant="outlined"
+          disabled
           href="https://github.com/SkillWallet/web-component"
         >
           See Your Dashboard
