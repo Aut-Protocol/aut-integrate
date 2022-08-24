@@ -7,6 +7,11 @@ const palette = {
     default: '#000000',
     paper: '#FFFFFF',
   },
+  // text: {
+  //   secondary: '#D8D8D8',
+  //   primary: '#FFFFFF',
+  //   disabled: '#CCCCCC',
+  // },
   primary: {
     main: '#009FE3',
   },
@@ -91,49 +96,34 @@ export const SwTheme = responsiveFontSizes(
         fontSize: '1.25rem', // 20px
       },
       body1: {
-        letterSpacing: '2.1px',
-        font: `normal normal 900 ${pxToRem(14)}/${pxToRem(28)} Avenir`,
+        fontSize: '0.875rem', // 14px
       },
       body2: {
-        fontSize: pxToRem(12),
-        letterSpacing: '2px',
-      },
-      emphasis: {
-        fontSize: pxToRem(25),
-        letterSpacing: '0px',
-        font: `oblique normal 900 ${pxToRem(25)}/${pxToRem(45)} Avenir`,
+        fontSize: '0.75rem', // 12px
       },
       subtitle1: {
-        fontSize: pxToRem(25),
-        letterSpacing: '0',
+        fontSize: '1.5625rem', // 25px
       },
       subtitle2: {
-        fontSize: pxToRem(20),
-        letterSpacing: '0',
+        fontSize: '0.875rem', // 14px
       },
       h1: {
-        fontSize: pxToRem(60),
-        letterSpacing: '0.96px',
+        fontSize: pxToRem(30), // 30px
       },
       h2: {
-        fontSize: pxToRem(48),
-        letterSpacing: '0.77px',
+        fontSize: pxToRem(20), // 20px
       },
       h3: {
-        fontSize: pxToRem(40),
-        letterSpacing: '0.64px',
+        fontSize: pxToRem(18), // 18px
       },
       h4: {
-        fontSize: pxToRem(30),
-        letterSpacing: '0.77px',
+        fontSize: '1rem', // 16px
       },
       h5: {
-        fontSize: pxToRem(24),
-        letterSpacing: '0.48px',
+        fontSize: '0.75rem', // 12px
       },
       h6: {
-        fontSize: pxToRem(18),
-        letterSpacing: '0.38px',
+        fontSize: '0.625rem', // 10px
       },
       xl: {
         fontSize: '5rem',
@@ -141,7 +131,7 @@ export const SwTheme = responsiveFontSizes(
       xxl: {
         fontSize: '6.25rem',
       },
-      fontFamily: ['Avenir', ' sans-serif'].join(','),
+      fontFamily: ['Source Sans Pro', ' sans-serif'].join(','),
     },
   })
 );
@@ -150,13 +140,11 @@ declare module '@mui/material/styles/createTypography' {
   interface Typography {
     xl: React.CSSProperties;
     xxl: React.CSSProperties;
-    emphasis?: React.CSSProperties;
   }
 
   interface TypographyOptions {
     xl?: React.CSSProperties;
     xxl: React.CSSProperties;
-    emphasis?: React.CSSProperties;
   }
 }
 
@@ -164,6 +152,5 @@ declare module '@mui/material/Typography/Typography' {
   interface TypographyPropsVariantOverrides {
     xl: true;
     xxl: true;
-    emphasis?: true;
   }
 }

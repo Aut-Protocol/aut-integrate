@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import StepWizard, { StepWizardChildProps } from 'react-step-wizard';
 import { styled } from '@mui/system';
 import { ButtonProps, Container } from '@mui/material';
-import { AutButton, AutGradientButton } from '@components/buttons';
+import { AutButton } from '@components/buttons';
 import { pxToRem } from '@utils/text-size';
 import StepperNav from './StepperNav';
 import { StepperProps } from './model';
@@ -153,10 +153,10 @@ const ActionsWrapper = styled('div')({
 
 export const StepperButton = ({ label, ...props }: ButtonProps & { label: string }) => {
   return (
-    <AutGradientButton
+    <AutButton
       sx={{
         minWidth: pxToRem(400),
-        height: pxToRem(80),
+        height: pxToRem(70),
         my: pxToRem(50),
       }}
       type="submit"
@@ -165,7 +165,7 @@ export const StepperButton = ({ label, ...props }: ButtonProps & { label: string
       {...props}
     >
       {label}
-    </AutGradientButton>
+    </AutButton>
   );
 };
 

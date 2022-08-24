@@ -20,7 +20,7 @@ const AutShare = (props: SimpleDialogProps) => {
   return (
     <div
       style={{
-        width: pxToRem(640),
+        width: pxToRem(700),
         minHeight: pxToRem(400),
         display: 'flex',
         position: 'relative',
@@ -58,7 +58,7 @@ const AutShare = (props: SimpleDialogProps) => {
             flex: 1,
           }}
         >
-          <Typography color="white" marginBottom={pxToRem(20)} component="span" variant="subtitle1">
+          <Typography color="white" marginBottom={pxToRem(20)} component="span" fontSize={pxToRem(35)}>
             {title}
           </Typography>
 
@@ -78,7 +78,7 @@ const AutShare = (props: SimpleDialogProps) => {
                 sx={{
                   width: pxToRem(250),
                   height: pxToRem(50),
-                  mt: pxToRem(50),
+                  mt: pxToRem(20),
                   '&.MuiButton-root': {
                     borderRadius: 0,
                     borderWidth: '2px',
