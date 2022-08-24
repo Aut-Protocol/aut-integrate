@@ -12,7 +12,7 @@ export const CopyAddress = ({ address, textStyles = {}, iconStyles = {} }) => {
           <Typography sx={{ color: 'white', fontSize: pxToRem(12), ...textStyles }} component="div">
             {trimAddress(address)}
             <IconButton sx={{ color: 'white', p: 0 }}>
-              <ContentCopyIcon sx={{ cursor: 'pointer', width: pxToRem(20), height: 'auto', ml: '5px', ...iconStyles }} />
+              <ContentCopyIcon sx={{ cursor: 'pointer', width: pxToRem(12), ml: '5px', ...iconStyles }} />
             </IconButton>
           </Typography>
         </Tooltip>
