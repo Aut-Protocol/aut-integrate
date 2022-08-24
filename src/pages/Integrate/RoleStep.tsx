@@ -73,7 +73,7 @@ const RoleStep = (props: StepperChildProps) => {
                   autoFocus={index === 0}
                   onChange={onChange}
                   sx={{
-                    mb: pxToRem(80),
+                    mb: pxToRem(45),
                   }}
                   inputProps={{ maxLength: 20 }}
                   helperText={

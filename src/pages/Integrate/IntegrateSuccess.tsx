@@ -3,7 +3,7 @@ import { StepperChildProps } from '@components/Stepper/model';
 import { Avatar, Box, Container, IconButton, Link, styled, Tooltip, Typography } from '@mui/material';
 import { pxToRem } from '@utils/text-size';
 import { ReactComponent as CutLogo } from '@assets/aut/cut.svg';
-import { AutButton, AutGradientButton } from '@components/buttons';
+import { AutButton } from '@components/buttons';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useParams } from 'react-router-dom';
@@ -36,7 +36,7 @@ const IntegrateSuccess = (props: StepperChildProps) => {
         title="Celebrate the new era of your DAO 🎉"
         description={
           <>
-            <Typography marginBottom={pxToRem(15)} variant="h6" color="white">
+            <Typography marginBottom={pxToRem(15)} fontSize={pxToRem(18)} color="white">
               {community?.name} 2.0 is now live on @opt_aut - with on-chain Roles & Interactions for all our Members 🙌 <br />
             </Typography>
 
@@ -47,7 +47,7 @@ const IntegrateSuccess = (props: StepperChildProps) => {
               </Link>
             </Typography> */}
 
-            <Typography marginBottom={pxToRem(15)} variant="h6" color="white">
+            <Typography marginBottom={pxToRem(15)} fontSize={pxToRem(18)} color="white">
               Let’s coordinate, change things - break things. Together 🫂
             </Typography>
           </>
@@ -68,7 +68,7 @@ const IntegrateSuccess = (props: StepperChildProps) => {
           />
         }
       />
-      <Typography marginTop={pxToRem(50)} fontWeight="bold" fontSize={pxToRem(54)} color="white">
+      <Typography letterSpacing="8px" textTransform="uppercase" marginTop={pxToRem(50)} fontSize={pxToRem(50)} color="white">
         You’ve now expanded your Community 🎉
       </Typography>
       <CutLogo />
@@ -80,30 +80,37 @@ const IntegrateSuccess = (props: StepperChildProps) => {
           marginTop: pxToRem(100),
         }}
       >
-        <Typography maxWidth="80%" marginRight={pxToRem(100)} variant="h5" color="white">
+        <Typography letterSpacing="1.25px" maxWidth="80%" marginRight={pxToRem(100)} fontSize={pxToRem(25)} color="white">
           Your expanded DAO Contract {'—> '}
         </Typography>
 
         <CopyAddress
           textStyles={{
-            fontSize: pxToRem(24),
+            fontSize: pxToRem(25),
           }}
           iconStyles={{
-            width: pxToRem(40),
+            width: pxToRem(50),
           }}
           address={params.address}
         />
       </div>
-      <Typography maxWidth="80%" marginTop={pxToRem(40)} variant="subtitle2" color="white">
+      <Typography letterSpacing="1.25px" maxWidth="80%" marginTop={pxToRem(40)} fontSize={pxToRem(20)} color="white">
         This contract already knows about the Roles and Interactions of your Community Members.
       </Typography>
 
-      <Typography marginTop={pxToRem(40)} marginBottom={pxToRem(100)} maxWidth="80%" variant="subtitle2" color="white">
+      <Typography
+        letterSpacing="1.25px"
+        marginTop={pxToRem(40)}
+        marginBottom={pxToRem(100)}
+        maxWidth="80%"
+        fontSize={pxToRem(20)}
+        color="white"
+      >
         Today begins the 2nd life of your DAO. <br /> Tweet to let everybody know about it, or just head over to your Dashboard & get things
         started!
       </Typography>
       <Box sx={{ gridGap: '30px', display: 'flex', justifyContent: 'center' }} className="right-box">
-        <AutGradientButton
+        <AutButton
           sx={{
             width: pxToRem(450),
             height: pxToRem(90),
@@ -114,8 +121,8 @@ const IntegrateSuccess = (props: StepperChildProps) => {
           variant="outlined"
         >
           Share
-        </AutGradientButton>
-        <AutGradientButton
+        </AutButton>
+        <AutButton
           sx={{
             width: pxToRem(450),
             height: pxToRem(90),
@@ -127,7 +134,7 @@ const IntegrateSuccess = (props: StepperChildProps) => {
           href="https://github.com/SkillWallet/web-component"
         >
           See Your Dashboard
-        </AutGradientButton>
+        </AutButton>
       </Box>
     </StepWrapper>
   );

@@ -10,11 +10,8 @@ import { Avatar, styled, Typography } from '@mui/material';
 import { IntegrateCommunity, IntegrateErrorMessage, IntegrateStatus, integrateUpdateStatus } from '@store/Integrate/integrate';
 import { ResultState } from '@store/result-status';
 import { useAppDispatch } from '@store/store.model';
-import { SelectedNetworkConfig, setProviderIsOpen } from '@store/WalletProvider/WalletProvider';
 import { MarketTemplates, CommitmentMessages } from '@utils/misc';
 import { pxToRem } from '@utils/text-size';
-import { useWeb3React } from '@web3-react/core';
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { base64toFile } from 'sw-web-shared';
@@ -30,20 +27,11 @@ const StepWrapper = styled('div')({
 const ConfirmStep = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const [submitted, setIsSubmitted] = useState(false);
   const data = useSelector(IntegrateCommunity);
   const status = useSelector(IntegrateStatus);
   const errorMessage = useSelector(IntegrateErrorMessage);
-  const { isActive, account, connector } = useWeb3React();
-  const networkConfig = useSelector(SelectedNetworkConfig);
 
   const onSubmit = async () => {
-    if (!isActive) {
-      setIsSubmitted(true);
-      dispatch(setProviderIsOpen(true));
-      return;
-    }
-    setIsSubmitted(false);
     const state = { ...data };
     if (state.image) {
       state.image = await base64toFile(state.image as string, 'community_image');
@@ -75,12 +63,6 @@ const ConfirmStep = () => {
     }
   };
 
-  useEffect(() => {
-    if (isActive && submitted && networkConfig) {
-      onSubmit();
-    }
-  }, [isActive, networkConfig, submitted]);
-
   const handleDialogClose = () => {
     dispatch(integrateUpdateStatus(ResultState.Idle));
   };
@@ -89,8 +71,8 @@ const ConfirmStep = () => {
     <StepWrapper>
       <ErrorDialog handleClose={handleDialogClose} open={status === ResultState.Failed} message={errorMessage} />
       <LoadingDialog handleClose={handleDialogClose} open={status === ResultState.Loading} message="Creating community" />
-      <Typography marginTop={pxToRem(30)} variant="emphasis" color="white">
-        Review your Community Info
+      <Typography textTransform="uppercase" marginTop={pxToRem(30)} fontSize={pxToRem(25)} color="white">
+        Confirm your information
       </Typography>
       <div
         style={{
@@ -138,7 +120,7 @@ const ConfirmStep = () => {
             <Typography lineHeight="1" fontSize={pxToRem(25)} color="white">
               {data.name}
             </Typography>
-            <Typography variant="body1" color="white">
+            <Typography fontSize={pxToRem(16)} color="white">
               {MarketTemplates[data.market - 1]?.title}
             </Typography>
             <Typography
@@ -146,7 +128,7 @@ const ConfirmStep = () => {
                 maxWidth: pxToRem(400),
                 mt: pxToRem(15),
               }}
-              variant="body1"
+              fontSize={pxToRem(14)}
               color="white"
             >
               {data.description}
@@ -168,12 +150,12 @@ const ConfirmStep = () => {
                 sx={{
                   width: pxToRem(220),
                 }}
-                variant="body1"
+                fontSize={pxToRem(16)}
                 color="white"
               >
                 Role Name
               </Typography>
-              <Typography variant="body1" color="white">
+              <Typography fontSize={pxToRem(16)} color="white">
                 {r.roleName}
               </Typography>
             </div>
@@ -189,12 +171,12 @@ const ConfirmStep = () => {
               sx={{
                 width: pxToRem(220),
               }}
-              variant="body1"
+              fontSize={pxToRem(16)}
               color="white"
             >
               Pledged Commitment
             </Typography>
-            <Typography variant="body1" color="white">
+            <Typography fontSize={pxToRem(16)} color="white">
               {data.commitment} ( {CommitmentMessages(data.commitment)} )
             </Typography>
           </div>
@@ -209,7 +191,7 @@ const ConfirmStep = () => {
               sx={{
                 width: pxToRem(220),
               }}
-              variant="body1"
+              fontSize={pxToRem(16)}
               color="white"
             >
               DAO Address
@@ -217,7 +199,7 @@ const ConfirmStep = () => {
 
             <CopyAddress
               textStyles={{
-                fontSize: pxToRem(14),
+                fontSize: pxToRem(16),
               }}
               address={data.daoAddr}
             />
