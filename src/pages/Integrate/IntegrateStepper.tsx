@@ -15,7 +15,7 @@ const steps: Step[] = [
     title: 'Import Contract',
     description: (
       <>
-        It all starts with your Genesis Contract. Add the address of your DAO, verify you’re <br /> part of it - and start giving it the
+        It all starts with your Genesis Contract. Add the address <br /> of your DAO, verify you’re part of it - and start giving it the
         superpowers it deserves ✨
       </>
     ),
@@ -25,7 +25,7 @@ const steps: Step[] = [
     title: 'Community Details',
     description: (
       <>
-        Time to customize your Community. Add some details, its name, its logo, its story. <br /> Tell your community members why it exists,
+        Time to customize your Community. Add some details, <br /> its name, its logo, its story. Tell your community members why it exists,
         and why it matters.
       </>
     ),
@@ -35,8 +35,8 @@ const steps: Step[] = [
     title: 'Select Market',
     description: (
       <>
-        Markets can be as niche-y as you need them to be. These are our 3 default Markets, <br /> choose the one that best represents your
-        Community - and partner with other <br /> DAOs in the same field!
+        Markets can be as niche-y as you need them to be. These are our 3 default Markets, choose the one that best represents your
+        Community - and partner with other DAOs in the same field!
       </>
     ),
   },
@@ -45,9 +45,8 @@ const steps: Step[] = [
     title: 'Roles',
     description: (
       <>
-        These are Roles you envision in your community (i.e.: dev, curator, DAO operator, …) <br /> They always come in sets of 3 to keep
-        balance between members. <br /> Use Roles to create new Guilds, Projects, operational groups - let your Members & <br /> DAO grow
-        with you 🙌
+        These are Roles you envision in your community (i.e.: dev, curator, DAO operator, …) They always come in sets of 3 to keep balance
+        between members. Use Roles to create new Guilds, Projects, operational groups - let your Members & DAO grow with you 🙌
       </>
     ),
   },
@@ -56,9 +55,9 @@ const steps: Step[] = [
     title: 'Commitment',
     description: (
       <>
-        The minimum level of Commitment you expect from Members joining your <br /> Community. You can see Commitment as the amount of
-        “time/dedication” that <br /> Members pledge to your DAO. Based on their Commitment, they will receive more <br /> or less tasks -
-        and grow or lose their Reputation.
+        The minimum level of Commitment you expect from Members joining your Community. You can see Commitment as the amount of
+        “time/dedication” that Members pledge to your DAO. Based on their Commitment, they will receive more or less tasks - and grow or
+        lose their Reputation.
       </>
     ),
   },

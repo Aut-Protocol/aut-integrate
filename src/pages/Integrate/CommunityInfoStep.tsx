@@ -55,6 +55,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
           style={{
             display: 'flex',
             alignItems: 'flex-end',
+            marginBottom: pxToRem(80),
           }}
         >
           <Controller
@@ -128,7 +129,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
                 multiline
                 rows={5}
                 sx={{
-                  mt: pxToRem(45),
+                  mb: pxToRem(80),
                 }}
                 placeholder="Introduce your community to the world. It can be a one-liner, common values, goals, or even the story behind it!"
                 helperText={

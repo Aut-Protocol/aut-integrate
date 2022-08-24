@@ -1,10 +1,10 @@
 import { Box, styled, Typography } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
 import { pxToRem } from '@utils/text-size';
-import { useHistory } from 'react-router-dom';
-import { AutButton } from '@components/buttons';
+import { Link, useHistory } from 'react-router-dom';
+import { AutGradientButton } from '@components/buttons';
 import { useAppDispatch } from '@store/store.model';
-import { SelectedNetworkConfig, setProviderIsOpen } from '@store/WalletProvider/WalletProvider';
+import { SelectedNetworkConfig } from '@store/WalletProvider/WalletProvider';
 import { useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -24,10 +24,14 @@ const GetStarted = () => {
   const networkConfig = useSelector(SelectedNetworkConfig);
   const history = useHistory();
 
+  // useEffect(() => {
+  //   dispatch(setProviderIsOpen(false));
+  // }, []);
+
   useEffect(() => {
-    if (isActive && networkConfig) {
-      history.push('/integrate');
-    }
+    // if (isActive && networkConfig) {
+    //   history.push('/integrate');
+    // }
   }, [isActive, networkConfig]);
 
   return (
@@ -40,38 +44,42 @@ const GetStarted = () => {
       >
         <AutLogo height={pxToRem(300)} />
       </Box>
-      <Box>
+      <Box
+        sx={{
+          maxWidth: pxToRem(750),
+        }}
+      >
         <Typography
           component="div"
+          variant="h1"
           sx={{
             color: 'white',
             mt: pxToRem(50),
-            mb: pxToRem(30),
+            mb: pxToRem(10),
             textAlign: 'left',
             fontWeight: 'bold',
-            fontSize: pxToRem(20),
           }}
         >
           Do more with your DAO.
         </Typography>
         <Typography
           component="div"
+          variant="emphasis"
           sx={{
             color: 'white',
             mb: pxToRem(20),
             textAlign: 'left',
-            fontSize: pxToRem(20),
           }}
         >
           Āut is an expandable Community protocol, powering the next level of collective coordination 🤝🫂
         </Typography>
         <Typography
           component="div"
+          variant="body1"
           sx={{
             color: 'white',
             mb: pxToRem(20),
             textAlign: 'left',
-            fontSize: pxToRem(20),
           }}
         >
           By integrating it, you can expand your DAO contract - adding the concepts of Members Roles & <br /> Interactions directly
@@ -79,29 +87,29 @@ const GetStarted = () => {
         </Typography>
         <Typography
           component="div"
+          variant="body1"
           sx={{
             color: 'white',
             mb: pxToRem(20),
             textAlign: 'left',
-            fontSize: pxToRem(20),
           }}
         >
           Assign Roles to your Community - and kick off role-based working routines and role-weighted governance <br /> in seconds.
         </Typography>
         <Typography
           component="div"
+          variant="body1"
           sx={{
             color: 'white',
             mb: pxToRem(50),
             textAlign: 'left',
-            fontSize: pxToRem(20),
           }}
         >
           There is no community like yours - create your own Standards. Opt Āut.
         </Typography>
       </Box>
       <Box sx={{ gridGap: '30px', display: 'flex', justifyContent: 'center' }} className="right-box">
-        <AutButton
+        {/* <AutButton
           sx={{
             width: pxToRem(450),
             height: pxToRem(90),
@@ -112,21 +120,20 @@ const GetStarted = () => {
           onClick={() => dispatch(setProviderIsOpen(true))}
         >
           Integrate
-        </AutButton>
-        {/* <AutButton
+        </AutButton> */}
+        <AutGradientButton
           sx={{
-            width: pxToRem(450),
-            height: pxToRem(90),
+            width: pxToRem(335),
+            height: pxToRem(85),
           }}
           component={Link}
-          disabled
           to="/integrate"
           type="submit"
           color="primary"
           variant="outlined"
         >
-          Dashboard
-        </AutButton> */}
+          Integrate
+        </AutGradientButton>
       </Box>
     </Wrapper>
   );
