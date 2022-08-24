@@ -314,7 +314,7 @@ const StyledSelectField = styled((props: SelectProps & { width: string }) => {
 const SelectWrapper = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  marginBottom: pxToRem(45),
+  marginBottom: pxToRem(80),
   position: 'relative',
   '.auto-helper-info, .auto-helper-error': {
     bottom: '-18px',

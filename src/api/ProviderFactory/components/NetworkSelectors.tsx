@@ -1,5 +1,5 @@
 import { environment } from '@api/environment';
-import { AutButton } from '@components/buttons';
+import { AutGradientButton } from '@components/buttons';
 import { pxToRem } from '@utils/text-size';
 
 export const NetworkSelectors = ({ onSelect }) => {
@@ -9,14 +9,14 @@ export const NetworkSelectors = ({ onSelect }) => {
         const label = environment.networkNames.split(',')[index];
         const foundChainId = Number(environment.chainIds.split(',')[index]);
         return (
-          <AutButton
+          <AutGradientButton
             key={`key-${index}`}
             onClick={() => {
               onSelect(foundChainId, networkName.trim());
             }}
             sx={{
-              width: pxToRem(310),
-              height: pxToRem(55),
+              width: pxToRem(330),
+              height: pxToRem(80),
               marginBottom: pxToRem(30),
               fontSize: pxToRem(16),
               textTransform: 'inherit',
@@ -30,7 +30,7 @@ export const NetworkSelectors = ({ onSelect }) => {
             variant="outlined"
           >
             Switch to {label}
-          </AutButton>
+          </AutGradientButton>
         );
       })}
     </>

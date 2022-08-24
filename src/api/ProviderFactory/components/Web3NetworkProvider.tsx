@@ -1,5 +1,6 @@
 import { useAppDispatch } from '@store/store.model';
 import {
+  NetworkIsEagerConnect,
   NetworkSelectorIsOpen,
   SelectedNetworkConfig,
   SelectedWalletType,
@@ -22,11 +23,8 @@ import { EnableAndChangeNetwork } from '../web3.network';
 
 const Title = styled(Typography)({
   mt: pxToRem(25),
-  letterSpacing: '3px',
-  fontSize: pxToRem(20),
-  fontWeight: '500',
+  fontWeight: '900',
   color: 'white',
-  textTransform: 'uppercase',
 });
 
 const Subtitle = styled(Typography)({
@@ -35,7 +33,6 @@ const Subtitle = styled(Typography)({
   fontSize: pxToRem(16),
   textAlign: 'center',
   color: 'white',
-  textTransform: 'uppercase',
 });
 
 const DialogInnerContent = styled('div')({
@@ -49,10 +46,26 @@ const DialogInnerContent = styled('div')({
 const Web3NetworkProvider = ({ fullScreen = false }: any) => {
   const dispatch = useAppDispatch();
   const isOpen = useSelector(NetworkSelectorIsOpen);
+  const eagerConnect = useSelector(NetworkIsEagerConnect);
   const [lastChainId, setLastChainId] = useState<number>(null);
   const wallet = useSelector(SelectedWalletType);
   const networkConfig = useSelector(SelectedNetworkConfig);
-  const { connector, isActive, chainId, provider } = useWeb3React();
+  const [connector, setConnector] = useState(null);
+  const { isActive, chainId, provider } = useWeb3React();
+
+  console.log('connector: ', connector);
+
+  const switchNetwork = async (chainId: number, index: number) => {
+    // await connector.deactivate();
+    // debugger;
+    // const networkName = environment.networks.split(',')[index];
+    // await dispatch(setWallet(wallet || ConnectorTypes.Metamask));
+    // await connector.activate(chainId);
+    // const config = getNetworkVariables(networkName);
+    // await EnableAndChangeNetwork(connector.provider, config);
+    // await dispatch(setNetwork(networkName));
+    // setLastChainId(chainId);
+  };
 
   useEffect(() => {
     if (isActive && lastChainId && lastChainId === chainId) {
@@ -61,6 +74,36 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
     }
   }, [chainId, lastChainId, provider]);
 
+  // useEffect(() => {
+  //   if (isActive && lastChainId && lastChainId !== chainId) {
+  //     const index = environment.chainIds.split(',').indexOf(chainId?.toString());
+  //     switchNetwork(chainId, index);
+  //   }
+  // }, [chainId, lastChainId, provider]);
+
+  // useEffect(() => {
+  //   if (eagerConnect && connector && !isActive) {
+  //     (async () => {
+  //       await connector.connectEagerly();
+  //       dispatch(setEagerConnect(false));
+  //     })();
+  //   }
+  // }, [connector, isActive, eagerConnect]);
+
+  // useEffect(() => {
+  //   const index = environment.chainIds.split(',').indexOf(chainId?.toString());
+  //   if (index === -1 && chainId) {
+  //     dispatch(setProviderIsOpen(true));
+  //     dispatch(setNetwork(null));
+  //     setLastChainId(null);
+  //     dispatch(setWallet(null));
+  //     return;
+  //   }
+  //   if (!lastChainId && connector && chainId) {
+  //     switchNetwork(chainId, index);
+  //   }
+  // }, [connector, chainId, lastChainId]);
+
   return (
     <DialogWrapper open={isOpen} fullScreen={fullScreen}>
       <>
@@ -68,25 +111,25 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
 
         {networkConfig && lastChainId !== chainId ? (
           <>
-            <Title>Waiting for confirmation</Title>
+            <Title variant="emphasis">Waiting for confirmation</Title>
             <div style={{ position: 'relative', flex: 1 }}>
               <AutLoading />
             </div>
           </>
         ) : (
           <>
-            {!wallet && <Title>Connect your wallet</Title>}
+            {!wallet && <Title variant="emphasis">Connect your wallet</Title>}
             {wallet && (
               <>
-                <Title>You Must Change Networks</Title>
+                <Title variant="emphasis">You Must Change Networks</Title>
                 <Subtitle>We’ve detected that you need to switch your wallet’s network from goerli.</Subtitle>
               </>
             )}
             <DialogInnerContent>
               {!wallet && (
                 <>
-                  <ConnectorBtn connectorType={ConnectorTypes.Metamask} />
-                  <ConnectorBtn connectorType={ConnectorTypes.WalletConnect} />
+                  <ConnectorBtn setConnector={setConnector} connectorType={ConnectorTypes.Metamask} />
+                  <ConnectorBtn setConnector={setConnector} connectorType={ConnectorTypes.WalletConnect} />
                 </>
               )}
 
@@ -94,7 +137,7 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
                 <NetworkSelectors
                   onSelect={async (foundChainId: number, networkName: string) => {
                     setLastChainId(foundChainId);
-                    await connector.activate();
+                    await connector.activate(foundChainId);
                     const config = getNetworkVariables(networkName);
                     await EnableAndChangeNetwork(connector.provider, config);
                     dispatch(setNetwork(networkName));
