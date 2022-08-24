@@ -9,6 +9,7 @@ export interface WalletProviderState {
   selectedNetwork: string;
   networkConfig: NetworkConfig;
   isOpen: boolean;
+  eagerConnect: boolean;
 }
 
 const initialState: WalletProviderState = {
@@ -17,6 +18,7 @@ const initialState: WalletProviderState = {
   selectedNetwork: null,
   networkConfig: null,
   isOpen: false,
+  eagerConnect: false,
 };
 
 export const walletProviderSlice = createSlice({
@@ -31,6 +33,9 @@ export const walletProviderSlice = createSlice({
     },
     setProviderIsOpen(state, action) {
       state.isOpen = action.payload;
+    },
+    setEagerConnect(state, action) {
+      state.eagerConnect = action.payload;
     },
     setNetwork(state, action) {
       if (state.selectedWalletType) {
@@ -49,9 +54,10 @@ export const walletProviderSlice = createSlice({
   },
 });
 
-export const { setSigner, setWallet, setNetwork, setProviderIsOpen } = walletProviderSlice.actions;
+export const { setSigner, setWallet, setEagerConnect, setNetwork, setProviderIsOpen } = walletProviderSlice.actions;
 
 export const NetworkSelectorIsOpen = (state: any) => state.walletProvider.isOpen as boolean;
+export const NetworkIsEagerConnect = (state: any) => state.walletProvider.eagerConnect as boolean;
 export const SelectedWalletType = (state: any) => state.walletProvider.selectedWalletType as string;
 export const NetworkSigner = (state: any) => state.walletProvider.signer as ethers.providers.JsonRpcSigner;
 export const SelectedNetworkConfig = (state: any) => state.walletProvider.networkConfig as NetworkConfig;

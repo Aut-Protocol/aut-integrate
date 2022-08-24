@@ -9,7 +9,7 @@ import { FormHelperText } from './Fields';
 export function CommitmentMessage({ value, children = null }) {
   const message = CommitmentMessages(value);
   return (
-    <Typography color="white" whiteSpace="nowrap" align="left" component="span" fontSize="20px" sx={{ display: 'flex', mb: '4px' }}>
+    <Typography color="white" whiteSpace="nowrap" align="left" component="span" variant="h6" sx={{ display: 'flex', mb: '4px' }}>
       {message}
     </Typography>
   );
@@ -70,6 +70,7 @@ export const AutSlider = (props: AutSliderProps) => {
     <div
       style={{
         position: 'relative',
+        marginBottom: pxToRem(80),
       }}
     >
       <CommitmentMessage value={props.value} />
