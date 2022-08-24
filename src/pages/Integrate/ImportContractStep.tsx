@@ -109,7 +109,7 @@ const ImportContractStep = (props: StepperChildProps) => {
               onChange={onChange}
               placeholder="DAO Address"
               sx={{
-                mb: pxToRem(80),
+                mb: pxToRem(45),
               }}
               helperText={<FormHelperText errorTypes={errorTypes} value={value} name={name} errors={formState.errors} />}
             />

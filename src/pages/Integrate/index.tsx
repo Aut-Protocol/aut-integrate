@@ -38,7 +38,7 @@ const Integrate = () => {
 
   useEffect(() => {
     if (!isActive) {
-      // dispatch(setProviderIsOpen(true));
+      dispatch(setProviderIsOpen(true));
     }
   }, [isActive]);
 

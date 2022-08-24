@@ -119,7 +119,6 @@ const StepperNav = (props: StepperNavProps) => {
       {props.steps[props.currentStep - 1].description && (
         <Typography
           component="div"
-          variant="emphasis"
           sx={{
             display: 'flex',
             justifyContent: 'center',
@@ -128,6 +127,7 @@ const StepperNav = (props: StepperNavProps) => {
             mt: pxToRem(30),
             mb: pxToRem(80),
             maxWidth: '85%',
+            fontSize: pxToRem(16),
           }}
         >
           {props.steps[props.currentStep - 1].description}
