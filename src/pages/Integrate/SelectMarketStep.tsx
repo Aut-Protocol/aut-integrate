@@ -34,7 +34,7 @@ const AutCard = styled(Card)({
       // background: 'transparent linear-gradient(111deg, #009FE3 0%, #5A2583 52%, #3458A4 100%) 0% 0% no-repeat padding-box',
       background:
         'transparent linear-gradient(45.57deg, #009fe3 0%, #0399de 8%, #0e8bd3 19%, #2072bf 30%, #3a50a4 41%, #5a2583 53%, #453f94 71%, #38519f 88%, #3458a4 100%) 0% 0%',
-      borderWidth: '0',
+      // borderWidth: '0',
       borderColor: 'transparent',
     },
 
@@ -78,8 +78,8 @@ const SelectMarketStep = (props: StepperChildProps) => {
                 return (
                   <AutCard
                     sx={{
-                      height: pxToRem(325),
-                      width: pxToRem(305),
+                      height: pxToRem(370),
+                      width: pxToRem(350),
                       p: pxToRem(45),
                     }}
                     square
@@ -93,13 +93,12 @@ const SelectMarketStep = (props: StepperChildProps) => {
                         p: 0,
                         pb: 0,
                         flexDirection: 'column',
-                        justifyContent: 'space-between',
                       }}
                     >
-                      <Typography color="white" fontSize={pxToRem(30)} component="div">
+                      <Typography color="white" fontSize={pxToRem(30)} marginBottom={pxToRem(20)} component="div">
                         {title}
                       </Typography>
-                      <Typography textAlign="left" color="white" fontSize={pxToRem(14)} component="div">
+                      <Typography textAlign="left" color="white" fontSize={pxToRem(18)} component="div">
                         {description}
                       </Typography>
                     </CardContent>

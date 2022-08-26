@@ -9,7 +9,8 @@ import { integrateUpdateStatus, resetIntegrateState } from '@store/Integrate/int
 import { ResultState } from '@store/result-status';
 import { useAppDispatch } from '@store/store.model';
 import { useWeb3React } from '@web3-react/core';
-import { setProviderIsOpen } from '@store/WalletProvider/WalletProvider';
+import { SelectedNetworkConfig, setProviderIsOpen } from '@store/WalletProvider/WalletProvider';
+import { useSelector } from 'react-redux';
 import IntegrateSuccess from './IntegrateSuccess';
 import IntegrateStepper from './IntegrateStepper';
 
@@ -18,6 +19,7 @@ const Integrate = () => {
   const { isActive } = useWeb3React();
   const { path } = useRouteMatch();
   const history = useHistory();
+  const networkConfig = useSelector(SelectedNetworkConfig);
   const [instance, setInstance] = useState<StepWizardChildProps>();
   const goBack = () => {
     if (instance?.currentStep === 1) {
@@ -37,10 +39,10 @@ const Integrate = () => {
   }, []);
 
   useEffect(() => {
-    if (!isActive) {
+    if (!isActive && !networkConfig) {
       dispatch(setProviderIsOpen(true));
     }
-  }, [isActive]);
+  }, [isActive, networkConfig]);
 
   return (
     <>

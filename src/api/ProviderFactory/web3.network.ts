@@ -8,7 +8,7 @@ const nativeCurrency = {
 };
 
 export const EnableAndChangeNetwork = async (provider: any, config: NetworkConfig) => {
-  console.info('Changing Network', config);
+  // console.info('Changing Network', config);
   const params = [
     {
       chainId: toHex(config.network.chainId),

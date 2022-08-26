@@ -117,10 +117,10 @@ const ConfirmStep = () => {
               textAlign: 'left',
             }}
           >
-            <Typography lineHeight="1" fontSize={pxToRem(25)} color="white">
+            <Typography lineHeight="1" marginBottom={pxToRem(12)} fontSize={pxToRem(28)} color="white">
               {data.name}
             </Typography>
-            <Typography fontSize={pxToRem(16)} color="white">
+            <Typography fontSize={pxToRem(20)} color="white">
               {MarketTemplates[data.market - 1]?.title}
             </Typography>
             <Typography
@@ -128,7 +128,7 @@ const ConfirmStep = () => {
                 maxWidth: pxToRem(400),
                 mt: pxToRem(15),
               }}
-              fontSize={pxToRem(14)}
+              fontSize={pxToRem(18)}
               color="white"
             >
               {data.description}
@@ -150,12 +150,12 @@ const ConfirmStep = () => {
                 sx={{
                   width: pxToRem(220),
                 }}
-                fontSize={pxToRem(16)}
+                fontSize={pxToRem(20)}
                 color="white"
               >
                 Role Name
               </Typography>
-              <Typography fontSize={pxToRem(16)} color="white">
+              <Typography fontSize={pxToRem(20)} color="white">
                 {r.roleName}
               </Typography>
             </div>
@@ -171,12 +171,12 @@ const ConfirmStep = () => {
               sx={{
                 width: pxToRem(220),
               }}
-              fontSize={pxToRem(16)}
+              fontSize={pxToRem(20)}
               color="white"
             >
               Pledged Commitment
             </Typography>
-            <Typography fontSize={pxToRem(16)} color="white">
+            <Typography fontSize={pxToRem(20)} color="white">
               {data.commitment} ( {CommitmentMessages(data.commitment)} )
             </Typography>
           </div>
@@ -191,7 +191,7 @@ const ConfirmStep = () => {
               sx={{
                 width: pxToRem(220),
               }}
-              fontSize={pxToRem(16)}
+              fontSize={pxToRem(20)}
               color="white"
             >
               DAO Address
@@ -199,7 +199,7 @@ const ConfirmStep = () => {
 
             <CopyAddress
               textStyles={{
-                fontSize: pxToRem(16),
+                fontSize: pxToRem(20),
               }}
               address={data.daoAddr}
             />

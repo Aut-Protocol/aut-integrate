@@ -36,7 +36,7 @@ const getConnector = (type: ConnectorTypes) => {
   return wallets[type];
 };
 
-export default function ConnectorBtn({ connectorType }: { connectorType: ConnectorTypes }) {
+export default function ConnectorBtn({ connectorType, setConnector }: { connectorType: ConnectorTypes; setConnector: any }) {
   const dispatch = useAppDispatch();
   const [connector] = getConnector(connectorType);
 
@@ -50,6 +50,7 @@ export default function ConnectorBtn({ connectorType }: { connectorType: Connect
     <AutButton
       onClick={() => {
         connector.activate();
+        setConnector(connector);
         dispatch(setWallet(connectorType));
       }}
       sx={{
