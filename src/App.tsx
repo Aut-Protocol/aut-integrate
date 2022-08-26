@@ -16,7 +16,6 @@ function App() {
       <Box
         sx={{
           height: `100%`,
-          backgroundColor: '#000',
         }}
       >
         <Switch>

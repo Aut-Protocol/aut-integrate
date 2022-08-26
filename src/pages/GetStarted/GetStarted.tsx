@@ -38,7 +38,7 @@ const GetStarted = () => {
           justifyContent: 'center',
         }}
       >
-        <AutLogo height={pxToRem(300)} />
+        <AutLogo height={pxToRem(250)} />
       </Box>
       <Box>
         <Typography
@@ -49,7 +49,7 @@ const GetStarted = () => {
             mb: pxToRem(30),
             textAlign: 'left',
             fontWeight: 'bold',
-            fontSize: pxToRem(20),
+            fontSize: pxToRem(25),
           }}
         >
           Do more with your DAO.
@@ -60,7 +60,7 @@ const GetStarted = () => {
             color: 'white',
             mb: pxToRem(20),
             textAlign: 'left',
-            fontSize: pxToRem(20),
+            fontSize: pxToRem(25),
           }}
         >
           Āut is an expandable Community protocol, powering the next level of collective coordination 🤝🫂
@@ -71,7 +71,7 @@ const GetStarted = () => {
             color: 'white',
             mb: pxToRem(20),
             textAlign: 'left',
-            fontSize: pxToRem(20),
+            fontSize: pxToRem(25),
           }}
         >
           By integrating it, you can expand your DAO contract - adding the concepts of Members Roles & <br /> Interactions directly
@@ -83,7 +83,7 @@ const GetStarted = () => {
             color: 'white',
             mb: pxToRem(20),
             textAlign: 'left',
-            fontSize: pxToRem(20),
+            fontSize: pxToRem(25),
           }}
         >
           Assign Roles to your Community - and kick off role-based working routines and role-weighted governance <br /> in seconds.
@@ -94,7 +94,7 @@ const GetStarted = () => {
             color: 'white',
             mb: pxToRem(50),
             textAlign: 'left',
-            fontSize: pxToRem(20),
+            fontSize: pxToRem(25),
           }}
         >
           There is no community like yours - create your own Standards. Opt Āut.

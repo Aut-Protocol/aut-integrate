@@ -1,9 +1,9 @@
 body,
 html {
   margin: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Avenir', sans-serif;
   // overflow: hidden;
-  background-color: #000;
+  background-color: #141414;
   height: 100%;
 
   #root {
@@ -22,10 +22,6 @@ html {
     // font-size: 62.8%;
     // font-size: 85%;
   }
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .sw-btn-label {
