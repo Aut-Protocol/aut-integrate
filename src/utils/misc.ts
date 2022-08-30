@@ -12,6 +12,22 @@ export const ContractTypes = [
     label: 'Moloch V2',
     value: 3,
   },
+  {
+    label: 'Aragon',
+    value: 4,
+  },
+  {
+    label: 'DAOStack',
+    value: 5,
+  },
+  {
+    label: 'Compound',
+    value: 6,
+  },
+  {
+    label: 'Tribute',
+    value: 7,
+  },
 ];
 
 export const MarketTemplates = [
