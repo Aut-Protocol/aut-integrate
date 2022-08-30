@@ -4,7 +4,7 @@ import { pxToRem } from '@utils/text-size';
 
 const palette = {
   background: {
-    default: '#000000',
+    default: '#141414',
     paper: '#FFFFFF',
   },
   primary: {
