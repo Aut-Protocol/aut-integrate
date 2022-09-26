@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { ResultState } from '@store/result-status';
 import { DefaultRoles, Role } from '@api/community.model';
-import { createCommunity } from '@api/registry.api';
+import { createCommunity, isMemberOfDao } from '@api/registry.api';
 
 export interface IntegrateState {
   community: {
@@ -74,6 +74,17 @@ export const integrateSlice = createSlice({
       .addCase(createCommunity.rejected, (state, action) => {
         state.status = ResultState.Failed;
         state.errorMessage = action.payload as string;
+      })
+      .addCase(isMemberOfDao.pending, (state) => {
+        state.status = ResultState.Loading;
+      })
+      .addCase(isMemberOfDao.fulfilled, (state, action) => {
+        state.status = ResultState.Idle;
+        state.errorMessage = action.payload ? null : 'You are not a member of this DAO';
+      })
+      .addCase(isMemberOfDao.rejected, (state) => {
+        state.status = ResultState.Failed;
+        state.errorMessage = 'You are not a member of this DAO';
       });
   },
 });
