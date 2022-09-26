@@ -16,7 +16,7 @@ export const Web3ThunkProviderFactory = <SWContractFunctions = any, SWContractEv
 ) => {
   return <Returned, ThunkArg = any>(
     args: ThunkArgs<SWContractEventTypes>,
-    contractAddress: (thunkAPI: GetThunkAPI<AsyncThunkConfig>) => Promise<string>,
+    contractAddress: (thunkAPI: GetThunkAPI<AsyncThunkConfig>, args?: any) => Promise<string>,
     thunk: AsyncThunkPayloadCreator<SWContractFunctions, Returned, ThunkArg, AsyncThunkConfig>
   ): AsyncThunk<Returned, ThunkArg, AsyncThunkConfig> => {
     stateActions = {
@@ -27,7 +27,7 @@ export const Web3ThunkProviderFactory = <SWContractFunctions = any, SWContractEv
     // @ts-ignore
     return createAsyncThunk<Returned, ThunkArg, AsyncThunkConfig>(typeName, async (arg, thunkAPI) => {
       try {
-        const addressOrName = (await contractAddress(thunkAPI)) || (args as any)?.addressOrName;
+        const addressOrName = (await contractAddress(thunkAPI, arg)) || (args as any)?.addressOrName;
         if (!addressOrName) {
           throw new Error(`Could not find addressOrName for ${type}`);
         }
