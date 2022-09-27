@@ -1,12 +1,24 @@
+import { isMemberOfDao } from '@api/registry.api';
+import ErrorDialog from '@components/Dialog/ErrorPopup';
+import LoadingDialog from '@components/Dialog/LoadingPopup';
 import { AutSelectField, AutTextField, FormHelperText } from '@components/Fields';
 import { StepperButton } from '@components/Stepper';
 import { StepperChildProps } from '@components/Stepper/model';
 import { Link, MenuItem, styled } from '@mui/material';
-import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
+import {
+  IntegrateCommunity,
+  IntegrateErrorMessage,
+  IntegrateStatus,
+  integrateUpdateCommunity,
+  integrateUpdateStatus,
+} from '@store/Integrate/integrate';
+import { ResultState } from '@store/result-status';
 import { useAppDispatch } from '@store/store.model';
 import { ContractTypes } from '@utils/misc';
 import { pxToRem } from '@utils/text-size';
+import { useWeb3React } from '@web3-react/core';
 import { isAddress } from 'ethers/lib/utils';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -25,6 +37,9 @@ const StepWrapper = styled('form')({
 
 const ImportContractStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
+  const status = useSelector(IntegrateStatus);
+  const errorMessage = useSelector(IntegrateErrorMessage);
+  const { account } = useWeb3React();
   const { contractType, daoAddr } = useSelector(IntegrateCommunity);
   const { control, handleSubmit, getValues, formState } = useForm({
     mode: 'onChange',
@@ -34,17 +49,35 @@ const ImportContractStep = (props: StepperChildProps) => {
     },
   });
 
-  const updateState = () => {
+  const updateState = async () => {
     return dispatch(integrateUpdateCommunity(getValues()));
   };
 
   const onSubmit = async () => {
     await updateState();
-    props?.stepper?.nextStep();
+
+    const values = getValues();
+    const result = await dispatch(
+      isMemberOfDao({
+        daoType: values.contractType,
+        memberAddress: account,
+        daoAddr: values.daoAddr,
+      })
+    );
+
+    if (result.meta.requestStatus === 'fulfilled' && typeof result.payload === 'boolean' && result.payload) {
+      props?.stepper?.nextStep();
+    }
+  };
+
+  const handleDialogClose = () => {
+    dispatch(integrateUpdateStatus(ResultState.Idle));
   };
 
   return (
     <StepWrapper autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+      <ErrorDialog handleClose={handleDialogClose} open={status === ResultState.Failed} message={errorMessage} />
+      <LoadingDialog handleClose={handleDialogClose} open={status === ResultState.Loading} message="Verifying address" />
       <Controller
         name="contractType"
         control={control}

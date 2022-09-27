@@ -10,6 +10,7 @@ export interface SnackbarPayload {
 export interface NetworkConfig {
   autIdAddress: string;
   registryAddress: string;
+  daoTypeAddress: string;
   network: {
     name: string;
     rpcUrls: string[];
