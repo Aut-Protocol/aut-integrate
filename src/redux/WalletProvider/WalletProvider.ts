@@ -33,16 +33,11 @@ export const walletProviderSlice = createSlice({
       state.isOpen = action.payload;
     },
     setNetwork(state, action) {
-      if (state.selectedWalletType) {
-        state.selectedNetwork = action.payload as string;
-        if (!action.payload) {
-          state.networkConfig = null;
-        } else {
-          state.networkConfig = getNetworkVariables(action.payload);
-        }
-      } else {
+      state.selectedNetwork = action.payload as string;
+      if (!action.payload) {
         state.networkConfig = null;
-        state.selectedNetwork = null;
+      } else {
+        state.networkConfig = getNetworkVariables(action.payload);
       }
     },
     resetWalletProviderState: () => initialState,

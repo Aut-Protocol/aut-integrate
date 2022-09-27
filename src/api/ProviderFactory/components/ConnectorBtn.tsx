@@ -7,6 +7,7 @@ import { ReactComponent as WalletConnectLogo } from '@assets/aut/wallet-connect.
 import { ReactComponent as MetamaskLogo } from '@assets/aut/metamask.svg';
 import { Typography } from '@mui/material';
 import { AutButton } from '@components/buttons';
+import { environment } from '@api/environment';
 
 export enum ConnectorTypes {
   WalletConnect = 'walletConnect',
@@ -42,16 +43,16 @@ export default function ConnectorBtn({ connectorType, setConnector }: { connecto
 
   useEffect(() => {
     if (connector) {
-      // walletConnect.connectEagerly();
+      // connector.connectEagerly();
     }
   }, [connector]);
 
   return (
     <AutButton
-      onClick={() => {
-        connector.activate();
-        setConnector(connector);
+      onClick={async () => {
+        await connector.connectEagerly();
         dispatch(setWallet(connectorType));
+        setConnector(connector);
       }}
       sx={{
         width: pxToRem(260),
