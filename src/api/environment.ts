@@ -19,6 +19,7 @@ export const swEnvVariables = {
   blockExplorerUrls: 'REACT_APP_BLOCK_EXPLORER_URLS',
   registryAddresses: 'REACT_APP_DAO_REGISTRY_ADDRESSES',
   autIDAddresses: 'REACT_APP_AUT_ID_ADDRESSES',
+  daoTypesAddresses: 'REACT_APP_DAO_TYPES_ADDRESSES',
 
   // NFT storage
   nftStorageKey: 'REACT_APP_NFT_STORAGE_KEY',
@@ -30,6 +31,7 @@ export const environment: typeof swEnvVariables = envionmentGenerator(swEnvVaria
 export const getNetworkVariables = (name: string): NetworkConfig => {
   const index = environment.networks.split(',').findIndex((r) => r.trim().toLowerCase() === name.trim().toLowerCase());
   const autIdAddress = environment.autIDAddresses.split(',')[index];
+  const daoTypeAddress = environment.daoTypesAddresses.split(',')[index];
   const registryAddress = environment.registryAddresses.split(',')[index];
   const rpcUrls = environment.rpcUrls.split(',')[index].split('|');
   const blockExplorerUrls = environment.blockExplorerUrls.split(',')[index].split('|');
@@ -38,6 +40,7 @@ export const getNetworkVariables = (name: string): NetworkConfig => {
   return {
     autIdAddress,
     registryAddress,
+    daoTypeAddress,
     network: {
       name,
       rpcUrls,

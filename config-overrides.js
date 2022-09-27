@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
-const webpack = require('webpack');
 const { alias } = require('react-app-rewire-alias');
 
 module.exports = {
@@ -11,6 +10,8 @@ module.exports = {
       assert: false,
       buffer: require.resolve('buffer'),
     };
+
+    configuration.ignoreWarnings = [/Failed to parse source map/];
 
     const modifiedConfig = alias({
       '@assets': path.resolve(__dirname, './src/assets'),

@@ -156,8 +156,8 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
             {!wallet && <Title>Connect your wallet</Title>}
             {wallet && (
               <>
-                <Title>You Must Change Networks</Title>
-                <Subtitle>We’ve detected that you need to switch your wallet’s network from goerli.</Subtitle>
+                <Title>Change Network</Title>
+                <Subtitle>You will need to switch your wallet’s network.</Subtitle>
               </>
             )}
             <DialogInnerContent>
