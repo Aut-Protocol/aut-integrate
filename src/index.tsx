@@ -7,12 +7,30 @@ import Web3AutProvider from '@api/ProviderFactory/components/Web3Provider';
 import { swEnvVariables, environment } from '@api/environment';
 import { ensureVariablesExist } from 'sw-web-shared';
 import { Buffer } from 'buffer';
+import markerSDK from '@marker.io/browser';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
+import SentryRRWeb from '@sentry/rrweb';
 import { SwTheme } from './theme';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 
 // @ts-ignore
 window.Buffer = Buffer;
+
+markerSDK.loadWidget({
+  destination: `${process.env.MARKER}`,
+  reporter: {
+    email: 'frontend@aut.id',
+    fullName: 'Aut Integrate',
+  },
+});
+
+Sentry.init({
+  dsn: `https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/${process.env.SENTRY}`,
+  integrations: [new BrowserTracing(), new SentryRRWeb({})],
+  tracesSampleRate: 1.0,
+});
 
 ReactDOM.render(
   <StyledEngineProvider injectFirst>
