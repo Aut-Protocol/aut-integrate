@@ -8,6 +8,7 @@ import { SelectedNetworkConfig, setProviderIsOpen } from '@store/WalletProvider/
 import { useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useBiconomy } from '@api/ProviderFactory/web-biconimy';
 
 const Wrapper = styled('div')({
   textAlign: 'center',
@@ -23,12 +24,14 @@ const GetStarted = () => {
   const { isActive } = useWeb3React();
   const networkConfig = useSelector(SelectedNetworkConfig);
   const history = useHistory();
+  const biconomy = useBiconomy();
 
   useEffect(() => {
+    console.log(biconomy, 'biconomy');
     if (isActive && networkConfig) {
       history.push('/integrate');
     }
-  }, [isActive, networkConfig]);
+  }, [isActive, networkConfig, biconomy]);
 
   return (
     <Wrapper>
