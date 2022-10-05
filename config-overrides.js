@@ -2,14 +2,29 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
 const { alias } = require('react-app-rewire-alias');
+// const webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
   webpack: (configuration) => {
-    configuration.resolve.fallback = {
+    const fallback = configuration.resolve.fallback || {};
+    Object.assign(fallback, {
+      crypto: require.resolve('crypto-browserify'),
+      stream: require.resolve('stream-browserify'),
+      assert: require.resolve('assert'),
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
+      os: require.resolve('os-browserify'),
       url: require.resolve('url'),
-      assert: false,
-      buffer: require.resolve('buffer'),
-    };
+    });
+    configuration.resolve.fallback = fallback;
+
+    configuration.plugins = (configuration.plugins || []).concat([
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
+        Buffer: ['buffer', 'Buffer'],
+      }),
+    ]);
 
     configuration.ignoreWarnings = [/Failed to parse source map/];
 
