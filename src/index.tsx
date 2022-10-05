@@ -4,7 +4,7 @@ import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
 import store from '@store/store';
 import Web3AutProvider from '@api/ProviderFactory/components/Web3Provider';
-import { swEnvVariables, environment } from '@api/environment';
+import { swEnvVariables, environment, EnvMode } from '@api/environment';
 import { ensureVariablesExist } from 'sw-web-shared';
 import { Buffer } from 'buffer';
 import markerSDK from '@marker.io/browser';
@@ -19,7 +19,7 @@ import App from './App';
 window.Buffer = Buffer;
 
 markerSDK.loadWidget({
-  destination: `${process.env.MARKER}`,
+  destination: `${process.env.REACT_APP_MARKER}`,
   reporter: {
     email: 'frontend@aut.id',
     fullName: 'Aut Integrate',
@@ -27,7 +27,7 @@ markerSDK.loadWidget({
 });
 
 Sentry.init({
-  dsn: `https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/${process.env.SENTRY}`,
+  dsn: `https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/${process.env.REACT_APP_SENTRY}`,
   integrations: [new BrowserTracing(), new SentryRRWeb({})],
   tracesSampleRate: 1.0,
 });
