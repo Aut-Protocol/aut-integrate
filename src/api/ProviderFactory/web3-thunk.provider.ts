@@ -32,10 +32,11 @@ export const Web3ThunkProviderFactory = <SWContractFunctions = any, SWContractEv
           throw new Error(`Could not find addressOrName for ${type}`);
         }
         let state = thunkAPI.getState() as any;
-        const { networkConfig } = state.walletProvider;
+        const { networksConfig, selectedNetwork } = state.walletProvider;
         let { signer } = state.walletProvider;
+        const network = networksConfig.find((n) => n.network === selectedNetwork);
 
-        await EnableAndChangeNetwork(signer.provider.provider, networkConfig);
+        await EnableAndChangeNetwork(signer.provider.provider, network);
         // get state again in case network was changed silently
         state = thunkAPI.getState() as any;
         signer = state.walletProvider.signer;

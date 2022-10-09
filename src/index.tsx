@@ -37,9 +37,7 @@ ReactDOM.render(
     <ThemeProvider theme={SwTheme}>
       <Provider store={store}>
         <BrowserRouter>
-          <Web3AutProvider>
-            <App />
-          </Web3AutProvider>
+          <App />
         </BrowserRouter>
       </Provider>
     </ThemeProvider>

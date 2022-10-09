@@ -1,5 +1,7 @@
 import { useAppDispatch } from '@store/store.model';
 import {
+  ConnectorTypes,
+  NetworksConfig,
   NetworkSelectorIsOpen,
   SelectedNetworkConfig,
   SelectedWalletType,
@@ -15,9 +17,8 @@ import { styled, Typography } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
 import AutLoading from '@components/AutLoading';
 import DialogWrapper from '@components/Dialog/DialogWrapper';
-import { environment, getNetworkVariables } from '@api/environment';
 import type { Connector } from '@web3-react/types';
-import ConnectorBtn, { ConnectorTypes } from './ConnectorBtn';
+import ConnectorBtn from './ConnectorBtn';
 import { NetworkSelectors } from './NetworkSelectors';
 import { EnableAndChangeNetwork } from '../web3.network';
 
@@ -51,6 +52,7 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
   const dispatch = useAppDispatch();
   const isOpen = useSelector(NetworkSelectorIsOpen);
   const wallet = useSelector(SelectedWalletType);
+  const networks = useSelector(NetworksConfig);
   const networkConfig = useSelector(SelectedNetworkConfig);
   const { isActive, chainId, provider } = useWeb3React();
 
@@ -64,22 +66,25 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
     }
     setSwitchingNetwork(true);
     await c.deactivate();
-    const networkName = name || environment.networks.split(',')[index];
     await c.activate(chainId);
-    const config = getNetworkVariables(networkName);
-    await EnableAndChangeNetwork(c.provider, config);
-    await dispatch(setNetwork(networkName));
+    const config = networks.find((n) => n.chainId?.toString() === chainId?.toString());
+    try {
+      await EnableAndChangeNetwork(c.provider, config);
+      await dispatch(setNetwork(config.network));
+    } catch (error) {
+      // console.log(error);
+    }
     setSwitchingNetwork(false);
   };
 
   const changeConnector = async (c: Connector) => {
     // @ts-ignore
     const foundChainId = Number(c?.provider?.chainId);
-    const index = environment.chainIds.split(',').indexOf(foundChainId?.toString());
+    const index = networks.map((n) => n.chainId?.toString()).indexOf(foundChainId?.toString());
     const chainAllowed = index !== -1;
     if (chainAllowed) {
-      const networkName = environment.networks.split(',')[index];
-      dispatch(setNetwork(networkName));
+      const config = networks.find((n) => n.chainId?.toString() === foundChainId?.toString());
+      dispatch(setNetwork(config.network));
       setConnectEagerly(true);
     }
     setConnector(c);
@@ -89,21 +94,25 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
     const previousChainId = connectedEagerly ? chainId : provider?._network?.chainId;
 
     const currentChainId = chainId;
-    const index = environment.chainIds.split(',').indexOf(currentChainId?.toString());
+    const index = networks.map((n) => n.chainId?.toString()).indexOf(currentChainId?.toString());
+
     const chainAllowed = index !== -1;
     const hasNetworkConfig = !!networkConfig;
     const isSameNetwork = previousChainId === chainId;
+    const shouldSelectCorrectNetwork = !chainAllowed && !!chainId;
 
     if (switchingNetwork || !provider || !chainId || !isActive) {
       const shouldActivateConnector = !isActive && chainAllowed && previousChainId && chainId;
       if (shouldActivateConnector) {
         console.warn('Activating network...');
         connector.activate(chainId);
+      } else if (shouldSelectCorrectNetwork && !isOpen) {
+        console.warn('Opening popup...');
+        dispatch(setProviderIsOpen(true));
       }
       return;
     }
 
-    const shouldSelectCorrectNetwork = !chainAllowed && !!chainId;
     const shouldUpdateSigner = chainAllowed && isActive && isSameNetwork;
     const shouldSwitchNetwork = isActive && chainAllowed && hasNetworkConfig && previousChainId && currentChainId && !isSameNetwork;
 
@@ -170,6 +179,7 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
 
               {wallet && (
                 <NetworkSelectors
+                  networks={networks}
                   onSelect={async (foundChainId: number, networkName: string) => {
                     switchNetwork(connector, foundChainId, null, networkName);
                   }}

@@ -1,23 +1,12 @@
 import { useEffect } from 'react';
-import { walletConnectConnector, metaMaskConnector } from '@api/ProviderFactory/web3.connectors';
 import { useAppDispatch } from '@store/store.model';
 import { pxToRem } from '@utils/text-size';
-import { setWallet } from '@store/WalletProvider/WalletProvider';
+import { ConnectorTypes, NetworkConnector, setWallet } from '@store/WalletProvider/WalletProvider';
 import { ReactComponent as WalletConnectLogo } from '@assets/aut/wallet-connect.svg';
 import { ReactComponent as MetamaskLogo } from '@assets/aut/metamask.svg';
 import { Typography } from '@mui/material';
 import { AutButton } from '@components/buttons';
-import { environment } from '@api/environment';
-
-export enum ConnectorTypes {
-  WalletConnect = 'walletConnect',
-  Metamask = 'metamask',
-}
-
-const wallets = {
-  [ConnectorTypes.Metamask]: metaMaskConnector,
-  [ConnectorTypes.WalletConnect]: walletConnectConnector,
-};
+import { useSelector } from 'react-redux';
 
 const btnConfig = {
   [ConnectorTypes.Metamask]: {
@@ -30,16 +19,9 @@ const btnConfig = {
   },
 };
 
-// const [walletConnect, hooks] = walletConnectConnector;
-// const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider, useENSNames } = hooks;
-
-const getConnector = (type: ConnectorTypes) => {
-  return wallets[type];
-};
-
 export default function ConnectorBtn({ connectorType, setConnector }: { connectorType: ConnectorTypes; setConnector: any }) {
   const dispatch = useAppDispatch();
-  const [connector] = getConnector(connectorType);
+  const [connector] = useSelector(NetworkConnector(connectorType));
 
   useEffect(() => {
     if (connector) {

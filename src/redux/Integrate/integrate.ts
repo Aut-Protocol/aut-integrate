@@ -82,8 +82,9 @@ export const integrateSlice = createSlice({
         state.status = ResultState.Idle;
         state.errorMessage = action.payload ? null : 'You are not a member of this DAO';
       })
-      .addCase(isMemberOfDao.rejected, (state) => {
+      .addCase(isMemberOfDao.rejected, (state, action) => {
         state.status = ResultState.Failed;
+        console.log(action, 'action');
         state.errorMessage = 'You are not a member of this DAO';
       });
   },
