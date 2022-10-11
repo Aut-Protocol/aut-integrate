@@ -4,7 +4,7 @@ import { Button, Toolbar } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
 import { ReactComponent as BackIcon } from '@assets/aut/back.svg';
 import { pxToRem } from '@utils/text-size';
-import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import { integrateUpdateStatus, resetIntegrateState } from '@store/Integrate/integrate';
 import { ResultState } from '@store/result-status';
 import { useAppDispatch } from '@store/store.model';
@@ -19,13 +19,20 @@ const Integrate = () => {
   const { isActive } = useWeb3React();
   const { path } = useRouteMatch();
   const history = useHistory();
+  const location = useLocation();
   const networkConfig = useSelector(SelectedNetworkConfig);
   const [instance, setInstance] = useState<StepWizardChildProps>();
   const goBack = () => {
     if (instance?.currentStep === 1) {
-      history.push('/');
+      history.push({
+        pathname: `/`,
+        search: location.search,
+      });
     } else if (!instance || path.includes('success')) {
-      history.push('/integrate');
+      history.push({
+        pathname: '/integrate',
+        search: location.search,
+      });
     } else {
       instance?.previousStep();
     }

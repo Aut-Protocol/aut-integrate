@@ -1,11 +1,13 @@
 import { Box, Typography } from '@mui/material';
 import { RootState } from '@store/store.model';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { SwButton } from 'sw-web-shared';
 
 function NotFound() {
   const { previousRoute } = useSelector((state: RootState) => state.ui);
+  const { search } = useLocation();
+
   return (
     <Box
       sx={{
@@ -49,7 +51,7 @@ function NotFound() {
         type="button"
         mode="light"
         component={Link}
-        to={previousRoute}
+        to={previousRoute + search}
         label="Go back"
       />
     </Box>

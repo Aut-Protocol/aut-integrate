@@ -1,7 +1,7 @@
 import { Box, styled, Typography } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
 import { pxToRem } from '@utils/text-size';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { AutButton } from '@components/buttons';
 import { useAppDispatch } from '@store/store.model';
 import { SelectedNetworkConfig, setProviderIsOpen } from '@store/WalletProvider/WalletProvider';
@@ -23,10 +23,14 @@ const GetStarted = () => {
   const { isActive } = useWeb3React();
   const networkConfig = useSelector(SelectedNetworkConfig);
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     if (isActive && networkConfig) {
-      history.push('/integrate');
+      history.push({
+        pathname: '/integrate',
+        search: location.search,
+      });
     }
   }, [isActive, networkConfig]);
 
