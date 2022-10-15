@@ -107,8 +107,8 @@ const ImportContractStep = (props: StepperChildProps) => {
               onChange={onChange}
               helperText={
                 <FormHelperText value={value} name={name} errors={formState.errors}>
-                  <Link sx={{ color: 'white' }} target="_blank" href="https://distributedtown.gitbook.io/v2/integrations/add-new-dao-type">
-                    Want to add a new DAO type?
+                  <Link sx={{ color: 'white' }} target="_blank" href="https://hackersdao.aut.id/">
+                    Aren't you part of a DAO yet? Join one here
                   </Link>
                 </FormHelperText>
               }
@@ -150,7 +150,7 @@ const ImportContractStep = (props: StepperChildProps) => {
         }}
       />
 
-      <StepperButton disabled={!formState.isValid} label="Verify Ownership & Continue" />
+      <StepperButton disabled={!formState.isValid} label="Verify Membership" />
     </StepWrapper>
   );
 };

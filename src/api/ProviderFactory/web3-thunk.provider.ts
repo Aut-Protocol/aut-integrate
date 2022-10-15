@@ -1,6 +1,7 @@
 import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
 import { ParseSWErrorMessage } from '@utils/error-parser';
 import { updateTransactionState } from '@store/ui-reducer';
+import * as Sentry from '@sentry/browser';
 import { EnableAndChangeNetwork } from './web3.network';
 import { BaseThunkArgs, ThunkArgs, GetThunkAPI, AsyncThunkConfig, ProviderEvent, AsyncThunkPayloadCreator } from './web3.thunk.type';
 
@@ -52,6 +53,7 @@ export const Web3ThunkProviderFactory = <SWContractFunctions = any, SWContractEv
         });
         return await thunk(contractProvider, arg, thunkAPI);
       } catch (error) {
+        Sentry.captureException(error);
         const message = ParseSWErrorMessage(error);
         if (stateActions.updateErrorStateAction) {
           stateActions.updateErrorStateAction(message, thunkAPI.dispatch);
