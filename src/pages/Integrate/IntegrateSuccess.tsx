@@ -1,13 +1,10 @@
 /* eslint-disable max-len */
 import { StepperChildProps } from '@components/Stepper/model';
-import { Avatar, Box, Container, IconButton, Link, styled, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Container, styled, Typography } from '@mui/material';
 import { pxToRem } from '@utils/text-size';
 import { ReactComponent as CutLogo } from '@assets/aut/cut.svg';
 import { AutButton } from '@components/buttons';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useParams } from 'react-router-dom';
-import { trimAddress } from '@utils/helpers';
 import CopyAddress from '@components/CopyAddress';
 import { AutShareDialog } from '@components/Share';
 import { useSelector } from 'react-redux';
@@ -112,8 +109,8 @@ const IntegrateSuccess = (props: StepperChildProps) => {
       <Box sx={{ gridGap: '30px', display: 'flex', justifyContent: 'center' }} className="right-box">
         <AutButton
           sx={{
-            width: pxToRem(450),
-            height: pxToRem(90),
+            width: pxToRem(360),
+            height: pxToRem(70),
           }}
           type="button"
           color="primary"
@@ -124,8 +121,8 @@ const IntegrateSuccess = (props: StepperChildProps) => {
         </AutButton>
         <AutButton
           sx={{
-            width: pxToRem(450),
-            height: pxToRem(90),
+            width: pxToRem(360),
+            height: pxToRem(70),
           }}
           type="button"
           color="primary"
