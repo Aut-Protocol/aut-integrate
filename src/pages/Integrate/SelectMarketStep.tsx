@@ -74,6 +74,11 @@ const SelectMarketStep = (props: StepperChildProps) => {
               name="market"
               key={market}
               control={control}
+              rules={{
+                validate: {
+                  selected: (v) => !!v,
+                },
+              }}
               render={({ field: { value, onChange } }) => {
                 return (
                   <AutCard

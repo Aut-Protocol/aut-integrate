@@ -13,7 +13,7 @@ import { useAppDispatch } from '@store/store.model';
 import { MarketTemplates, CommitmentMessages } from '@utils/misc';
 import { pxToRem } from '@utils/text-size';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { base64toFile } from 'sw-web-shared';
 
 const StepWrapper = styled('div')({
@@ -30,6 +30,7 @@ const ConfirmStep = () => {
   const data = useSelector(IntegrateCommunity);
   const status = useSelector(IntegrateStatus);
   const errorMessage = useSelector(IntegrateErrorMessage);
+  const location = useLocation();
 
   const onSubmit = async () => {
     const state = { ...data };
@@ -59,7 +60,10 @@ const ConfirmStep = () => {
     );
 
     if (result.meta.requestStatus === 'fulfilled') {
-      history.push(`integrate/success/${result.payload}`);
+      history.push({
+        pathname: `integrate/success/${result.payload}`,
+        search: location.search,
+      });
     }
   };
 
@@ -125,6 +129,7 @@ const ConfirmStep = () => {
             </Typography>
             <Typography
               sx={{
+                wordBreak: 'break-word',
                 maxWidth: pxToRem(400),
                 mt: pxToRem(15),
               }}

@@ -54,16 +54,17 @@ export const MarketTemplates = [
 export const CommitmentMessages = (value: number) => {
   switch (+value) {
     case 1:
-      return `Just lurking 👀`;
     case 2:
+      return `Just lurking 👀`;
     case 3:
     case 4:
       return 'gm gm 😪';
     case 5:
     case 6:
+      return 'buidler ⚙️';
     case 7:
-      return 'Trusted seed 🌱';
     case 8:
+      return 'Trusted seed 🌱';
     case 9:
     case 10:
       return `Soulbound ⛓️`;

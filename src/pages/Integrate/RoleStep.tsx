@@ -57,13 +57,13 @@ const RoleStep = (props: StepperChildProps) => {
           key={`roles.${index}.roleName`}
           name={`roles.${index}.roleName`}
           control={control}
-          rules={{ min: 0, required: index !== 2 }}
+          rules={{ minLength: 1, required: true }}
           render={({ field: { name, value, onChange } }) => {
             return (
               <>
                 <AutTextField
                   placeholder="Role Name"
-                  required={index !== 2}
+                  required
                   variant="standard"
                   focused
                   id={name}
@@ -78,7 +78,7 @@ const RoleStep = (props: StepperChildProps) => {
                   inputProps={{ maxLength: 20 }}
                   helperText={
                     <FormHelperText errorTypes={errorTypes} value={value} name={name} errors={errors}>
-                      <span>{20 - (value?.length || 0)} of 20 characters left</span>
+                      <span>{20 - (value?.length || 0)}/20 characters left</span>
                     </FormHelperText>
                   }
                 />
