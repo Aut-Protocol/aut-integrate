@@ -14,6 +14,7 @@ import { toBase64 } from 'sw-web-shared';
 
 const errorTypes = {
   maxWords: `Words cannot be more than 3`,
+  maxNameChars: `Characters cannot be more than 24`,
   maxLength: `Characters cannot be more than 280`,
 };
 
@@ -88,6 +89,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
             rules={{
               required: true,
               validate: {
+                maxNameChars: (v) => v.length <= 24,
                 maxWords: (v: string) => countWords(v) <= 3,
               },
             }}
@@ -104,7 +106,9 @@ const CommunityInfoStep = (props: StepperChildProps) => {
                   placeholder="Community Name"
                   helperText={
                     <FormHelperText errorTypes={errorTypes} value={value} name={name} errors={formState.errors}>
-                      <span>{3 - countWords(value)} Words left</span>
+                      <span>
+                        {3 - countWords(value)}/3 words and {24 - (value?.length || 0)}/24 characters left
+                      </span>
                     </FormHelperText>
                   }
                 />
@@ -133,7 +137,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
                 placeholder="Introduce your community to the world. It can be a one-liner, common values, goals, or even the story behind it!"
                 helperText={
                   <FormHelperText errorTypes={errorTypes} value={value} name={name} errors={formState.errors}>
-                    <span>Max characters {280 - (value?.length || 0)}</span>
+                    <span>{280 - (value?.length || 0)}/280 characters left</span>
                   </FormHelperText>
                 }
               />

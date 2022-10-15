@@ -28,7 +28,7 @@ const Integrate = () => {
         pathname: `/`,
         search: location.search,
       });
-    } else if (!instance || path.includes('success')) {
+    } else if (!instance) {
       history.push({
         pathname: '/integrate',
         search: location.search,
@@ -62,20 +62,22 @@ const Integrate = () => {
           justifyContent: 'center',
         }}
       >
-        <Button
-          sx={{
-            color: 'white',
-            position: 'absolute',
-            left: pxToRem(140),
-            top: pxToRem(40),
-          }}
-          type="button"
-          onClick={goBack}
-          startIcon={<BackIcon style={{ height: pxToRem(34), width: pxToRem(28) }} />}
-          variant="text"
-        >
-          Back
-        </Button>
+        {!history.location.pathname.includes('success') && (
+          <Button
+            sx={{
+              color: 'white',
+              position: 'absolute',
+              left: pxToRem(140),
+              top: pxToRem(40),
+            }}
+            type="button"
+            onClick={goBack}
+            startIcon={<BackIcon style={{ height: pxToRem(34), width: pxToRem(28) }} />}
+            variant="text"
+          >
+            Back
+          </Button>
+        )}
         <AutLogo width="80" height="80" />
       </Toolbar>
       <Switch>

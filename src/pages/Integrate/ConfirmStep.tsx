@@ -129,6 +129,7 @@ const ConfirmStep = () => {
             </Typography>
             <Typography
               sx={{
+                wordBreak: 'break-word',
                 maxWidth: pxToRem(400),
                 mt: pxToRem(15),
               }}
