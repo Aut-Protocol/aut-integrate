@@ -36,7 +36,7 @@
     "@hookform/error-message": "^2.0.0",
     "@lottiefiles/lottie-player": "^1.5.7",
     "@lottiefiles/react-lottie-player": "^3.4.7",
-    "@marker.io/browser": "^0.12.0",
+    "@marker.io/browser": "^0.13.0",
     "@mui/icons-material": "~5.2.1",
     "@mui/lab": "^5.0.0-alpha.76",
     "@mui/material": "~5.2.3",
