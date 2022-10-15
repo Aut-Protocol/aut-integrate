@@ -6,15 +6,3 @@ export interface SnackbarPayload {
   severity?: AlertColor;
   duration?: number;
 }
-
-export interface NetworkConfig {
-  autIdAddress: string;
-  registryAddress: string;
-  daoTypeAddress: string;
-  network: {
-    name: string;
-    rpcUrls: string[];
-    chainId: number;
-    blockExplorerUrls: string[];
-  };
-}

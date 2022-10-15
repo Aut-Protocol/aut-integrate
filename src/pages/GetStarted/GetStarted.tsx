@@ -123,8 +123,8 @@ const GetStarted = () => {
       <Box sx={{ gridGap: '30px', display: 'flex', justifyContent: 'center' }} className="right-box">
         <AutButton
           sx={{
-            width: pxToRem(450),
-            height: pxToRem(90),
+            width: pxToRem(360),
+            height: pxToRem(70),
           }}
           type="submit"
           color="primary"
