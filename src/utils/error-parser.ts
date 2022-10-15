@@ -98,6 +98,10 @@ export const ParseSWErrorMessage = (error: any) => {
     return error;
   }
 
+  if (error?.message) {
+    return error?.message?.toString();
+  }
+
   if (isJson(error)) {
     error = JSON.parse(JSON.stringify(error));
   }
@@ -112,17 +116,13 @@ export const ParseSWErrorMessage = (error: any) => {
     return error?.reason?.toString();
   }
 
-  if (error instanceof TypeError || error instanceof Error) {
-    error = error.message?.toString();
-  }
-
   if (error?.data?.message) {
     error = error?.data?.message?.toString();
   }
 
   if (typeof error !== 'string') {
     console.error(error);
-    throw new Error('SW smart contract error message is not a string!');
+    return 'Internal JSON-RPC error.';
   }
 
   const [mainMsg, fullSwMsg] = error.split('execution reverted:');

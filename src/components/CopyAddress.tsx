@@ -1,9 +1,9 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { trimAddress } from '@utils/helpers';
-import { Tooltip, Typography, IconButton, Snackbar, Button } from '@mui/material';
+import { Tooltip, Typography, IconButton, Snackbar } from '@mui/material';
 import { pxToRem } from '@utils/text-size';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 
 export const CopyAddress = ({ address, textStyles = {}, iconStyles = {} }) => {
@@ -22,23 +22,18 @@ export const CopyAddress = ({ address, textStyles = {}, iconStyles = {} }) => {
       <Snackbar
         sx={{
           '.MuiPaper-root': {
-            // background: '#009FE3',
+            background: '#000',
             color: 'white',
-            borderRadius: '4px',
+            borderRadius: '4.8px',
+            borderWidth: '1px',
             overflow: 'hidden',
             fontSize: pxToRem(18),
             paddingY: 0,
             textalign: 'center',
-            alignItems: '',
+            alignItems: 'center',
             display: 'flex',
             justifyContent: 'center',
-            minWidth: '200px',
-            backgroundColor: 'transparent',
-            borderImage:
-              // eslint-disable-next-line max-len
-              'linear-gradient(45.57deg, #009fe3 0%, #0399de 8%, #0e8bd3 19%, #2072bf 30%, #3a50a4 41%, #5a2583 53%, #453f94 71%, #38519f 88%, #3458a4 100%) 1',
-            borderWidth: '3px',
-            borderColor: 'transparent',
+            minWidth: '120px',
           },
         }}
         open={open}
@@ -46,7 +41,7 @@ export const CopyAddress = ({ address, textStyles = {}, iconStyles = {} }) => {
         action={action}
         onClose={() => setOpen(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        message="Copied to clipboard"
+        message="Copied ✅"
       />
       <CopyToClipboard text={address} onCopy={() => setOpen(true)}>
         <div style={{ color: 'white' }}>
