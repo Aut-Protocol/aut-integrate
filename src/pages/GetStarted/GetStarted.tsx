@@ -1,12 +1,12 @@
 import { Box, styled, Typography } from '@mui/material';
 import { ReactComponent as AutLogo } from '@assets/aut/logo.svg';
 import { pxToRem } from '@utils/text-size';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { AutButton } from '@components/buttons';
 import { useAppDispatch } from '@store/store.model';
 import { SelectedNetworkConfig, setProviderIsOpen } from '@store/WalletProvider/WalletProvider';
 import { useWeb3React } from '@web3-react/core';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useBiconomy } from '@api/ProviderFactory/web-biconimy';
 
@@ -21,17 +21,35 @@ const Wrapper = styled('div')({
 
 const GetStarted = () => {
   const dispatch = useAppDispatch();
+  const [connectInitiated, setConnectInitiated] = useState(false);
   const { isActive } = useWeb3React();
   const networkConfig = useSelector(SelectedNetworkConfig);
   const history = useHistory();
-  const biconomy = useBiconomy();
+  const location = useLocation();
 
   useEffect(() => {
-    console.log(biconomy, 'biconomy');
-    if (isActive && networkConfig) {
-      history.push('/integrate');
+    if (!connectInitiated) {
+      return;
     }
-  }, [isActive, networkConfig, biconomy]);
+    if (isActive && networkConfig) {
+      history.push({
+        pathname: '/integrate',
+        search: location.search,
+      });
+    }
+  }, [isActive, networkConfig]);
+
+  const goToIntegrate = () => {
+    setConnectInitiated(true);
+    if (!isActive || !networkConfig) {
+      dispatch(setProviderIsOpen(true));
+    } else {
+      history.push({
+        pathname: '/integrate',
+        search: location.search,
+      });
+    }
+  };
 
   return (
     <Wrapper>
@@ -106,15 +124,15 @@ const GetStarted = () => {
       <Box sx={{ gridGap: '30px', display: 'flex', justifyContent: 'center' }} className="right-box">
         <AutButton
           sx={{
-            width: pxToRem(450),
-            height: pxToRem(90),
+            width: pxToRem(360),
+            height: pxToRem(70),
           }}
           type="submit"
           color="primary"
           variant="outlined"
-          onClick={() => dispatch(setProviderIsOpen(true))}
+          onClick={() => goToIntegrate()}
         >
-          Integrate
+          Expand
         </AutButton>
         {/* <AutButton
           sx={{

@@ -6,27 +6,40 @@ const { alias } = require('react-app-rewire-alias');
 const webpack = require('webpack');
 
 module.exports = {
-  webpack: (configuration) => {
-    const fallback = configuration.resolve.fallback || {};
-    Object.assign(fallback, {
-      crypto: require.resolve('crypto-browserify'),
-      stream: require.resolve('stream-browserify'),
-      assert: require.resolve('assert'),
-      http: require.resolve('stream-http'),
-      https: require.resolve('https-browserify'),
-      os: require.resolve('os-browserify'),
-      url: require.resolve('url'),
-    });
-    configuration.resolve.fallback = fallback;
+  webpack: (config) => {
+    // const fallback = config.resolve.fallback || {};
+    // Object.assign(fallback, {
+    //   crypto: require.resolve('crypto-browserify'),
+    //   stream: require.resolve('stream-browserify'),
+    //   assert: require.resolve('assert'),
+    //   http: require.resolve('stream-http'),
+    //   https: require.resolve('https-browserify'),
+    //   os: require.resolve('os-browserify'),
+    //   url: require.resolve('url'),
+    //   zlib: require.resolve('browserify-zlib'),
+    //   path: require.resolve('path-browserify'),
+    //   fs: false,
+    //   net: false,
+    //   tls: false,
+    //   bufferutil: false,
+    //   'utf-8-validate': false,
+    // });
 
-    configuration.plugins = (configuration.plugins || []).concat([
+    // config.ignoreWarnings = [/Failed to parse source map/];
+    // config.resolve.fallback = fallback;
+    config.plugins = (config.plugins || []).concat([
       new webpack.ProvidePlugin({
         process: 'process/browser',
         Buffer: ['buffer', 'Buffer'],
       }),
     ]);
 
-    configuration.ignoreWarnings = [/Failed to parse source map/];
+    // config.module.rules.unshift({
+    //   test: /\.m?js$/,
+    //   resolve: {
+    //     fullySpecified: false, // disable the behavior
+    //   },
+    // });
 
     const modifiedConfig = alias({
       '@assets': path.resolve(__dirname, './src/assets'),
@@ -35,14 +48,8 @@ module.exports = {
       '@utils': path.resolve(__dirname, './src/utils'),
       '@store': path.resolve(__dirname, './src/redux'),
       '@components': path.resolve(__dirname, './src/components'),
-      react: path.resolve('./node_modules/react'),
-      'react-dom': path.resolve('./node_modules/react-dom'),
-      '@mui/material': path.resolve('./node_modules/@mui/material'),
-      '@mui/icons-material': path.resolve('./node_modules/@mui/icons-material'),
-      '@emotion/react': path.resolve('./node_modules/@emotion/react'),
-      '@emotion/styled': path.resolve('./node_modules/@emotion/styled'),
-      'react-router-dom': path.resolve('./node_modules/react-router-dom'),
-    })(configuration);
+    })(config);
+
     return modifiedConfig;
   },
 };

@@ -4,7 +4,7 @@ import { pxToRem } from '@utils/text-size';
 
 export const AutButton = styled<ButtonProps<any, any>>(Button)(({ theme }) => ({
   '&.MuiButton-root': {
-    border: `${pxToRem(5)} solid ${theme.palette.primary.main}`,
+    border: `3px solid ${theme.palette.primary.main}`,
     borderRadius: '50px',
     textDecoration: 'uppercase',
     color: 'white',

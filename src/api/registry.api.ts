@@ -4,8 +4,8 @@ import {
   Web3DaoTypesProvider,
   Web3MembershipCheckerProvider,
 } from '@aut-protocol/abi-types';
-import { NetworkConfig } from '@store/model';
 import { Community } from './community.model';
+import { NetworkConfig } from './ProviderFactory/network.config';
 import { Web3ThunkProviderFactory } from './ProviderFactory/web3-thunk.provider';
 import { ipfsCIDToHttpUrl, storeAsBlob, storeImageAsBlob } from './storage.api';
 
@@ -23,8 +23,9 @@ export const isMemberOfDao = membershipCheckerThunkProvider(
   },
   async (thunkAPI, { daoType }) => {
     const state = thunkAPI.getState() as any;
-    const config: NetworkConfig = state.walletProvider.networkConfig;
-    const daoTypesContract = await Web3DaoTypesProvider(config.daoTypeAddress);
+    const { selectedNetwork, networksConfig } = state.walletProvider;
+    const config: NetworkConfig = networksConfig.find((n) => n.network === selectedNetwork);
+    const daoTypesContract = await Web3DaoTypesProvider(config.contracts.daoTypesAddress);
     return daoTypesContract.getMembershipCheckerAddress(daoType);
   },
   async (contract, requestBody: { memberAddress: string; daoAddr: string; daoType: number }) => {
@@ -42,8 +43,9 @@ export const createCommunity = communityRegistryThunkProvider(
   },
   (thunkAPI) => {
     const state = thunkAPI.getState() as any;
-    const config: NetworkConfig = state.walletProvider.networkConfig;
-    return Promise.resolve(config.registryAddress);
+    const { selectedNetwork, networksConfig } = state.walletProvider;
+    const config: NetworkConfig = networksConfig.find((n) => n.network === selectedNetwork);
+    return Promise.resolve(config.contracts.daoExpanderRegistryAddress);
   },
   async (contract, requestBody: { metadata: Community; contractType: number; daoAddr: string }) => {
     const { metadata, contractType, daoAddr } = requestBody;

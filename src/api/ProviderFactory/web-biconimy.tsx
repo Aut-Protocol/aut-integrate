@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import Biconomy from '@biconomy/mexa';
+import { Biconomy } from '@biconomy/mexa';
 import { useWeb3React } from '@web3-react/core';
 import { ethers } from 'ethers';
 import { setSigner } from '@store/WalletProvider/WalletProvider';
@@ -32,7 +32,6 @@ const BiconomyProvider = (props) => {
       jsonRpcUrl: 'https://goerli.infura.io/v3/',
       strictMode: true,
       debug: true,
-      dappId: '1661764208373',
       contractAddresses: ['0xa9d390c4E576A1a73F5171E80aE58651cFF8eab2', '0x4957f46a74A1c6C9e761c46298A9975A3CD6b1B8'],
     });
   }, [connector?.provider]);

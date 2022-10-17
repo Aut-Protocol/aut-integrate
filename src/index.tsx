@@ -3,14 +3,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
 import store from '@store/store';
-import Web3AutProvider from '@api/ProviderFactory/components/Web3Provider';
 import { swEnvVariables, environment } from '@api/environment';
-import { ensureVariablesExist } from 'sw-web-shared';
-import { Buffer } from 'buffer';
-// import * as Sentry from '@sentry/react';
-// import { BrowserTracing } from '@sentry/tracing';
-// import SentryRRWeb from '@sentry/rrweb';
-import { BiconomyProvider } from '@api/ProviderFactory/web-biconimy';
+import markerSDK from '@marker.io/browser';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
+import SentryRRWeb from '@sentry/rrweb';
+import { createRoot } from 'react-dom/client';
+import { ensureVariablesExist } from '@utils/env';
 import { SwTheme } from './theme';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
@@ -21,29 +20,37 @@ import App from './App';
 // window.Buffer = require('buffer/').Buffer;
 
 // @ts-ignore
-window.Buffer = Buffer;
+// window.Buffer = Buffer;
 
-// Sentry.init({
-//   dsn: 'https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/4503899050278912',
-//   integrations: [new BrowserTracing(), new SentryRRWeb()],
-//   tracesSampleRate: 1.0,
-// });
+markerSDK.loadWidget({
+  destination: `${process.env.REACT_APP_MARKER}`,
+  reporter: {
+    email: 'frontend@aut.id',
+    fullName: 'Aut Integrate',
+  },
+});
 
-ReactDOM.render(
+Sentry.init({
+  dsn: `https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/${process.env.REACT_APP_SENTRY}`,
+  integrations: [new BrowserTracing(), new SentryRRWeb({})],
+  tracesSampleRate: 1.0,
+});
+
+const container = document.getElementById('app');
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container!);
+
+root.render(
   <StyledEngineProvider injectFirst>
     <ThemeProvider theme={SwTheme}>
       <Provider store={store}>
         <BrowserRouter>
-          <Web3AutProvider>
-            <BiconomyProvider>
-              <App />
-            </BiconomyProvider>
-          </Web3AutProvider>
+          {/* <App /> */}
+          <div>Test</div>
         </BrowserRouter>
       </Provider>
     </ThemeProvider>
-  </StyledEngineProvider>,
-  document.getElementById('root')
+  </StyledEngineProvider>
 );
 
 ensureVariablesExist(environment, swEnvVariables);
