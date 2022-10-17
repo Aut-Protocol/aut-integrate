@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material';
 import { pxToRem } from '@utils/text-size';
-import { SwButton } from 'sw-web-shared';
 import { AutButton } from '../buttons';
 import DialogWrapper from './DialogWrapper';
 
@@ -48,7 +47,7 @@ const ErrorDialog = ({ mode = 'light', open, hasRetry = false, handleClose, subt
         >
           {subtitle}
         </Typography>
-        {hasRetry && <SwButton type="button" btnType="medium" mode={mode} onClick={() => handleClose('retry')} label="Retry" />}
+        {hasRetry && <AutButton type="button" btnType="medium" mode={mode} onClick={() => handleClose('retry')} label="Retry" />}
       </div>
     </DialogWrapper>
   );
