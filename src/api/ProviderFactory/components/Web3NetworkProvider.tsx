@@ -5,6 +5,7 @@ import {
   NetworkSelectorIsOpen,
   SelectedNetworkConfig,
   SelectedWalletType,
+  setBiconomySigner,
   setNetwork,
   setProviderIsOpen,
   setSigner,
@@ -21,6 +22,9 @@ import type { Connector } from '@web3-react/types';
 import ConnectorBtn from './ConnectorBtn';
 import { NetworkSelectors } from './NetworkSelectors';
 import { EnableAndChangeNetwork } from '../web3.network';
+import { Biconomy } from '@biconomy/mexa';
+import { ExternalProvider } from '@ethersproject/providers';
+import { ethers } from 'ethers';
 
 const Title = styled(Typography)({
   mt: pxToRem(25),
@@ -60,7 +64,21 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
   const [switchingNetwork, setSwitchingNetwork] = useState(false);
   const [connectedEagerly, setConnectEagerly] = useState(false);
 
-  const switchNetwork = async (c: Connector, chainId: number, index: number, name: string = null) => {
+  const initializeBiconomy = async (provider: ExternalProvider) => {
+    try {
+      const biconomy = new Biconomy(window.ethereum, {
+        apiKey: '13d36UjLv.3aa76216-6ad5-411b-8ba6-d5438fce9e67',
+        strictMode: true,
+        contractAddresses: networks.map((n) => n.contracts.daoExpanderRegistryAddress),
+      });
+      await biconomy.init();
+      return new ethers.providers.Web3Provider(await biconomy.provider).getSigner();
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const switchNetwork = async (c: Connector, chainId: number) => {
     if (!c) {
       return;
     }
@@ -134,13 +152,16 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
 
     if (shouldUpdateSigner) {
       console.warn('Updating signer...');
-      dispatch(setProviderIsOpen(false));
       dispatch(setSigner(provider.getSigner()));
+      dispatch(setProviderIsOpen(false));
+      (async () => {
+        await dispatch(setBiconomySigner(await initializeBiconomy(connector.provider)));
+      })();
     }
 
     if (shouldSwitchNetwork) {
       console.warn('Switching network...');
-      switchNetwork(connector, chainId, index);
+      switchNetwork(connector, chainId);
     }
 
     if (connectedEagerly) {
@@ -180,8 +201,8 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
               {wallet && (
                 <NetworkSelectors
                   networks={networks}
-                  onSelect={async (foundChainId: number, networkName: string) => {
-                    switchNetwork(connector, foundChainId, null, networkName);
+                  onSelect={async (foundChainId: number) => {
+                    switchNetwork(connector, foundChainId);
                   }}
                 />
               )}

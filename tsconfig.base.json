@@ -1,28 +1,14 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@assets/*": [
-                "src/assets/*"
-            ],
-            "@store/*": [
-                "src/redux/*"
-            ],
-            "@utils/*": [
-                "src/utils/*"
-            ],
-            "@auth/*": [
-                "src/auth/*"
-            ],
-            "@components/*": [
-                "src/components/*"
-            ],
-            "@hooks/*": [
-                "src/hooks/*"
-            ],
-            "@api/*": [
-                "src/api/*"
-            ]
-        }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@assets/*": ["src/assets/*"],
+      "@store/*": ["src/redux/*"],
+      "@utils/*": ["src/utils/*"],
+      "@auth/*": ["src/auth/*"],
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@api/*": ["src/api/*"]
     }
+  }
 }

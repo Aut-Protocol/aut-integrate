@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint react/prop-types: 0 */
 
 import { pxToRem } from '@utils/text-size';

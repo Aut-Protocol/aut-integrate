@@ -25,6 +25,7 @@ export const isMemberOfDao = membershipCheckerThunkProvider(
     const state = thunkAPI.getState() as any;
     const { selectedNetwork, networksConfig } = state.walletProvider;
     const config: NetworkConfig = networksConfig.find((n) => n.network === selectedNetwork);
+
     const daoTypesContract = await Web3DaoTypesProvider(config.contracts.daoTypesAddress);
     return daoTypesContract.getMembershipCheckerAddress(daoType);
   },
@@ -40,6 +41,7 @@ export const createCommunity = communityRegistryThunkProvider(
   {
     type: 'integrate/create/community',
     event: DAOExpanderRegistryContractEventType.DAOExpanderDeployed,
+    enableBiconomy: true,
   },
   (thunkAPI) => {
     const state = thunkAPI.getState() as any;
@@ -47,8 +49,8 @@ export const createCommunity = communityRegistryThunkProvider(
     const config: NetworkConfig = networksConfig.find((n) => n.network === selectedNetwork);
     return Promise.resolve(config.contracts.daoExpanderRegistryAddress);
   },
-  async (contract, requestBody: { metadata: Community; contractType: number; daoAddr: string }) => {
-    const { metadata, contractType, daoAddr } = requestBody;
+  async (contract, requestBody: { metadata: Community; contractType: number; daoAddr: string; account: string }) => {
+    const { metadata, contractType, daoAddr, account } = requestBody;
     console.log('Metadata -> ', metadata);
     console.log('ContractType -> ', contractType);
     console.log('DaoAddr -> ', daoAddr);
@@ -57,13 +59,26 @@ export const createCommunity = communityRegistryThunkProvider(
     }
     const cid = await storeAsBlob(metadata);
     console.log('Metadata url -> ', ipfsCIDToHttpUrl(cid));
-    const response = await contract.deployDAOExpander(
-      contractType,
-      daoAddr,
-      metadata.properties.market as number,
-      cid,
-      metadata.properties.commitment
-    );
-    return response[0];
+    try {
+      const { data } = await contract.contract.populateTransaction.deployDAOExpander(
+        contractType,
+        daoAddr,
+        metadata.properties.market as number,
+        cid,
+        metadata.properties.commitment
+      );
+      let txParams = {
+        data: data,
+        to: contract.contract.address,
+        // from: account,
+        from: window.ethereum.selectedAddress,
+        signatureType: 'EIP712_SIGN',
+      };
+      const txHash = await ((contract.contract.provider as any).provider as any).send('eth_sendTransaction', [txParams]);
+      debugger;
+      return txHash.transactionId;
+    } catch (error) {
+      console.log(error, 'error');
+    }
   }
 );

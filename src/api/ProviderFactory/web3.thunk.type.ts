@@ -14,10 +14,12 @@ export interface BaseThunkArgs<FunctionsTypes, EventType> {
 export interface ProviderEvent<EventType> {
   type?: string;
   event: EventType;
+  enableBiconomy?: boolean;
 }
 
 export interface ProviderThunkType {
   type: string;
+  enableBiconomy?: boolean;
 }
 
 export type ThunkArgs<EventType> = ProviderEvent<EventType> | ProviderThunkType;

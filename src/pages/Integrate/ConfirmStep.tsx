@@ -13,6 +13,7 @@ import { useAppDispatch } from '@store/store.model';
 import { MarketTemplates, CommitmentMessages } from '@utils/misc';
 import { pxToRem } from '@utils/text-size';
 import { base64toFile } from '@utils/to-base-64';
+import { useWeb3React } from '@web3-react/core';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -31,6 +32,7 @@ const ConfirmStep = () => {
   const status = useSelector(IntegrateStatus);
   const errorMessage = useSelector(IntegrateErrorMessage);
   const location = useLocation();
+  const { account } = useWeb3React();
 
   const onSubmit = async () => {
     const state = { ...data };
@@ -41,6 +43,7 @@ const ConfirmStep = () => {
       createCommunity({
         contractType: state.contractType,
         daoAddr: state.daoAddr,
+        account,
         metadata: new Community({
           name: state.name,
           image: state.image,
