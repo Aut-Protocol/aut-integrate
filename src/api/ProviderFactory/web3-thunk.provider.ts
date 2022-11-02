@@ -34,13 +34,22 @@ export const Web3ThunkProviderFactory = <SWContractFunctions = any, SWContractEv
         }
         let state = thunkAPI.getState() as any;
         const { networksConfig, selectedNetwork } = state.walletProvider;
-        let { signer } = state.walletProvider;
+        let { signer, biconomySigner } = state.walletProvider;
+
+        let selectedSigner = null;
         const network = networksConfig.find((n) => n.network === selectedNetwork);
 
-        await EnableAndChangeNetwork(signer.provider.provider, network);
-        // get state again in case network was changed silently
-        state = thunkAPI.getState() as any;
-        signer = state.walletProvider.signer;
+        if (args?.enableBiconomy) {
+          selectedSigner = biconomySigner;
+          console.log('biconomy', selectedSigner);
+        } else {
+          selectedSigner = signer;
+        }
+
+        // await EnableAndChangeNetwork(signer.provider.provider, network);
+        // // get state again in case network was changed silently
+        // state = thunkAPI.getState() as any;
+        // signer = state.walletProvider.signer;
 
         const contractProvider = await stateActions.provider(addressOrName, {
           event: (args as ProviderEvent<SWContractEventTypes>).event,

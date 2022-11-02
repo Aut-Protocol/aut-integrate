@@ -14,30 +14,21 @@ import { SwTheme } from './theme';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 
-// console.log(Buffer, 'Buffer');
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// window.Buffer = require('buffer/').Buffer;
+// markerSDK.loadWidget({
+//   destination: `${process.env.REACT_APP_MARKER}`,
+//   reporter: {
+//     email: 'frontend@aut.id',
+//     fullName: 'Aut Integrate',
+//   },
+// });
 
-// @ts-ignore
-// window.Buffer = Buffer;
+// Sentry.init({
+//   dsn: `https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/${process.env.REACT_APP_SENTRY}`,
+//   integrations: [new BrowserTracing(), new SentryRRWeb({})],
+//   tracesSampleRate: 1.0,
+// });
 
-markerSDK.loadWidget({
-  destination: `${process.env.REACT_APP_MARKER}`,
-  reporter: {
-    email: 'frontend@aut.id',
-    fullName: 'Aut Integrate',
-  },
-});
-
-Sentry.init({
-  dsn: `https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/${process.env.REACT_APP_SENTRY}`,
-  integrations: [new BrowserTracing(), new SentryRRWeb({})],
-  tracesSampleRate: 1.0,
-});
-
-const container = document.getElementById('app');
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const container = document.getElementById('root');
 const root = createRoot(container!);
 
 root.render(
@@ -45,8 +36,7 @@ root.render(
     <ThemeProvider theme={SwTheme}>
       <Provider store={store}>
         <BrowserRouter>
-          {/* <App /> */}
-          <div>Test</div>
+          <App />
         </BrowserRouter>
       </Provider>
     </ThemeProvider>
