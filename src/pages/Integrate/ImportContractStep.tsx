@@ -60,7 +60,6 @@ const ImportContractStep = (props: StepperChildProps) => {
     const result = await dispatch(
       isMemberOfDao({
         daoType: values.contractType,
-        memberAddress: account,
         daoAddr: values.daoAddr,
       })
     );

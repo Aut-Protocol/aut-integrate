@@ -5,7 +5,6 @@ import { Web3ReactHooks } from '@web3-react/core';
 import { MetaMask } from '@web3-react/metamask';
 import { WalletConnect } from '@web3-react/walletconnect';
 import { ethers } from 'ethers';
-import { ExternalProvider } from '@ethersproject/providers';
 
 export enum ConnectorTypes {
   WalletConnect = 'walletConnect',
@@ -20,7 +19,6 @@ export interface WalletProviderState {
   isOpen: boolean;
   connectors: [MetaMask | WalletConnect, Web3ReactHooks][];
   wallets: any;
-  biconomySigner: ethers.providers.JsonRpcSigner;
 }
 
 const initialState: WalletProviderState = {
@@ -31,7 +29,6 @@ const initialState: WalletProviderState = {
   networksConfig: [],
   connectors: [],
   wallets: {},
-  biconomySigner: null,
 };
 
 export const walletProviderSlice = createSlice({
@@ -49,9 +46,6 @@ export const walletProviderSlice = createSlice({
     },
     setNetwork(state, action) {
       state.selectedNetwork = action.payload as string;
-    },
-    setBiconomySigner(state, action) {
-      state.biconomySigner = action.payload;
     },
     setNetworks(state, action) {
       state.networksConfig = action.payload;
@@ -73,7 +67,7 @@ export const walletProviderSlice = createSlice({
   },
 });
 
-export const { setSigner, setWallet, setNetwork, setNetworks, setProviderIsOpen, setBiconomySigner } = walletProviderSlice.actions;
+export const { setSigner, setWallet, setNetwork, setNetworks, setProviderIsOpen } = walletProviderSlice.actions;
 
 export const NetworkSelectorIsOpen = (state: any) => state.walletProvider.isOpen as boolean;
 export const SelectedWalletType = (state: any) => state.walletProvider.selectedWalletType as string;
