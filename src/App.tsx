@@ -2,11 +2,12 @@ import { withRouter, Switch, Route } from 'react-router-dom';
 import { Box, CssBaseline } from '@mui/material';
 import Web3NetworkProvider from '@api/ProviderFactory/components/Web3NetworkProvider';
 import NotFound from '@components/NotFound';
+import { environment } from '@api/environment';
+import AutSDK from '@aut-protocol/sdk';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '@store/store.model';
 import { setNetworks } from '@store/WalletProvider/WalletProvider';
 import Web3AutProvider from '@api/ProviderFactory/components/Web3Provider';
-import { BiconomyProvider } from '@api/ProviderFactory/web-biconimy';
 import AutLoading from '@components/AutLoading';
 import SWSnackbar from './components/snackbar';
 import GetStarted from './pages/GetStarted/GetStarted';
@@ -20,7 +21,12 @@ function App() {
 
   useEffect(() => {
     getAppConfig()
-      .then(async (res) => dispatch(setNetworks(res)))
+      .then(async (res) => {
+        dispatch(setNetworks(res));
+        const sdk = new AutSDK({
+          nftStorageApiKey: environment.nftStorageKey,
+        });
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -30,22 +36,20 @@ function App() {
         <AutLoading />
       ) : (
         <Web3AutProvider>
-          <BiconomyProvider>
-            <Web3NetworkProvider />
-            <CssBaseline />
-            <SWSnackbar />
-            <Box
-              sx={{
-                height: `100%`,
-              }}
-            >
-              <Switch>
-                <Route exact component={GetStarted} path="/" />
-                <Route path="/integrate" component={Integrate} />
-                <Route component={NotFound} />
-              </Switch>
-            </Box>
-          </BiconomyProvider>
+          <Web3NetworkProvider />
+          <CssBaseline />
+          <SWSnackbar />
+          <Box
+            sx={{
+              height: `100%`,
+            }}
+          >
+            <Switch>
+              <Route exact component={GetStarted} path="/" />
+              <Route path="/integrate" component={Integrate} />
+              <Route component={NotFound} />
+            </Switch>
+          </Box>
         </Web3AutProvider>
       )}
     </>

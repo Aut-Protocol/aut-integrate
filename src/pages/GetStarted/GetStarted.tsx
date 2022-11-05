@@ -8,7 +8,6 @@ import { SelectedNetworkConfig, setProviderIsOpen } from '@store/WalletProvider/
 import { useWeb3React } from '@web3-react/core';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useBiconomy } from '@api/ProviderFactory/web-biconimy';
 
 const Wrapper = styled('div')({
   textAlign: 'center',

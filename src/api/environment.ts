@@ -12,6 +12,7 @@ export const swEnvVariables = {
 
   // Networks
   networkEnv: 'REACT_APP_NETWORK_ENV',
+  biconomyApiKey: 'REACT_APP_BICONOMY_API_KEY',
 
   // NFT storage
   nftStorageKey: 'REACT_APP_NFT_STORAGE_KEY',

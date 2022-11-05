@@ -6,7 +6,7 @@ import { createCommunity, isMemberOfDao } from '@api/registry.api';
 export interface IntegrateState {
   community: {
     name: string;
-    image: string | File;
+    image: string;
     description: string;
     market: number;
     roles: Role[];
@@ -42,7 +42,7 @@ const initialState: IntegrateState = {
     ],
     commitment: 5,
     contractType: 1,
-    daoAddr: '0x09e930B4FEB47cA86236c8961B8B1e23e514ec3F',
+    daoAddr: '0x8eA20de15Db87Be1a8B20Da5ebD785a4a9BE9690',
   },
   status: ResultState.Idle,
   errorMessage: null,

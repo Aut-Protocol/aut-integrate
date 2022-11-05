@@ -1,9 +1,9 @@
-export class BaseNFTModel<Properties> implements Omit<any, 'image'> {
+export class BaseNFTModel<Properties> {
   name: string;
 
   description: string;
 
-  image: File | string;
+  image: string;
 
   properties: Properties;
 
