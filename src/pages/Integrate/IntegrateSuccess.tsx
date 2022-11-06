@@ -1,22 +1,22 @@
 /* eslint-disable max-len */
-import { StepperChildProps } from '@components/Stepper/model';
-import { Avatar, Box, Container, styled, Typography } from '@mui/material';
-import { pxToRem } from '@utils/text-size';
-import { ReactComponent as CutLogo } from '@assets/aut/cut.svg';
-import { AutButton } from '@components/buttons';
-import { useParams } from 'react-router-dom';
-import CopyAddress from '@components/CopyAddress';
-import { AutShareDialog } from '@components/Share';
-import { useSelector } from 'react-redux';
-import { IntegrateCommunity } from '@store/Integrate/integrate';
-import { useState } from 'react';
+import { StepperChildProps } from "@components/Stepper/model";
+import { Avatar, Box, Container, styled, Typography } from "@mui/material";
+import { pxToRem } from "@utils/text-size";
+import { ReactComponent as CutLogo } from "@assets/aut/cut.svg";
+import { AutButton } from "@components/buttons";
+import { useParams } from "react-router-dom";
+import CopyAddress from "@components/CopyAddress";
+import { AutShareDialog } from "@components/Share";
+import { useSelector } from "react-redux";
+import { IntegrateCommunity } from "@store/Integrate/integrate";
+import { useState } from "react";
 
 const StepWrapper = styled(Container)({
-  textAlign: 'center',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
+  textAlign: "center",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column"
 });
 
 const IntegrateSuccess = (props: StepperChildProps) => {
@@ -25,7 +25,15 @@ const IntegrateSuccess = (props: StepperChildProps) => {
   const params = useParams<{ address: string }>();
   const shareMessage = `Hey there! We've just deployed ${community?.name} on Aut - choose your Role in our Community, and let's build something great together!`;
   return (
-    <StepWrapper maxWidth="lg" sx={{ width: '100%', flexGrow: 1, boxSizing: 'border-box', position: 'relative' }}>
+    <StepWrapper
+      maxWidth="lg"
+      sx={{
+        width: "100%",
+        flexGrow: 1,
+        boxSizing: "border-box",
+        position: "relative"
+      }}
+    >
       <AutShareDialog
         open={open}
         onClose={() => setOpen(false)}
@@ -33,8 +41,13 @@ const IntegrateSuccess = (props: StepperChildProps) => {
         title="Celebrate the new era of your DAO 🎉"
         description={
           <>
-            <Typography marginBottom={pxToRem(15)} fontSize={pxToRem(18)} color="white">
-              {community?.name} 2.0 is now live on @opt_aut - with on-chain Roles & Interactions for all our Members 🙌 <br />
+            <Typography
+              marginBottom={pxToRem(15)}
+              fontSize={pxToRem(18)}
+              color="white"
+            >
+              {community?.name} 2.0 is now live on @opt_aut - with on-chain
+              Roles & Interactions for all our Members 🙌 <br />
             </Typography>
 
             {/* <Typography marginBottom={pxToRem(15)} fontSize={pxToRem(18)} color="white">
@@ -44,55 +57,78 @@ const IntegrateSuccess = (props: StepperChildProps) => {
               </Link>
             </Typography> */}
 
-            <Typography marginBottom={pxToRem(15)} fontSize={pxToRem(18)} color="white">
+            <Typography
+              marginBottom={pxToRem(15)}
+              fontSize={pxToRem(18)}
+              color="white"
+            >
               Let’s coordinate, change things - break things. Together 🫂
             </Typography>
           </>
         }
         twitterProps={{
           title: shareMessage,
-          hashtags: ['Aut', 'DAO', 'Blockchain'],
+          hashtags: ["Aut", "DAO", "Blockchain"]
         }}
         hideCloseBtn
         rightSide={
           <Avatar
             sx={{
               height: pxToRem(165),
-              width: pxToRem(165),
+              width: pxToRem(165)
             }}
             variant="square"
             src={community?.image as string}
           />
         }
       />
-      <Typography letterSpacing="8px" textTransform="uppercase" marginTop={pxToRem(50)} fontSize={pxToRem(50)} color="white">
+      <Typography
+        letterSpacing="8px"
+        textTransform="uppercase"
+        marginTop={pxToRem(50)}
+        fontSize={pxToRem(50)}
+        color="white"
+      >
         You’ve now expanded your Community 🎉
       </Typography>
       <CutLogo />
 
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginTop: pxToRem(100),
+          display: "flex",
+          alignItems: "center",
+          marginTop: pxToRem(100)
         }}
       >
-        <Typography letterSpacing="1.25px" maxWidth="80%" marginRight={pxToRem(100)} fontSize={pxToRem(25)} color="white">
-          Your expanded DAO Contract {'—> '}
+        <Typography
+          letterSpacing="1.25px"
+          maxWidth="80%"
+          marginRight={pxToRem(100)}
+          fontSize={pxToRem(25)}
+          color="white"
+        >
+          Your expanded DAO Contract {"—> "}
         </Typography>
 
         <CopyAddress
           textStyles={{
-            fontSize: pxToRem(25),
+            fontSize: pxToRem(25)
           }}
           iconStyles={{
-            width: pxToRem(50),
+            width: pxToRem(50)
           }}
           address={params.address}
         />
       </div>
-      <Typography letterSpacing="1.25px" maxWidth="80%" marginTop={pxToRem(40)} fontSize={pxToRem(20)} color="white">
-        This contract already knows about the Roles and Interactions of your Community Members.
+      <Typography
+        letterSpacing="1.25px"
+        maxWidth="80%"
+        marginTop={pxToRem(40)}
+        fontSize={pxToRem(20)}
+        color="white"
+      >
+        This contract already knows about the Roles and Interactions of your
+        Community Members.
       </Typography>
 
       <Typography
@@ -103,14 +139,17 @@ const IntegrateSuccess = (props: StepperChildProps) => {
         fontSize={pxToRem(20)}
         color="white"
       >
-        Today begins the 2nd life of your DAO. <br /> Tweet to let everybody know about it, or just head over to your Dashboard & get things
-        started!
+        Today begins the 2nd life of your DAO. <br /> Tweet to let everybody
+        know about it, or just head over to your Dashboard & get things started!
       </Typography>
-      <Box sx={{ gridGap: '30px', display: 'flex', justifyContent: 'center' }} className="right-box">
+      <Box
+        sx={{ gridGap: "30px", display: "flex", justifyContent: "center" }}
+        className="right-box"
+      >
         <AutButton
           sx={{
             width: pxToRem(360),
-            height: pxToRem(70),
+            height: pxToRem(70)
           }}
           type="button"
           color="primary"
@@ -122,7 +161,7 @@ const IntegrateSuccess = (props: StepperChildProps) => {
         <AutButton
           sx={{
             width: pxToRem(360),
-            height: pxToRem(70),
+            height: pxToRem(70)
           }}
           type="button"
           color="primary"
