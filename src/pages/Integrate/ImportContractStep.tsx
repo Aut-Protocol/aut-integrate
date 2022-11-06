@@ -91,7 +91,7 @@ const ImportContractStep = (props: StepperChildProps) => {
       <LoadingDialog
         handleClose={handleDialogClose}
         open={status === ResultState.Loading}
-        message="Verifying address"
+        message=""
       />
       <Controller
         name="contractType"

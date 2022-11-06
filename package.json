@@ -30,7 +30,7 @@
     ]
   },
   "dependencies": {
-    "@aut-protocol/sdk": "latest",
+    "@aut-protocol/sdk": "0.0.73-beta-04",
     "@aut-protocol/sdk-biconomy": "latest",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",

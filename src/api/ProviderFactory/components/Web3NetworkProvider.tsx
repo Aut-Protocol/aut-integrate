@@ -24,7 +24,6 @@ import { NetworkSelectors } from "./NetworkSelectors";
 import { EnableAndChangeNetwork } from "../web3.network";
 import { SDKBiconomyWrapper } from "@aut-protocol/sdk-biconomy";
 import { ethers } from "ethers";
-import { environment } from "@api/environment";
 
 const Title = styled(Typography)({
   mt: pxToRem(25),
@@ -102,14 +101,13 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
 
   const initialiseSDK = async (signer: ethers.providers.JsonRpcSigner) => {
     const sdk = AutSDK.getInstance();
-    const biconomy = new SDKBiconomyWrapper({
-      enableDebugMode: true,
-      apiKey: networkConfig.biconomyApiKey || environment.biconomyApiKey,
-      contractAddresses: [
-        networkConfig.contracts.autIDAddress,
-        networkConfig.contracts.daoExpanderRegistryAddress
-      ]
-    });
+    const biconomy =
+      networkConfig.biconomyApiKey &&
+      new SDKBiconomyWrapper({
+        enableDebugMode: true,
+        apiKey: networkConfig.biconomyApiKey,
+        contractAddresses: [networkConfig.contracts.daoExpanderRegistryAddress]
+      });
     await sdk.init(
       signer,
       {

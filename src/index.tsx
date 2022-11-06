@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
@@ -14,22 +13,22 @@ import { SwTheme } from "./theme";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 
-// markerSDK.loadWidget({
-//   destination: `${process.env.REACT_APP_MARKER}`,
-//   reporter: {
-//     email: 'frontend@aut.id',
-//     fullName: 'Aut Integrate',
-//   },
-// });
+markerSDK.loadWidget({
+  destination: `${process.env.REACT_APP_MARKER}`,
+  reporter: {
+    email: "frontend@aut.id",
+    fullName: "Aut Integrate"
+  }
+});
 
-// Sentry.init({
-//   dsn: `https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/${process.env.REACT_APP_SENTRY}`,
-//   integrations: [new BrowserTracing(), new SentryRRWeb({})],
-//   tracesSampleRate: 1.0,
-// });
+Sentry.init({
+  dsn: `https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/${process.env.REACT_APP_SENTRY}`,
+  integrations: [new BrowserTracing(), new SentryRRWeb({})],
+  tracesSampleRate: 1.0
+});
 
 const container = document.getElementById("root");
-const root = createRoot(container!);
+const root = createRoot(container);
 
 root.render(
   <StyledEngineProvider injectFirst>
