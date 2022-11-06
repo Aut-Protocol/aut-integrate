@@ -1,4 +1,4 @@
-import { BaseNFTModel } from './api.model';
+import { BaseNFTModel } from "./api.model";
 
 export interface Role {
   roleName: string;
@@ -37,14 +37,14 @@ export class Community extends BaseNFTModel<CommunityProperties> {
 export const DefaultRoles: Role[] = [
   {
     id: 4,
-    roleName: 'Core Team',
+    roleName: "Core Team"
   },
   {
     id: 5,
-    roleName: 'Advisor',
+    roleName: "Advisor"
   },
   {
     id: 6,
-    roleName: 'Investor',
-  },
+    roleName: "Investor"
+  }
 ];

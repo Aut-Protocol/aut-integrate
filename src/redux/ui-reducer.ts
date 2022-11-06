@@ -1,19 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   snackbar: {
     open: false,
-    message: '',
-    severity: 'success',
-    duration: 2000,
+    message: "",
+    severity: "success",
+    duration: 2000
   },
   logs: [],
-  previousRoute: '/',
-  transactionState: null,
+  previousRoute: "/",
+  transactionState: null
 };
 
 export const uiSlice = createSlice({
-  name: 'ui',
+  name: "ui",
   initialState,
   reducers: {
     addLog(state, action) {
@@ -26,13 +26,13 @@ export const uiSlice = createSlice({
     openSnackbar(state, action) {
       state.snackbar.open = true;
       state.snackbar.message = action.payload.message;
-      state.snackbar.severity = action.payload.severity || 'success';
+      state.snackbar.severity = action.payload.severity || "success";
       state.snackbar.duration = action.payload.duration || 4000;
     },
     closeSnackbar(state) {
       state.snackbar = {
         ...state.snackbar,
-        open: false,
+        open: false
       };
     },
     updateTransactionState(state, action) {
@@ -41,10 +41,16 @@ export const uiSlice = createSlice({
     setPreviusRoute(state, action) {
       state.previousRoute = action.payload;
     },
-    resetUIState: () => initialState,
-  },
+    resetUIState: () => initialState
+  }
 });
 
-export const { openSnackbar, closeSnackbar, addLog, setPreviusRoute, updateTransactionState } = uiSlice.actions;
+export const {
+  openSnackbar,
+  closeSnackbar,
+  addLog,
+  setPreviusRoute,
+  updateTransactionState
+} = uiSlice.actions;
 
 export default uiSlice.reducer;

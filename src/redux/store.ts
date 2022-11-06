@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
-import * as Sentry from '@sentry/react';
-import { reducers } from './reducers';
+import { configureStore } from "@reduxjs/toolkit";
+import logger from "redux-logger";
+import * as Sentry from "@sentry/react";
+import { reducers } from "./reducers";
 
 const sentryReduxEnhancer = Sentry.createReduxEnhancer({
   // Optionally pass options listed below
@@ -10,10 +10,10 @@ const sentryReduxEnhancer = Sentry.createReduxEnhancer({
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: false
     }).concat(logger),
   reducer: reducers,
-  enhancers: [sentryReduxEnhancer],
+  enhancers: [sentryReduxEnhancer]
 });
 
 export default store;

@@ -1,18 +1,21 @@
-import { AutSlider } from '@components/CommitmentSlider';
-import { StepperButton } from '@components/Stepper';
-import { StepperChildProps } from '@components/Stepper/model';
-import { styled } from '@mui/material';
-import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
-import { useAppDispatch } from '@store/store.model';
-import { Controller, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { AutSlider } from "@components/CommitmentSlider";
+import { StepperButton } from "@components/Stepper";
+import { StepperChildProps } from "@components/Stepper/model";
+import { styled } from "@mui/material";
+import {
+  IntegrateCommunity,
+  integrateUpdateCommunity
+} from "@store/Integrate/integrate";
+import { useAppDispatch } from "@store/store.model";
+import { Controller, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
-const StepWrapper = styled('form')({
-  textAlign: 'center',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
+const StepWrapper = styled("form")({
+  textAlign: "center",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column"
 });
 
 const CommitmentStep = (props: StepperChildProps) => {
@@ -23,12 +26,12 @@ const CommitmentStep = (props: StepperChildProps) => {
     control,
     handleSubmit,
     getValues,
-    formState: { errors, isValid },
+    formState: { errors, isValid }
   } = useForm({
-    mode: 'onChange',
+    mode: "onChange",
     defaultValues: {
-      commitment,
-    },
+      commitment
+    }
   });
 
   const updateState = () => {
@@ -61,7 +64,7 @@ const CommitmentStep = (props: StepperChildProps) => {
                 value: value || 0,
                 onChange,
                 min: 0,
-                max: 10,
+                max: 10
               }}
             />
           );
