@@ -1,12 +1,12 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { ResultState } from '@store/result-status';
-import { DefaultRoles, Role } from '@api/community.model';
-import { createCommunity, isMemberOfDao } from '@api/registry.api';
+import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { ResultState } from "@store/result-status";
+import { DefaultRoles, Role } from "@api/community.model";
+import { createCommunity, isMemberOfDao } from "@api/registry.api";
 
 export interface IntegrateState {
   community: {
     name: string;
-    image: string | File;
+    image: string;
     description: string;
     market: number;
     roles: Role[];
@@ -28,40 +28,40 @@ const initialState: IntegrateState = {
     roles: [
       {
         id: 1,
-        roleName: '',
+        roleName: ""
       },
       {
         id: 2,
-        roleName: '',
+        roleName: ""
       },
       {
         id: 3,
-        roleName: '',
-      },
+        roleName: ""
+      }
     ],
     commitment: null,
     contractType: 1,
-    daoAddr: null,
+    daoAddr: null
   },
   status: ResultState.Idle,
   errorMessage: null,
-  loadingMessage: null,
+  loadingMessage: null
 };
 
 export const integrateSlice = createSlice({
-  name: 'integrate',
+  name: "integrate",
   initialState,
   reducers: {
     integrateUpdateCommunity(state: IntegrateState, action) {
       state.community = {
         ...state.community,
-        ...action.payload,
+        ...action.payload
       };
     },
     integrateUpdateStatus(state, action) {
       state.status = action.payload;
     },
-    resetIntegrateState: () => initialState,
+    resetIntegrateState: () => initialState
   },
   extraReducers: (builder) => {
     builder
@@ -80,39 +80,49 @@ export const integrateSlice = createSlice({
       })
       .addCase(isMemberOfDao.fulfilled, (state, action) => {
         state.status = ResultState.Idle;
-        state.errorMessage = action.payload ? null : 'You are not a member of this DAO';
+        state.errorMessage = action.payload
+          ? null
+          : "You are not a member of this DAO";
       })
       .addCase(isMemberOfDao.rejected, (state, action) => {
         state.status = ResultState.Failed;
-        console.log(action, 'action');
-        state.errorMessage = 'You are not a member of this DAO';
+        console.log(action, "action");
+        state.errorMessage = "You are not a member of this DAO";
       });
-  },
+  }
 });
 
-export const { integrateUpdateStatus, integrateUpdateCommunity, resetIntegrateState } = integrateSlice.actions;
+export const {
+  integrateUpdateStatus,
+  integrateUpdateCommunity,
+  resetIntegrateState
+} = integrateSlice.actions;
 
 const roles = (state) => state.integrate.roles;
-export const IntegrateStatus = (state: any) => state.integrate.status as ResultState;
-export const IntegrateCommunity = (state: any) => state.integrate.community as typeof initialState.community;
-export const IntegrateLoadingMessage = (state: any) => state.integrate.loadingMessage as boolean;
-export const IntegrateErrorMessage = (state: any) => state.integrate.errorMessage as string;
+export const IntegrateStatus = (state: any) =>
+  state.integrate.status as ResultState;
+export const IntegrateCommunity = (state: any) =>
+  state.integrate.community as typeof initialState.community;
+export const IntegrateLoadingMessage = (state: any) =>
+  state.integrate.loadingMessage as boolean;
+export const IntegrateErrorMessage = (state: any) =>
+  state.integrate.errorMessage as string;
 export const getRoles = createSelector(roles, (x1): Role[] => {
   const [role1, role2, role3] = x1;
   return [
     {
       id: 4,
-      roleName: role1?.value,
+      roleName: role1?.value
     },
     {
       id: 5,
-      roleName: role2?.value,
+      roleName: role2?.value
     },
     {
       id: 6,
-      roleName: role3?.value,
+      roleName: role3?.value
     },
-    ...DefaultRoles,
+    ...DefaultRoles
   ];
 });
 

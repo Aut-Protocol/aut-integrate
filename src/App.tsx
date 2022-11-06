@@ -1,17 +1,19 @@
-import { withRouter, Switch, Route } from 'react-router-dom';
-import { Box, CssBaseline } from '@mui/material';
-import Web3NetworkProvider from '@api/ProviderFactory/components/Web3NetworkProvider';
-import NotFound from '@components/NotFound';
-import { useEffect, useState } from 'react';
-import { getAppConfig } from '@api/aut.api';
-import { useAppDispatch } from '@store/store.model';
-import { setNetworks } from '@store/WalletProvider/WalletProvider';
-import Web3AutProvider from '@api/ProviderFactory/components/Web3Provider';
-import AutLoading from '@components/AutLoading';
-import SWSnackbar from './components/snackbar';
-import GetStarted from './pages/GetStarted/GetStarted';
-import Integrate from './pages/Integrate';
-import './App.scss';
+import { withRouter, Switch, Route } from "react-router-dom";
+import { Box, CssBaseline } from "@mui/material";
+import Web3NetworkProvider from "@api/ProviderFactory/components/Web3NetworkProvider";
+import NotFound from "@components/NotFound";
+import { environment } from "@api/environment";
+import AutSDK from "@aut-protocol/sdk";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "@store/store.model";
+import { setNetworks } from "@store/WalletProvider/WalletProvider";
+import Web3AutProvider from "@api/ProviderFactory/components/Web3Provider";
+import AutLoading from "@components/AutLoading";
+import SWSnackbar from "./components/snackbar";
+import GetStarted from "./pages/GetStarted/GetStarted";
+import Integrate from "./pages/Integrate";
+import "./App.scss";
+import { getAppConfig } from "@api/aut.api";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -19,7 +21,12 @@ function App() {
 
   useEffect(() => {
     getAppConfig()
-      .then(async (res) => dispatch(setNetworks(res)))
+      .then(async (res) => {
+        dispatch(setNetworks(res));
+        const sdk = new AutSDK({
+          nftStorageApiKey: environment.nftStorageKey
+        });
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -34,7 +41,7 @@ function App() {
           <SWSnackbar />
           <Box
             sx={{
-              height: `100%`,
+              height: `100%`
             }}
           >
             <Switch>

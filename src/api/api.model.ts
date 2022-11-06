@@ -1,11 +1,9 @@
-import { TokenInput } from 'nft.storage/dist/src/lib/interface';
-
-export class BaseNFTModel<Properties> implements Omit<TokenInput, 'image'> {
+export class BaseNFTModel<Properties> {
   name: string;
 
   description: string;
 
-  image: File | string;
+  image: string;
 
   properties: Properties;
 

@@ -1,6 +1,6 @@
 export enum NetworkConfigEnv {
-  Testing = 'testing',
-  Mainnet = 'mainnet',
+  Testing = "testing",
+  Mainnet = "mainnet"
 }
 
 export interface NetworkContracts {
@@ -17,5 +17,6 @@ export interface NetworkConfig {
   chainId: string | number;
   rpcUrls: string[];
   explorerUrls: string[];
+  biconomyApiKey: string;
   contracts: NetworkContracts;
 }
