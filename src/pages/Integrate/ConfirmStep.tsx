@@ -17,7 +17,6 @@ import { ResultState } from "@store/result-status";
 import { useAppDispatch } from "@store/store.model";
 import { MarketTemplates, CommitmentMessages } from "@utils/misc";
 import { pxToRem } from "@utils/text-size";
-import { useWeb3React } from "@web3-react/core";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -86,7 +85,11 @@ const ConfirmStep = () => {
       <LoadingDialog
         handleClose={handleDialogClose}
         open={status === ResultState.Loading}
-        message="Creating community"
+        message={
+          <>
+            This might take a while, <br /> please be patient
+          </>
+        }
       />
       <Typography
         textTransform="uppercase"
