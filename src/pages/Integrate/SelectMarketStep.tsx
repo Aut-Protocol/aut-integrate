@@ -1,59 +1,62 @@
 /* eslint-disable max-len */
-import { StepperButton } from '@components/Stepper';
-import { StepperChildProps } from '@components/Stepper/model';
-import { Card, CardContent, Grid, styled, Typography } from '@mui/material';
-import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
-import { useAppDispatch } from '@store/store.model';
-import { MarketTemplates } from '@utils/misc';
-import { pxToRem } from '@utils/text-size';
-import { Controller, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { StepperButton } from "@components/Stepper";
+import { StepperChildProps } from "@components/Stepper/model";
+import { Card, CardContent, Grid, styled, Typography } from "@mui/material";
+import {
+  IntegrateCommunity,
+  integrateUpdateCommunity
+} from "@store/Integrate/integrate";
+import { useAppDispatch } from "@store/store.model";
+import { MarketTemplates } from "@utils/misc";
+import { pxToRem } from "@utils/text-size";
+import { Controller, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
-const StepWrapper = styled('form')({
-  textAlign: 'center',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
+const StepWrapper = styled("form")({
+  textAlign: "center",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column"
 });
 
 const AutCard = styled(Card)({
-  '&.MuiPaper-root': {
-    cursor: 'pointer',
-    textAlign: 'center',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    backgroundColor: 'transparent',
+  "&.MuiPaper-root": {
+    cursor: "pointer",
+    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    backgroundColor: "transparent",
     borderImage:
-      'linear-gradient(45.57deg, #009fe3 0%, #0399de 8%, #0e8bd3 19%, #2072bf 30%, #3a50a4 41%, #5a2583 53%, #453f94 71%, #38519f 88%, #3458a4 100%) 1',
-    borderWidth: '3px',
-    borderColor: 'transparent',
-    '&.active': {
+      "linear-gradient(45.57deg, #009fe3 0%, #0399de 8%, #0e8bd3 19%, #2072bf 30%, #3a50a4 41%, #5a2583 53%, #453f94 71%, #38519f 88%, #3458a4 100%) 1",
+    borderWidth: "3px",
+    borderColor: "transparent",
+    "&.active": {
       // background: 'transparent linear-gradient(111deg, #009FE3 0%, #5A2583 52%, #3458A4 100%) 0% 0% no-repeat padding-box',
       background:
-        'transparent linear-gradient(45.57deg, #009fe3 0%, #0399de 8%, #0e8bd3 19%, #2072bf 30%, #3a50a4 41%, #5a2583 53%, #453f94 71%, #38519f 88%, #3458a4 100%) 0% 0%',
+        "transparent linear-gradient(45.57deg, #009fe3 0%, #0399de 8%, #0e8bd3 19%, #2072bf 30%, #3a50a4 41%, #5a2583 53%, #453f94 71%, #38519f 88%, #3458a4 100%) 0% 0%",
       // borderWidth: '0',
-      borderColor: 'transparent',
+      borderColor: "transparent"
     },
 
-    '.MuiCardContent-root': {
-      ':last-child': {
-        padding: 0,
-      },
-    },
-  },
+    ".MuiCardContent-root": {
+      ":last-child": {
+        padding: 0
+      }
+    }
+  }
 });
 
 const SelectMarketStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
   const { market } = useSelector(IntegrateCommunity);
   const { control, handleSubmit, getValues, formState } = useForm({
-    mode: 'onChange',
+    mode: "onChange",
     defaultValues: {
-      market,
-    },
+      market
+    }
   });
 
   const updateState = () => {
@@ -67,7 +70,13 @@ const SelectMarketStep = (props: StepperChildProps) => {
 
   return (
     <StepWrapper onSubmit={handleSubmit(onSubmit)}>
-      <Grid container justifyContent="space-around" alignItems="center" spacing={5} sx={{ marginBottom: pxToRem(45) }}>
+      <Grid
+        container
+        justifyContent="space-around"
+        alignItems="center"
+        spacing={5}
+        sx={{ marginBottom: pxToRem(45) }}
+      >
         {MarketTemplates.map(({ title, market, description }, index) => (
           <Grid item key={index}>
             <Controller
@@ -76,8 +85,8 @@ const SelectMarketStep = (props: StepperChildProps) => {
               control={control}
               rules={{
                 validate: {
-                  selected: (v) => !!v,
-                },
+                  selected: (v) => !!v
+                }
               }}
               render={({ field: { value, onChange } }) => {
                 return (
@@ -85,25 +94,35 @@ const SelectMarketStep = (props: StepperChildProps) => {
                     sx={{
                       height: pxToRem(370),
                       width: pxToRem(350),
-                      p: pxToRem(45),
+                      p: pxToRem(45)
                     }}
                     square
                     onClick={() => onChange(value === market ? null : market)}
-                    className={value === market ? 'active' : ''}
+                    className={value === market ? "active" : ""}
                   >
                     <CardContent
                       sx={{
                         flex: 1,
-                        display: 'flex',
+                        display: "flex",
                         p: 0,
                         pb: 0,
-                        flexDirection: 'column',
+                        flexDirection: "column"
                       }}
                     >
-                      <Typography color="white" fontSize={pxToRem(30)} marginBottom={pxToRem(20)} component="div">
+                      <Typography
+                        color="white"
+                        fontSize={pxToRem(30)}
+                        marginBottom={pxToRem(20)}
+                        component="div"
+                      >
                         {title}
                       </Typography>
-                      <Typography textAlign="left" color="white" fontSize={pxToRem(18)} component="div">
+                      <Typography
+                        textAlign="left"
+                        color="white"
+                        fontSize={pxToRem(18)}
+                        component="div"
+                      >
                         {description}
                       </Typography>
                     </CardContent>

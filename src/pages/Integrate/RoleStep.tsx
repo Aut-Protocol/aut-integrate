@@ -1,23 +1,26 @@
-import { StepperChildProps } from '@components/Stepper/model';
-import { styled } from '@mui/material';
-import { IntegrateCommunity, integrateUpdateCommunity } from '@store/Integrate/integrate';
-import { useAppDispatch } from '@store/store.model';
-import { pxToRem } from '@utils/text-size';
-import { Controller, useForm, useFieldArray } from 'react-hook-form';
-import { useSelector } from 'react-redux';
-import { AutTextField, FormHelperText } from '@components/Fields';
-import { StepperButton } from '@components/Stepper';
+import { StepperChildProps } from "@components/Stepper/model";
+import { styled } from "@mui/material";
+import {
+  IntegrateCommunity,
+  integrateUpdateCommunity
+} from "@store/Integrate/integrate";
+import { useAppDispatch } from "@store/store.model";
+import { pxToRem } from "@utils/text-size";
+import { Controller, useForm, useFieldArray } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { AutTextField, FormHelperText } from "@components/Fields";
+import { StepperButton } from "@components/Stepper";
 
 const errorTypes = {
-  maxLength: `Characters cannot be more than 280`,
+  maxLength: `Characters cannot be more than 280`
 };
 
-const StepWrapper = styled('form')({
-  textAlign: 'center',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
+const StepWrapper = styled("form")({
+  textAlign: "center",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column"
 });
 
 const RoleStep = (props: StepperChildProps) => {
@@ -28,17 +31,17 @@ const RoleStep = (props: StepperChildProps) => {
     control,
     handleSubmit,
     getValues,
-    formState: { errors, isValid },
+    formState: { errors, isValid }
   } = useForm({
-    mode: 'onChange',
+    mode: "onChange",
     defaultValues: {
-      roles,
-    },
+      roles
+    }
   });
 
   const { fields } = useFieldArray({
     control,
-    name: 'roles',
+    name: "roles"
   });
 
   const updateState = () => {
@@ -73,12 +76,19 @@ const RoleStep = (props: StepperChildProps) => {
                   autoFocus={index === 0}
                   onChange={onChange}
                   sx={{
-                    mb: pxToRem(45),
+                    mb: pxToRem(45)
                   }}
                   inputProps={{ maxLength: 20 }}
                   helperText={
-                    <FormHelperText errorTypes={errorTypes} value={value} name={name} errors={errors}>
-                      <span>{20 - (value?.length || 0)}/20 characters left</span>
+                    <FormHelperText
+                      errorTypes={errorTypes}
+                      value={value}
+                      name={name}
+                      errors={errors}
+                    >
+                      <span>
+                        {20 - (value?.length || 0)}/20 characters left
+                      </span>
                     </FormHelperText>
                   }
                 />

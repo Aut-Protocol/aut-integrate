@@ -1,12 +1,18 @@
-import AutSDK from '@aut-protocol/sdk';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Community } from './community.model';
+import AutSDK from "@aut-protocol/sdk";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Community } from "./community.model";
 
 export const isMemberOfDao = createAsyncThunk(
-  'membership-checker/is-member',
-  async (requestBody: { daoAddr: string; daoType: number }, { rejectWithValue }) => {
+  "membership-checker/is-member",
+  async (
+    requestBody: { daoAddr: string; daoType: number },
+    { rejectWithValue }
+  ) => {
     const sdk = AutSDK.getInstance();
-    const response = await sdk.daoTypes.isMember(requestBody.daoAddr, requestBody.daoType);
+    const response = await sdk.daoTypes.isMember(
+      requestBody.daoAddr,
+      requestBody.daoType
+    );
     if (response?.isSuccess) {
       return response.data;
     }
@@ -15,8 +21,11 @@ export const isMemberOfDao = createAsyncThunk(
 );
 
 export const createCommunity = createAsyncThunk(
-  'integrate/create/community',
-  async (requestBody: { metadata: Community; contractType: number; daoAddr: string }, { rejectWithValue }) => {
+  "integrate/create/community",
+  async (
+    requestBody: { metadata: Community; contractType: number; daoAddr: string },
+    { rejectWithValue }
+  ) => {
     const sdk = AutSDK.getInstance();
     const response = await sdk.daoExpanderRegistry.deployDAOExpander(
       requestBody.contractType,

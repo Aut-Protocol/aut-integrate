@@ -1,27 +1,32 @@
 /* eslint-disable max-len */
 
-import { Community, CommunityProperties } from '@api/community.model';
-import { createCommunity } from '@api/registry.api';
-import CopyAddress from '@components/CopyAddress';
-import ErrorDialog from '@components/Dialog/ErrorPopup';
-import LoadingDialog from '@components/Dialog/LoadingPopup';
-import { StepperButton } from '@components/Stepper';
-import { Avatar, styled, Typography } from '@mui/material';
-import { IntegrateCommunity, IntegrateErrorMessage, IntegrateStatus, integrateUpdateStatus } from '@store/Integrate/integrate';
-import { ResultState } from '@store/result-status';
-import { useAppDispatch } from '@store/store.model';
-import { MarketTemplates, CommitmentMessages } from '@utils/misc';
-import { pxToRem } from '@utils/text-size';
-import { useWeb3React } from '@web3-react/core';
-import { useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Community, CommunityProperties } from "@api/community.model";
+import { createCommunity } from "@api/registry.api";
+import CopyAddress from "@components/CopyAddress";
+import ErrorDialog from "@components/Dialog/ErrorPopup";
+import LoadingDialog from "@components/Dialog/LoadingPopup";
+import { StepperButton } from "@components/Stepper";
+import { Avatar, styled, Typography } from "@mui/material";
+import {
+  IntegrateCommunity,
+  IntegrateErrorMessage,
+  IntegrateStatus,
+  integrateUpdateStatus
+} from "@store/Integrate/integrate";
+import { ResultState } from "@store/result-status";
+import { useAppDispatch } from "@store/store.model";
+import { MarketTemplates, CommitmentMessages } from "@utils/misc";
+import { pxToRem } from "@utils/text-size";
+import { useWeb3React } from "@web3-react/core";
+import { useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
 
-const StepWrapper = styled('div')({
-  textAlign: 'center',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
+const StepWrapper = styled("div")({
+  textAlign: "center",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "column"
 });
 
 const ConfirmStep = () => {
@@ -50,19 +55,19 @@ const ConfirmStep = () => {
             commitment: state.commitment,
             rolesSets: [
               {
-                roleSetName: 'First',
-                roles: state.roles,
-              },
-            ],
-          }),
-        }),
+                roleSetName: "First",
+                roles: state.roles
+              }
+            ]
+          })
+        })
       })
     );
 
-    if (result.meta.requestStatus === 'fulfilled') {
+    if (result.meta.requestStatus === "fulfilled") {
       history.push({
         pathname: `integrate/success/${result.payload}`,
-        search: location.search,
+        search: location.search
       });
     }
   };
@@ -73,20 +78,33 @@ const ConfirmStep = () => {
 
   return (
     <StepWrapper>
-      <ErrorDialog handleClose={handleDialogClose} open={status === ResultState.Failed} message={errorMessage} />
-      <LoadingDialog handleClose={handleDialogClose} open={status === ResultState.Loading} message="Creating community" />
-      <Typography textTransform="uppercase" marginTop={pxToRem(30)} fontSize={pxToRem(25)} color="white">
+      <ErrorDialog
+        handleClose={handleDialogClose}
+        open={status === ResultState.Failed}
+        message={errorMessage}
+      />
+      <LoadingDialog
+        handleClose={handleDialogClose}
+        open={status === ResultState.Loading}
+        message="Creating community"
+      />
+      <Typography
+        textTransform="uppercase"
+        marginTop={pxToRem(30)}
+        fontSize={pxToRem(25)}
+        color="white"
+      >
         Confirm your information
       </Typography>
       <div
         style={{
-          marginTop: pxToRem(50),
+          marginTop: pxToRem(50)
         }}
       >
         <div
           style={{
-            display: 'flex',
-            marginBottom: pxToRem(60),
+            display: "flex",
+            marginBottom: pxToRem(60)
           }}
         >
           {data.image && (
@@ -96,32 +114,37 @@ const ConfirmStep = () => {
                 variant="square"
                 src={data.image as string}
                 sx={{
-                  cursor: 'pointer',
-                  background: 'transparent',
+                  cursor: "pointer",
+                  background: "transparent",
                   height: pxToRem(110),
                   width: pxToRem(110),
-                  border: '1px solid #439EDD',
+                  border: "1px solid #439EDD",
                   mr: pxToRem(45),
-                  '&.MuiAvatar-root': {
-                    justifyContent: 'center',
-                  },
+                  "&.MuiAvatar-root": {
+                    justifyContent: "center"
+                  }
                 }}
                 imgProps={{
                   style: {
-                    maxHeight: '100%',
-                    maxWidth: '100%',
-                    objectFit: 'cover',
-                  },
+                    maxHeight: "100%",
+                    maxWidth: "100%",
+                    objectFit: "cover"
+                  }
                 }}
               />
             </div>
           )}
           <div
             style={{
-              textAlign: 'left',
+              textAlign: "left"
             }}
           >
-            <Typography lineHeight="1" marginBottom={pxToRem(12)} fontSize={pxToRem(28)} color="white">
+            <Typography
+              lineHeight="1"
+              marginBottom={pxToRem(12)}
+              fontSize={pxToRem(28)}
+              color="white"
+            >
               {data.name}
             </Typography>
             <Typography fontSize={pxToRem(20)} color="white">
@@ -129,9 +152,9 @@ const ConfirmStep = () => {
             </Typography>
             <Typography
               sx={{
-                wordBreak: 'break-word',
+                wordBreak: "break-word",
                 maxWidth: pxToRem(400),
-                mt: pxToRem(15),
+                mt: pxToRem(15)
               }}
               fontSize={pxToRem(18)}
               color="white"
@@ -146,14 +169,14 @@ const ConfirmStep = () => {
             <div
               key={`preview-role-${index}`}
               style={{
-                display: 'flex',
-                textAlign: 'left',
-                marginBottom: pxToRem(25),
+                display: "flex",
+                textAlign: "left",
+                marginBottom: pxToRem(25)
               }}
             >
               <Typography
                 sx={{
-                  width: pxToRem(220),
+                  width: pxToRem(220)
                 }}
                 fontSize={pxToRem(20)}
                 color="white"
@@ -167,14 +190,14 @@ const ConfirmStep = () => {
           ))}
           <div
             style={{
-              display: 'flex',
-              textAlign: 'left',
-              marginBottom: pxToRem(25),
+              display: "flex",
+              textAlign: "left",
+              marginBottom: pxToRem(25)
             }}
           >
             <Typography
               sx={{
-                width: pxToRem(220),
+                width: pxToRem(220)
               }}
               fontSize={pxToRem(20)}
               color="white"
@@ -187,14 +210,14 @@ const ConfirmStep = () => {
           </div>
           <div
             style={{
-              display: 'flex',
-              textAlign: 'left',
-              marginBottom: pxToRem(25),
+              display: "flex",
+              textAlign: "left",
+              marginBottom: pxToRem(25)
             }}
           >
             <Typography
               sx={{
-                width: pxToRem(220),
+                width: pxToRem(220)
               }}
               fontSize={pxToRem(20)}
               color="white"
@@ -204,7 +227,7 @@ const ConfirmStep = () => {
 
             <CopyAddress
               textStyles={{
-                fontSize: pxToRem(20),
+                fontSize: pxToRem(20)
               }}
               address={data.daoAddr}
             />

@@ -1,18 +1,18 @@
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
-import { Provider } from 'react-redux';
-import store from '@store/store';
-import { swEnvVariables, environment } from '@api/environment';
-import markerSDK from '@marker.io/browser';
-import * as Sentry from '@sentry/react';
-import { BrowserTracing } from '@sentry/tracing';
-import SentryRRWeb from '@sentry/rrweb';
-import { createRoot } from 'react-dom/client';
-import { ensureVariablesExist } from '@utils/env';
-import { SwTheme } from './theme';
-import reportWebVitals from './reportWebVitals';
-import App from './App';
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
+import { Provider } from "react-redux";
+import store from "@store/store";
+import { swEnvVariables, environment } from "@api/environment";
+import markerSDK from "@marker.io/browser";
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";
+import SentryRRWeb from "@sentry/rrweb";
+import { createRoot } from "react-dom/client";
+import { ensureVariablesExist } from "@utils/env";
+import { SwTheme } from "./theme";
+import reportWebVitals from "./reportWebVitals";
+import App from "./App";
 
 // markerSDK.loadWidget({
 //   destination: `${process.env.REACT_APP_MARKER}`,
@@ -28,7 +28,7 @@ import App from './App';
 //   tracesSampleRate: 1.0,
 // });
 
-const container = document.getElementById('root');
+const container = document.getElementById("root");
 const root = createRoot(container!);
 
 root.render(

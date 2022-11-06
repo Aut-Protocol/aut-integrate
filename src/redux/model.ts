@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import { AlertColor } from '@mui/material/Alert';
+import { AlertColor } from "@mui/material/Alert";
 
 export interface SnackbarPayload {
   message: string;
