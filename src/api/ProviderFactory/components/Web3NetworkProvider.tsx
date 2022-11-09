@@ -17,12 +17,12 @@ import { styled, Typography } from "@mui/material";
 import { ReactComponent as AutLogo } from "@assets/aut/logo.svg";
 import AutLoading from "@components/AutLoading";
 import DialogWrapper from "@components/Dialog/DialogWrapper";
-import AutSDK from "@aut-protocol/sdk";
+import AutSDK from "@aut-labs-private/sdk";
 import type { Connector } from "@web3-react/types";
 import ConnectorBtn from "./ConnectorBtn";
 import { NetworkSelectors } from "./NetworkSelectors";
 import { EnableAndChangeNetwork } from "../web3.network";
-import { SDKBiconomyWrapper } from "@aut-protocol/sdk-biconomy";
+import { SDKBiconomyWrapper } from "@aut-labs-private/sdk-biconomy";
 import { ethers } from "ethers";
 
 const Title = styled(Typography)({

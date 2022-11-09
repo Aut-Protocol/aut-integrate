@@ -30,8 +30,8 @@
     ]
   },
   "dependencies": {
-    "@aut-protocol/sdk": "0.0.73-beta-04",
-    "@aut-protocol/sdk-biconomy": "latest",
+    "@aut-labs-private/sdk": "latest",
+    "@aut-labs-private/sdk-biconomy": "latest",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@lottiefiles/lottie-player": "^1.5.7",
