@@ -1,4 +1,4 @@
-import AutSDK from "@aut-protocol/sdk";
+import AutSDK from "@aut-labs-private/sdk";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Community } from "./community.model";
 

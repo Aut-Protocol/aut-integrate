@@ -3,7 +3,7 @@ import { Box, CssBaseline } from "@mui/material";
 import Web3NetworkProvider from "@api/ProviderFactory/components/Web3NetworkProvider";
 import NotFound from "@components/NotFound";
 import { environment } from "@api/environment";
-import AutSDK from "@aut-protocol/sdk";
+import AutSDK from "@aut-labs-private/sdk";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "@store/store.model";
 import { setNetworks } from "@store/WalletProvider/WalletProvider";
