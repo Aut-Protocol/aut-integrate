@@ -27,8 +27,6 @@ Before you submit your Pull Request (PR) consider the following guidelines:
 
 - Search [GitHub](https://github.com/Aut-Labs/aut-integrate/pulls) for an open or closed PR
   that relates to your submission. You don't want to duplicate effort.
-- Please sign our [Contributor License Agreement (CLA)](#cla) before sending PRs.
-  We cannot accept code without this.
 - Make your changes in a new git branch:
 
      ```shell
