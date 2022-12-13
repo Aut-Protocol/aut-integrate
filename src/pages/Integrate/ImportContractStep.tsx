@@ -8,7 +8,7 @@ import {
 } from "@components/Fields";
 import { StepperButton } from "@components/Stepper";
 import { StepperChildProps } from "@components/Stepper/model";
-import { Link, MenuItem, styled } from "@mui/material";
+import { Link, MenuItem, styled, TextField } from "@mui/material";
 import {
   IntegrateCommunity,
   IntegrateErrorMessage,
@@ -160,9 +160,9 @@ const ImportContractStep = (props: StepperChildProps) => {
         }}
         render={({ field: { name, value, onChange } }) => {
           return (
-            <AutTextField
-              width="450"
+            <TextField
               variant="standard"
+              color="offWhite"
               required
               name={name}
               value={value || ""}

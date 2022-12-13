@@ -37,7 +37,6 @@ function App() {
       ) : (
         <Web3AutProvider>
           <Web3NetworkProvider />
-          <CssBaseline />
           <SWSnackbar />
           <Box
             sx={{
