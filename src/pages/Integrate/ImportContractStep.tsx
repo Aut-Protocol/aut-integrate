@@ -8,7 +8,7 @@ import {
 } from "@components/Fields";
 import { StepperButton } from "@components/Stepper";
 import { StepperChildProps } from "@components/Stepper/model";
-import { Link, MenuItem, styled, TextField } from "@mui/material";
+import { Link, MenuItem, Select, styled, TextField } from "@mui/material";
 import {
   IntegrateCommunity,
   IntegrateErrorMessage,
@@ -103,9 +103,18 @@ const ImportContractStep = (props: StepperChildProps) => {
         }}
         render={({ field: { name, value, onChange } }) => {
           return (
-            <AutSelectField
+            <Select
               variant="standard"
+              color="offWhite"
               autoFocus
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "400px",
+                  xxl: "800px"
+                },
+                mb: pxToRem(45)
+              }}
               renderValue={(selected) => {
                 if (!selected) {
                   return "DAO Type" as any;
@@ -113,28 +122,27 @@ const ImportContractStep = (props: StepperChildProps) => {
                 const type = ContractTypes.find((t) => t.value === selected);
                 return type?.label || selected;
               }}
-              width="450"
+              // width="450"
               name={name}
-              color="primary"
               value={value || ""}
               displayEmpty
               required
               onChange={onChange}
-              helperText={
-                <FormHelperText
-                  value={value}
-                  name={name}
-                  errors={formState.errors}
-                >
-                  <Link
-                    sx={{ color: "white" }}
-                    target="_blank"
-                    href="https://hackersdao.aut.id/"
-                  >
-                    Aren't you part of a DAO yet? Join one here
-                  </Link>
-                </FormHelperText>
-              }
+              // helperText={
+              //   <FormHelperText
+              //     value={value}
+              //     name={name}
+              //     errors={formState.errors}
+              //   >
+              //     <Link
+              //       sx={{ color: "white" }}
+              //       target="_blank"
+              //       href="https://hackersdao.aut.id/"
+              //     >
+              //       Aren't you part of a DAO yet? Join one here
+              //     </Link>
+              //   </FormHelperText>
+              // }
             >
               {ContractTypes.map((type) => (
                 <MenuItem
@@ -145,7 +153,7 @@ const ImportContractStep = (props: StepperChildProps) => {
                   {type.label}
                 </MenuItem>
               ))}
-            </AutSelectField>
+            </Select>
           );
         }}
       />
@@ -169,6 +177,11 @@ const ImportContractStep = (props: StepperChildProps) => {
               onChange={onChange}
               placeholder="DAO Address"
               sx={{
+                width: {
+                  xs: "100%",
+                  sm: "400px",
+                  xxl: "800px"
+                },
                 mb: pxToRem(45)
               }}
               helperText={

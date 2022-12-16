@@ -177,7 +177,6 @@ const GetStarted = () => {
           variant="outlined"
           size="normal"
           color="offWhite"
-          disabled
           onClick={() => goToIntegrate()}
         >
           Integrate Āut

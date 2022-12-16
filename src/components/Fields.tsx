@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { pxToRem } from "@utils/text-size";
-import { Controller, FieldErrors } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 interface FormHelperTextProps {
   errors: any;
@@ -44,7 +44,7 @@ export function FormHelperText({
         color="red"
         align="right"
         component="span"
-        variant="body2"
+        variant="body"
         className="auto-helper-error"
         sx={{
           width: "100%",
@@ -68,7 +68,7 @@ export function FormHelperText({
         color="white"
         align="right"
         component="span"
-        variant="body2"
+        variant="body"
       >
         {children}
       </Typography>
