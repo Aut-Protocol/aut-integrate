@@ -40,13 +40,29 @@ declare module "@mui/material/TextField" {
   interface TextFieldClasses {
     outlinedOffWhite?: true;
   }
-  interface TextFieldPropsSizeOverrides {
-    normal: true;
-    chunky: true;
-    square: true;
+  interface TextFieldPropsColorOverrides {
+    offWhite?: true;
+    nightBlack?: true;
+  }
+}
+
+declare module "@mui/material/Select" {
+  interface SelectClasses {
+    standardOffWhite?: true;
   }
 
-  interface TextFieldPropsColorOverrides {
+  interface SelectPropsColorOverrides {
+    offWhite?: true;
+    nightBlack?: true;
+  }
+}
+
+declare module "@mui/material/InputBase" {
+  interface InputBaseClasses {
+    standardOffWhite?: true;
+  }
+
+  interface InputBasePropsColorOverrides {
     offWhite?: true;
     nightBlack?: true;
   }
@@ -65,6 +81,7 @@ declare module "@mui/material/styles" {
   interface Palette {
     offWhite?: PaletteColor;
     nightBlack?: PaletteColor;
+    // white?: PaletteColor;
   }
 }
 
