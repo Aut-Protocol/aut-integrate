@@ -41,14 +41,16 @@ const GetStarted = () => {
     }
   }, [isActive, networkConfig]);
 
-  const goToIntegrate = () => {
+  const goToIntegrate = (startFromScratch = false) => {
     setConnectInitiated(true);
     if (!isActive || !networkConfig) {
       dispatch(setProviderIsOpen(true));
     } else {
+      const qParams = new URLSearchParams(location.search);
+      qParams.set("startFromScratch", `${startFromScratch}`);
       history.push({
         pathname: "/integrate",
-        search: location.search
+        search: qParams.toString()
       });
     }
   };
@@ -140,6 +142,18 @@ const GetStarted = () => {
           onClick={() => goToIntegrate()}
         >
           Expand
+        </AutButton>
+        <AutButton
+          sx={{
+            width: pxToRem(360),
+            height: pxToRem(70)
+          }}
+          type="submit"
+          color="primary"
+          variant="outlined"
+          onClick={() => goToIntegrate(true)}
+        >
+          Start from scratch
         </AutButton>
         {/* <AutButton
           sx={{
