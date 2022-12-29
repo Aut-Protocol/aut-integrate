@@ -114,6 +114,7 @@ export const buttonStyles = {
 
 export default (theme: Theme) =>
   ({
+    ...theme.components.MuiButton,
     styleOverrides: {
       outlinedOffWhite: {
         borderColor: theme.palette.offWhite.main,

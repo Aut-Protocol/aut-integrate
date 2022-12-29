@@ -50,6 +50,7 @@ const generateColors = (color: PaletteColor, white: PaletteColor) => ({
 
 export default (theme: Theme) =>
   ({
+    ...theme.components.MuiTextField,
     styleOverrides: {
       root: ({ ownerState: { color } }) => {
         const colorVariant = color || "primary";
