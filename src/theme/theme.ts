@@ -5,6 +5,7 @@ import AutTextFieldStyles from "./field-text-styles";
 import AutSelectFieldStyles from "./field-select-styles";
 import AutTextStyles from "./text-styles";
 import AutPalette from "./palette";
+import AutDialogStyles from "./dialog-styles";
 import "./theme.overrides";
 
 const AutTheme = createTheme({
@@ -47,7 +48,10 @@ const AutTheme = createTheme({
 
 AutTheme.typography = AutTextStyles(AutTheme);
 AutTheme.components.MuiButton = AutButtonStyles(AutTheme);
+AutTheme.components.MuiDialog = AutDialogStyles(AutTheme);
 AutTheme.components.MuiTextField = AutTextFieldStyles(AutTheme);
 AutTheme.components.MuiSelect = AutSelectFieldStyles(AutTheme);
+
+console.log(AutTheme, "AutTheme");
 
 export default AutTheme;

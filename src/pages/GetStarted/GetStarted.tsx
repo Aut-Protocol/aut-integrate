@@ -9,6 +9,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ReactComponent as GenesisImage } from "@assets/genesis.svg";
+import AppTitle from "@components/AppTitle";
 
 const Wrapper = styled(Container)({
   display: "flex",
@@ -58,14 +59,16 @@ const GetStarted = () => {
     }
   }, [isActive, networkConfig]);
 
-  const goToIntegrate = () => {
+  const goToIntegrate = (startFromScratch = false) => {
     setConnectInitiated(true);
     if (!isActive || !networkConfig) {
       dispatch(setProviderIsOpen(true));
     } else {
+      const qParams = new URLSearchParams(location.search);
+      qParams.set("startFromScratch", `${startFromScratch}`);
       history.push({
         pathname: "/integrate",
-        search: location.search
+        search: qParams.toString()
       });
     }
   };
@@ -82,27 +85,13 @@ const GetStarted = () => {
           xxl: "900px"
         }}
       >
-        <Typography
-          fontWeight="300"
-          fontFamily="FractulAltLight"
-          component="h1"
-          variant="h1"
-          color="white"
+        <AppTitle
           mb={{
             xs: "32px",
             md: "46px",
             xxl: "100px"
           }}
-        >
-          <strong
-            style={{
-              fontFamily: "FractulAltBold"
-            }}
-          >
-            Āut
-          </strong>{" "}
-          Expander
-        </Typography>
+        />
         <Typography
           component="p"
           variant="subtitle1"
@@ -186,7 +175,7 @@ const GetStarted = () => {
           variant="outlined"
           size="normal"
           color="offWhite"
-          onClick={() => goToIntegrate()}
+          onClick={() => goToIntegrate(true)}
         >
           Start from scratch
         </Button>

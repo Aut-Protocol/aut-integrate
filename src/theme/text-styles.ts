@@ -122,6 +122,7 @@ export default (theme: Theme) =>
       return prev;
     },
     {
+      ...theme.typography,
       fontSize: 16,
       fontFamily: ["FractulRegular", " sans-serif"].join(",")
     } as TypographyOptions

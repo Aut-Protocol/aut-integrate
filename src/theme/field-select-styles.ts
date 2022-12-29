@@ -29,6 +29,7 @@ const generateColors = (color: PaletteColor, white: PaletteColor) => ({
 
 export default (theme: Theme) =>
   ({
+    ...theme.components.MuiSelect,
     styleOverrides: {
       "&.MuiInputBase-root:before": {
         borderColor: theme.palette.error.main
