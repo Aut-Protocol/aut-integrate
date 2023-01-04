@@ -25,6 +25,8 @@ import {
 import { useSelector } from "react-redux";
 import IntegrateSuccess from "./IntegrateSuccess";
 import IntegrateStepper from "./IntegrateStepper";
+import AppTitle from "@components/AppTitle";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 const Integrate = () => {
   const dispatch = useAppDispatch();
@@ -85,14 +87,19 @@ const Integrate = () => {
             type="button"
             onClick={goBack}
             startIcon={
-              <BackIcon style={{ height: pxToRem(34), width: pxToRem(28) }} />
+              <ChevronLeftIcon
+                sx={{
+                  height: "30px",
+                  width: "30px"
+                }}
+              />
             }
             variant="text"
           >
             Back
           </Button>
         )}
-        <AutLogo width="80" height="80" />
+        <AppTitle variant="h2" />
       </Toolbar>
       <Switch>
         <Route

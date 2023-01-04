@@ -55,11 +55,16 @@ declare module "@mui/material/Select" {
     offWhite?: true;
     nightBlack?: true;
   }
+
+  interface SelectPropsColorOverrides {
+    offWhite?: true;
+    nightBlack?: true;
+  }
 }
 
 declare module "@mui/material/InputBase" {
   interface InputBaseClasses {
-    standardOffWhite?: true;
+    offWhite?: true;
   }
 
   interface InputBasePropsColorOverrides {

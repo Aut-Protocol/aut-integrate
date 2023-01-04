@@ -4,6 +4,7 @@ import {
   ComponentsProps,
   ComponentsVariants,
   PaletteColor,
+  TextField,
   Theme
 } from "@mui/material";
 
@@ -40,13 +41,28 @@ const generateColors = (color: PaletteColor, white: PaletteColor) => ({
     letterSpacing: "-0.008em",
     fontFamily: "FractulRegular"
   },
-  ".MuiInputBase-root:before": {
+  textarea: {
+    color: white.light,
+    fontWeight: "normal",
+    letterSpacing: "-0.008em",
+    fontFamily: "FractulRegular"
+  },
+  ".MuiInputBase-root:before, .MuiInputBase-root:not(.Mui-Focused) fieldset": {
     borderColor: color.dark
   },
-  ".MuiInputBase-root:hover:not(.Mui-disabled):before": {
-    borderColor: color.dark
-  }
+  ".MuiInputBase-root:hover:not(.Mui-disabled):before, .MuiInputBase-root:hover:not(.Mui-disabled):not(.Mui-Focused) fieldset":
+    {
+      borderColor: color.dark,
+      borderWidth: "2px"
+    },
+  ".MuiInputBase-root.MuiOutlinedInput-root.Mui-focused fieldset, .MuiInputBase-root.MuiOutlinedInput-root.Mui-focused:hover fieldset":
+    {
+      borderColor: color.light,
+      borderWidth: "2px"
+    }
 });
+
+export const AutTextField = TextField;
 
 export default (theme: Theme) =>
   ({
@@ -60,6 +76,9 @@ export default (theme: Theme) =>
         );
         Object.keys(fontSize).forEach((key: Breakpoint) => {
           styles.input[theme.breakpoints.up(key)] = {
+            fontSize: fontSize[key]
+          };
+          styles.textarea[theme.breakpoints.up(key)] = {
             fontSize: fontSize[key]
           };
         });

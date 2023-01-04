@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import StepWizard, { StepWizardChildProps } from "react-step-wizard";
 import { styled } from "@mui/system";
-import { ButtonProps, Container } from "@mui/material";
+import { Button, ButtonProps, Container } from "@mui/material";
 import { AutButton } from "@components/buttons";
 import { pxToRem } from "@utils/text-size";
 import StepperNav from "./StepperNav";
@@ -156,19 +156,18 @@ export const StepperButton = ({
   ...props
 }: ButtonProps & { label: string }) => {
   return (
-    <AutButton
+    <Button
       sx={{
-        minWidth: pxToRem(400),
-        height: pxToRem(70),
         my: pxToRem(50)
       }}
       type="submit"
-      color="primary"
       variant="outlined"
+      size="normal"
+      color="offWhite"
       {...props}
     >
       {label}
-    </AutButton>
+    </Button>
   );
 };
 

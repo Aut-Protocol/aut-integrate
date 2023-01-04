@@ -41,7 +41,7 @@ const initialState: IntegrateState = {
     ],
     commitment: null,
     contractType: 1,
-    daoAddr: null
+    daoAddr: "0x8eA20de15Db87Be1a8B20Da5ebD785a4a9BE9690"
   },
   status: ResultState.Idle,
   errorMessage: null,

@@ -42,6 +42,7 @@ const GenesisImageWrapper = styled(GenesisImage)(({ theme }) => ({
 const GetStarted = () => {
   const dispatch = useAppDispatch();
   const [connectInitiated, setConnectInitiated] = useState(false);
+  const [canStartFromScratch, setCanStartFromScratch] = useState(false);
   const { isActive } = useWeb3React();
   const networkConfig = useSelector(SelectedNetworkConfig);
   const history = useHistory();
@@ -52,25 +53,27 @@ const GetStarted = () => {
       return;
     }
     if (isActive && networkConfig) {
-      history.push({
-        pathname: "/integrate",
-        search: location.search
-      });
+      start(canStartFromScratch);
     }
-  }, [isActive, networkConfig]);
+  }, [isActive, networkConfig, canStartFromScratch]);
 
   const goToIntegrate = (startFromScratch = false) => {
     setConnectInitiated(true);
+    setCanStartFromScratch(startFromScratch);
     if (!isActive || !networkConfig) {
       dispatch(setProviderIsOpen(true));
     } else {
-      const qParams = new URLSearchParams(location.search);
-      qParams.set("startFromScratch", `${startFromScratch}`);
-      history.push({
-        pathname: "/integrate",
-        search: qParams.toString()
-      });
+      start(startFromScratch);
     }
+  };
+
+  const start = (startFromScratch: boolean) => {
+    const qParams = new URLSearchParams(location.search);
+    qParams.set("startFromScratch", `${startFromScratch}`);
+    history.push({
+      pathname: "/integrate",
+      search: qParams.toString()
+    });
   };
 
   return (
