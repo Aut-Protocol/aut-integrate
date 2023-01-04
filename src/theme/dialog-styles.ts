@@ -1,5 +1,4 @@
 import {
-  Breakpoint,
   ComponentsOverrides,
   ComponentsProps,
   ComponentsVariants,

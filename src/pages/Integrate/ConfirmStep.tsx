@@ -91,12 +91,7 @@ const ConfirmStep = () => {
           </>
         }
       />
-      <Typography
-        textTransform="uppercase"
-        marginTop={pxToRem(30)}
-        fontSize={pxToRem(25)}
-        color="white"
-      >
+      <Typography color="white" variant="h3">
         Confirm your information
       </Typography>
       <div
