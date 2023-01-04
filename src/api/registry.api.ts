@@ -1,4 +1,4 @@
-import AutSDK from "@aut-labs-private/sdk";
+import AutSDK, { SDKContractGenericResponse } from "@aut-labs-private/sdk";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Community } from "./community.model";
 
@@ -27,14 +27,24 @@ export const createCommunity = createAsyncThunk(
     { rejectWithValue }
   ) => {
     const sdk = AutSDK.getInstance();
-    const response = await sdk.daoExpanderRegistry.deployDAOExpander(
-      requestBody.contractType,
-      requestBody.daoAddr,
-      requestBody.metadata.properties.market as number,
-      requestBody.metadata.properties.commitment,
-      requestBody.metadata
-    );
+    let response: SDKContractGenericResponse<string>;
 
+    if (requestBody.daoAddr) {
+      response = await sdk.daoExpanderRegistry.deployDAOExpander(
+        requestBody.contractType,
+        requestBody.daoAddr,
+        requestBody.metadata.properties.market as number,
+        requestBody.metadata.properties.commitment,
+        requestBody.metadata
+      );
+    } else {
+      // start from scratch
+      response = await sdk.autDaoRegistry.deployAutDAO(
+        requestBody.metadata.properties.market as number,
+        requestBody.metadata.properties.commitment,
+        requestBody.metadata
+      );
+    }
     if (response?.isSuccess) {
       return response.data;
     }

@@ -106,12 +106,16 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
       new SDKBiconomyWrapper({
         enableDebugMode: true,
         apiKey: networkConfig.biconomyApiKey,
-        contractAddresses: [networkConfig.contracts.daoExpanderRegistryAddress]
+        contractAddresses: [
+          networkConfig.contracts.daoExpanderRegistryAddress,
+          networkConfig.contracts.autDaoRegistryAddress
+        ]
       });
     await sdk.init(
       signer,
       {
         daoTypesAddress: networkConfig.contracts.daoTypesAddress,
+        autDaoRegistryAddress: networkConfig.contracts.autDaoRegistryAddress,
         autIDAddress: networkConfig.contracts.autIDAddress,
         daoExpanderRegistryAddress:
           networkConfig.contracts.daoExpanderRegistryAddress
