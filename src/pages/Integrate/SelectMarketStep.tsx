@@ -8,7 +8,6 @@ import {
 } from "@store/Integrate/integrate";
 import { useAppDispatch } from "@store/store.model";
 import { MarketTemplates } from "@utils/misc";
-import { pxToRem } from "@utils/text-size";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
@@ -20,33 +19,39 @@ const StepWrapper = styled("form")({
   flexDirection: "column"
 });
 
-const AutCard = styled(Card)({
-  "&.MuiPaper-root": {
-    cursor: "pointer",
-    textAlign: "center",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    backgroundColor: "transparent",
-    borderImage:
-      "linear-gradient(45.57deg, #009fe3 0%, #0399de 8%, #0e8bd3 19%, #2072bf 30%, #3a50a4 41%, #5a2583 53%, #453f94 71%, #38519f 88%, #3458a4 100%) 1",
-    borderWidth: "3px",
-    borderColor: "transparent",
-    "&.active": {
-      // background: 'transparent linear-gradient(111deg, #009FE3 0%, #5A2583 52%, #3458A4 100%) 0% 0% no-repeat padding-box',
-      background:
-        "transparent linear-gradient(45.57deg, #009fe3 0%, #0399de 8%, #0e8bd3 19%, #2072bf 30%, #3a50a4 41%, #5a2583 53%, #453f94 71%, #38519f 88%, #3458a4 100%) 0% 0%",
-      // borderWidth: '0',
-      borderColor: "transparent"
-    },
-
-    ".MuiCardContent-root": {
-      ":last-child": {
-        padding: 0
+const AutCard = styled(Card)(({ theme, color }) => {
+  return {
+    "&.MuiPaper-root": {
+      boxSizing: "border-box",
+      cursor: "pointer",
+      textAlign: "center",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      backgroundColor: "transparent",
+      border: "none",
+      position: "relative",
+      "&::before": {
+        transition: theme.transitions.create(["border-color"]),
+        border: `1px solid ${theme.palette[color].dark}`,
+        content: `" "`,
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0
+      },
+      "&:hover::before": {
+        borderWidth: "2px",
+        borderColor: theme.palette[color].dark
+      },
+      "&.active::before": {
+        borderWidth: "2px",
+        borderColor: theme.palette[color].light
       }
     }
-  }
+  };
 });
 
 const SelectMarketStep = (props: StepperChildProps) => {
@@ -74,8 +79,11 @@ const SelectMarketStep = (props: StepperChildProps) => {
         container
         justifyContent="space-around"
         alignItems="center"
-        spacing={5}
-        sx={{ marginBottom: pxToRem(45) }}
+        spacing={{
+          xs: "20px",
+          md: "22px",
+          xxl: "75px"
+        }}
       >
         {MarketTemplates.map(({ title, market, description }, index) => (
           <Grid item key={index}>
@@ -92,11 +100,21 @@ const SelectMarketStep = (props: StepperChildProps) => {
                 return (
                   <AutCard
                     sx={{
-                      height: pxToRem(370),
-                      width: pxToRem(350),
-                      p: pxToRem(45)
+                      height: {
+                        xs: "100%",
+                        md: "235px",
+                        lg: "250px",
+                        xxl: "350px"
+                      },
+                      width: {
+                        xs: "100%",
+                        md: "280px",
+                        lg: "290px",
+                        xxl: "335px"
+                      }
                     }}
                     square
+                    color="offWhite"
                     onClick={() => onChange(value === market ? null : market)}
                     className={value === market ? "active" : ""}
                   >
@@ -104,24 +122,22 @@ const SelectMarketStep = (props: StepperChildProps) => {
                       sx={{
                         flex: 1,
                         display: "flex",
-                        p: 0,
-                        pb: 0,
+                        padding: {
+                          xs: "20px",
+                          md: "28px",
+                          lg: "30px",
+                          xxl: "50px"
+                        },
                         flexDirection: "column"
                       }}
                     >
-                      <Typography
-                        color="white"
-                        fontSize={pxToRem(30)}
-                        marginBottom={pxToRem(20)}
-                        component="div"
-                      >
+                      <Typography mb={2} color="white" variant="subtitle1">
                         {title}
                       </Typography>
                       <Typography
                         textAlign="left"
                         color="white"
-                        fontSize={pxToRem(18)}
-                        component="div"
+                        variant="body1"
                       >
                         {description}
                       </Typography>

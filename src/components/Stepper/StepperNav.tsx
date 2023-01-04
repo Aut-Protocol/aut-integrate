@@ -122,16 +122,15 @@ const StepperNav = (props: StepperNavProps) => {
       </DotWrapper>
       {props.steps[props.currentStep - 1].description && (
         <Typography
-          component="div"
+          variant="body"
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            color: "white",
             mt: pxToRem(30),
             mb: pxToRem(80),
-            maxWidth: "85%",
-            fontSize: pxToRem(20)
+            color: "offWhite.main",
+            maxWidth: "85%"
           }}
         >
           {props.steps[props.currentStep - 1].description}

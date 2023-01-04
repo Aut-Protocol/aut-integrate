@@ -32,7 +32,18 @@ const StepWrapper = styled("form")({
 
 const FormStackWrapper = styled("div")(({ theme }) => ({
   display: "flex",
-  alignItems: "flex-end"
+  alignItems: "flex-end",
+  marginBottom: "45px",
+  gridGap: "20px",
+  [theme.breakpoints.up("xs")]: {
+    width: "100%"
+  },
+  [theme.breakpoints.up("sm")]: {
+    width: "400px"
+  },
+  [theme.breakpoints.up("xxl")]: {
+    width: "800px"
+  }
 }));
 
 const CommunityInfoStep = (props: StepperChildProps) => {
@@ -70,7 +81,8 @@ const CommunityInfoStep = (props: StepperChildProps) => {
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "column"
+                    flexDirection: "column",
+                    marginBottom: "3px"
                   }}
                 >
                   <AFileUpload
@@ -110,12 +122,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
                   onChange={onChange}
                   placeholder="Community Name"
                   sx={{
-                    width: {
-                      xs: "100%",
-                      sm: "400px",
-                      xxl: "800px"
-                    },
-                    mb: pxToRem(45)
+                    flex: 1
                   }}
                   helperText={
                     <FormHelperText
