@@ -162,8 +162,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
                     xs: "100%",
                     sm: "400px",
                     xxl: "800px"
-                  },
-                  mb: pxToRem(45)
+                  }
                 }}
                 placeholder="Introduce your community to the world. It can be a one-liner, common values, goals, or even the story behind it!"
                 helperText={
