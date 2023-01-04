@@ -1,23 +1,33 @@
-/* eslint-disable react/no-unstable-nested-components */
-import { Avatar } from "@mui/material";
-import { styled } from "@mui/system";
+import { Avatar, styled } from "@mui/material";
 import { pxToRem } from "@utils/text-size";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { ReactComponent as UploadIcon } from "@assets/aut/upload-icon.svg";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
-const UploadWrapper = styled("div")({
-  height: pxToRem(100),
-  width: pxToRem(100),
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  border: "1px solid #439EDD",
-  marginBottom: "3px",
-  marginRight: pxToRem(20),
-  cursor: "pointer",
-  position: "relative"
+const UploadWrapper = styled("div")(({ theme, color }) => {
+  return {
+    boxSizing: "border-box",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    border: `1px solid ${theme.palette[color].dark}`,
+    transition: theme.transitions.create(["border-color"]),
+    "&:hover": {
+      borderWidth: "2px",
+      borderColor: theme.palette[color].dark
+    },
+    cursor: "pointer",
+    position: "relative",
+    [theme.breakpoints.up("xs")]: {
+      height: "70px",
+      width: "70px"
+    },
+    [theme.breakpoints.up("xxl")]: {
+      height: "70px",
+      width: "70px"
+    }
+  };
 });
 
 const Action = styled("div")(({ theme }) => ({
@@ -51,7 +61,8 @@ const Action = styled("div")(({ theme }) => ({
 
 const AFileUpload = ({
   fileChange = (file: File) => null,
-  initialPreviewUrl = null
+  initialPreviewUrl = null,
+  color = null
 }) => {
   const [preview, setPreview] = useState(initialPreviewUrl);
   const [showAction, setShowAction] = useState(false);
@@ -88,7 +99,7 @@ const AFileUpload = ({
       onMouseEnter={() => toggleActions(true)}
       onMouseLeave={() => toggleActions(false)}
       onClick={handleActionClick}
-      className="container"
+      color={color}
     >
       <div {...getRootProps({ className: "dropzone" })}>
         <input {...getInputProps()} />

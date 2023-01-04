@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { AutTextField, FormHelperText } from "@components/Fields";
+import { FormHelperText } from "@components/Fields";
 import AFileUpload from "@components/FileUpload";
 import { StepperButton } from "@components/Stepper";
 import { StepperChildProps } from "@components/Stepper/model";
@@ -9,6 +9,7 @@ import {
   integrateUpdateCommunity
 } from "@store/Integrate/integrate";
 import { useAppDispatch } from "@store/store.model";
+import { AutTextField } from "@theme/field-text-styles";
 import { countWords } from "@utils/helpers";
 import { pxToRem } from "@utils/text-size";
 import { toBase64 } from "@utils/to-base-64";
@@ -28,6 +29,11 @@ const StepWrapper = styled("form")({
   justifyContent: "center",
   flexDirection: "column"
 });
+
+const FormStackWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "flex-end"
+}));
 
 const CommunityInfoStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
@@ -55,12 +61,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
   return (
     <StepWrapper autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       <div className="sw-community-description">
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-end"
-          }}
-        >
+        <FormStackWrapper>
           <Controller
             name="image"
             control={control}
@@ -73,6 +74,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
                   }}
                 >
                   <AFileUpload
+                    color="offWhite"
                     initialPreviewUrl={image}
                     fileChange={async (file) => {
                       if (file) {
@@ -99,14 +101,22 @@ const CommunityInfoStep = (props: StepperChildProps) => {
             render={({ field: { name, value, onChange } }) => {
               return (
                 <AutTextField
-                  width="330"
                   variant="standard"
+                  color="offWhite"
                   required
                   autoFocus
                   name={name}
                   value={value || ""}
                   onChange={onChange}
                   placeholder="Community Name"
+                  sx={{
+                    width: {
+                      xs: "100%",
+                      sm: "400px",
+                      xxl: "800px"
+                    },
+                    mb: pxToRem(45)
+                  }}
                   helperText={
                     <FormHelperText
                       errorTypes={errorTypes}
@@ -124,7 +134,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
               );
             }}
           />
-        </div>
+        </FormStackWrapper>
 
         <Controller
           name="description"
@@ -133,15 +143,20 @@ const CommunityInfoStep = (props: StepperChildProps) => {
           render={({ field: { name, value, onChange } }) => {
             return (
               <AutTextField
-                width="450"
                 name={name}
                 value={value || ""}
                 onChange={onChange}
-                color="primary"
+                variant="outlined"
+                color="offWhite"
                 multiline
                 rows={5}
                 sx={{
-                  mt: pxToRem(45)
+                  width: {
+                    xs: "100%",
+                    sm: "400px",
+                    xxl: "800px"
+                  },
+                  mb: pxToRem(45)
                 }}
                 placeholder="Introduce your community to the world. It can be a one-liner, common values, goals, or even the story behind it!"
                 helperText={

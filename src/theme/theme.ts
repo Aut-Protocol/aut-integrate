@@ -4,6 +4,7 @@ import AutButtonStyles from "./button-styles";
 import AutTextFieldStyles from "./field-text-styles";
 import AutSelectFieldStyles from "./field-select-styles";
 import AutTextStyles from "./text-styles";
+import AutMenuStyles from "./menu-styles";
 import AutPalette from "./palette";
 import AutDialogStyles from "./dialog-styles";
 import "./theme.overrides";
@@ -51,7 +52,6 @@ AutTheme.components.MuiButton = AutButtonStyles(AutTheme);
 AutTheme.components.MuiDialog = AutDialogStyles(AutTheme);
 AutTheme.components.MuiTextField = AutTextFieldStyles(AutTheme);
 AutTheme.components.MuiSelect = AutSelectFieldStyles(AutTheme);
-
-console.log(AutTheme, "AutTheme");
+AutTheme.components.MuiMenu = AutMenuStyles(AutTheme);
 
 export default AutTheme;
