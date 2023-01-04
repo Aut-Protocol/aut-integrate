@@ -1,5 +1,5 @@
 {
-  "name": "aut-integrate",
+  "name": "aut-expader",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -30,7 +30,7 @@
     ]
   },
   "dependencies": {
-    "@aut-labs-private/sdk": "latest",
+    "@aut-labs-private/sdk": "0.0.3",
     "@aut-labs-private/sdk-biconomy": "latest",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",

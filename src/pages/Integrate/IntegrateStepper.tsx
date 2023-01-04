@@ -8,8 +8,9 @@ import SelectMarketStep from "./SelectMarketStep";
 import RoleStep from "./RoleStep";
 import CommitmentStep from "./CommitmentStep";
 import ConfirmStep from "./ConfirmStep";
+import { useLocation } from "react-router-dom";
 
-const steps: Step[] = [
+const defaultSteps: Step[] = [
   {
     component: ImportContractStep,
     title: "Import Contract",
@@ -76,13 +77,25 @@ const steps: Step[] = [
 ];
 
 const IntegrateStepper = (props) => {
+  const location = useLocation();
   const [instance, setInstance] = useState<StepWizardChildProps & any>();
+  const [steps, setSteps] = useState([]);
 
   useEffect(() => {
     props.instance(() => instance);
   }, [instance]);
 
-  return <Stepper instance={setInstance} steps={steps} />;
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const startFromScratch = params.get("startFromScratch");
+    if (startFromScratch === "true") {
+      setSteps(defaultSteps.slice(1));
+    } else {
+      setSteps(defaultSteps);
+    }
+  }, []);
+
+  return steps?.length && <Stepper instance={setInstance} steps={steps} />;
 };
 
 export default IntegrateStepper;
