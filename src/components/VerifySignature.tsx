@@ -78,7 +78,7 @@ const VerifySignature = ({ onClose = (_: boolean) => null, open }) => {
       setSigned(true);
     } catch (err) {
       setLoading(false);
-      setSigned(true);
+      setSigned(false);
       setErrorMessage(err?.message);
     }
   };
@@ -218,7 +218,6 @@ const VerifySignature = ({ onClose = (_: boolean) => null, open }) => {
                         }}
                         placeholder="twitter.com/username/status/123456"
                         onChange={debouncedChangeHandler}
-                        inputProps={{ maxLength: 20 }}
                       />
                     </div>
                     <AutButton
