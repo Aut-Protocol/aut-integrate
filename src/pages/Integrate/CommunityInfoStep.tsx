@@ -61,7 +61,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
 
   return (
     <StepWrapper autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-      {/* {openVerify && (
+      {openVerify && (
         <VerifySignature
           onClose={(ver) => {
             setVerified(ver);
@@ -69,7 +69,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
           }}
           open={openVerify}
         />
-      )} */}
+      )}
       <div
         style={{
           display: "flex",
@@ -174,7 +174,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
         }}
       />
 
-      {/* <div
+      <div
         style={{
           display: "flex",
           gridGap: pxToRem(20),
@@ -214,7 +214,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
         >
           Verify
         </AutButton>
-      </div> */}
+      </div>
       <StepperButton
         label="Next"
         disabled={!formState.isValid || !values.image}
