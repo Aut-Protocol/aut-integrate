@@ -1,9 +1,11 @@
 /* eslint-disable max-len */
 import { FormHelperText } from "@components/Fields";
+import { AutButton } from "@components/buttons";
 import AFileUpload from "@components/FileUpload";
 import { StepperButton } from "@components/Stepper";
 import { StepperChildProps } from "@components/Stepper/model";
-import { styled } from "@mui/material";
+import VerifySignature from "@components/VerifySignature";
+import { Button, styled } from "@mui/material";
 import {
   IntegrateCommunity,
   integrateUpdateCommunity
@@ -13,6 +15,7 @@ import { AutTextField } from "@theme/field-text-styles";
 import { countWords } from "@utils/helpers";
 import { pxToRem } from "@utils/text-size";
 import { toBase64 } from "@utils/to-base-64";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
@@ -48,13 +51,17 @@ const FormStackWrapper = styled("div")(({ theme }) => ({
 
 const CommunityInfoStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
-  const { name, image, description } = useSelector(IntegrateCommunity);
+  const [openVerify, setOpenVerify] = useState(false);
+  const [verified, setVerified] = useState(false);
+  const { name, image, description, daoTweetUrl } =
+    useSelector(IntegrateCommunity);
   const { control, handleSubmit, getValues, watch, formState } = useForm({
     mode: "onChange",
     defaultValues: {
       name,
       image,
-      description
+      description,
+      daoTweetUrl
     }
   });
 
@@ -71,100 +78,67 @@ const CommunityInfoStep = (props: StepperChildProps) => {
 
   return (
     <StepWrapper autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-      <div className="sw-community-description">
-        <FormStackWrapper>
-          <Controller
-            name="image"
-            control={control}
-            render={({ field: { onChange } }) => {
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    marginBottom: "3px"
-                  }}
-                >
-                  <AFileUpload
-                    color="offWhite"
-                    initialPreviewUrl={image}
-                    fileChange={async (file) => {
-                      if (file) {
-                        onChange(await toBase64(file));
-                      } else {
-                        onChange(null);
-                      }
-                    }}
-                  />
-                </div>
-              );
-            }}
-          />
-          <Controller
-            name="name"
-            control={control}
-            rules={{
-              required: true,
-              validate: {
-                maxNameChars: (v) => v.length <= 24,
-                maxWords: (v: string) => countWords(v) <= 3
-              }
-            }}
-            render={({ field: { name, value, onChange } }) => {
-              return (
-                <AutTextField
-                  variant="standard"
-                  color="offWhite"
-                  required
-                  autoFocus
-                  name={name}
-                  value={value || ""}
-                  onChange={onChange}
-                  placeholder="Community Name"
-                  sx={{
-                    flex: 1
-                  }}
-                  helperText={
-                    <FormHelperText
-                      errorTypes={errorTypes}
-                      value={value}
-                      name={name}
-                      errors={formState.errors}
-                    >
-                      <span>
-                        {3 - countWords(value)}/3 words and{" "}
-                        {24 - (value?.length || 0)}/24 characters left
-                      </span>
-                    </FormHelperText>
-                  }
-                />
-              );
-            }}
-          />
-        </FormStackWrapper>
-
+      {openVerify && (
+        <VerifySignature
+          onClose={(ver) => {
+            setVerified(ver);
+            setOpenVerify(false);
+          }}
+          open={openVerify}
+        />
+      )}
+      <FormStackWrapper>
         <Controller
-          name="description"
+          name="image"
           control={control}
-          rules={{ maxLength: 280 }}
+          render={({ field: { onChange } }) => {
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: "3px"
+                }}
+              >
+                <AFileUpload
+                  color="offWhite"
+                  initialPreviewUrl={image}
+                  fileChange={async (file) => {
+                    if (file) {
+                      onChange(await toBase64(file));
+                    } else {
+                      onChange(null);
+                    }
+                  }}
+                />
+              </div>
+            );
+          }}
+        />
+        <Controller
+          name="name"
+          control={control}
+          rules={{
+            required: true,
+            validate: {
+              maxNameChars: (v) => v.length <= 24,
+              maxWords: (v: string) => countWords(v) <= 3
+            }
+          }}
           render={({ field: { name, value, onChange } }) => {
             return (
               <AutTextField
+                variant="standard"
+                color="offWhite"
+                required
+                autoFocus
                 name={name}
                 value={value || ""}
                 onChange={onChange}
-                variant="outlined"
-                color="offWhite"
-                multiline
-                rows={5}
+                placeholder="Community Name"
                 sx={{
-                  width: {
-                    xs: "100%",
-                    sm: "400px",
-                    xxl: "800px"
-                  }
+                  flex: 1
                 }}
-                placeholder="Introduce your community to the world. It can be a one-liner, common values, goals, or even the story behind it!"
                 helperText={
                   <FormHelperText
                     errorTypes={errorTypes}
@@ -173,7 +147,8 @@ const CommunityInfoStep = (props: StepperChildProps) => {
                     errors={formState.errors}
                   >
                     <span>
-                      {280 - (value?.length || 0)}/280 characters left
+                      {3 - countWords(value)}/3 words and{" "}
+                      {24 - (value?.length || 0)}/24 characters left
                     </span>
                   </FormHelperText>
                 }
@@ -181,7 +156,81 @@ const CommunityInfoStep = (props: StepperChildProps) => {
             );
           }}
         />
-      </div>
+      </FormStackWrapper>
+
+      <Controller
+        name="description"
+        control={control}
+        rules={{ maxLength: 280 }}
+        render={({ field: { name, value, onChange } }) => {
+          return (
+            <AutTextField
+              name={name}
+              value={value || ""}
+              onChange={onChange}
+              variant="outlined"
+              color="offWhite"
+              multiline
+              rows={5}
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "400px",
+                  xxl: "800px"
+                },
+                mb: pxToRem(45)
+              }}
+              placeholder="Introduce your community to the world. It can be a one-liner, common values, goals, or even the story behind it!"
+              helperText={
+                <FormHelperText
+                  errorTypes={errorTypes}
+                  value={value}
+                  name={name}
+                  errors={formState.errors}
+                >
+                  <span>{280 - (value?.length || 0)}/280 characters left</span>
+                </FormHelperText>
+              }
+            />
+          );
+        }}
+      />
+
+      <FormStackWrapper>
+        <Controller
+          name="daoTweetUrl"
+          control={control}
+          render={({ field: { name, value, onChange } }) => {
+            return (
+              <AutTextField
+                variant="standard"
+                color="offWhite"
+                name={name}
+                value={value || ""}
+                sx={{
+                  flex: 1
+                }}
+                onChange={onChange}
+                placeholder="Add Twitter"
+              />
+            );
+          }}
+        />
+        <Button
+          onClick={() => setOpenVerify(true)}
+          sx={{
+            width: pxToRem(140),
+            height: pxToRem(48)
+          }}
+          type="button"
+          size="square"
+          color="offWhite"
+          disabled={!values.daoTweetUrl}
+          variant="outlined"
+        >
+          Verify
+        </Button>
+      </FormStackWrapper>
       <StepperButton
         label="Next"
         disabled={!formState.isValid || !values.image}

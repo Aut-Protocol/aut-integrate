@@ -4,16 +4,19 @@ import {
   DialogActions,
   DialogContent,
   useMediaQuery,
-  useTheme
+  useTheme,
+  IconButton
 } from "@mui/material";
 import { pxToRem } from "@utils/text-size";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const DialogWrapper = ({
   children,
   actions = null,
   open,
   onClose = null,
-  fullScreen = false
+  fullScreen = false,
+  contentSx = {} as any
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -24,6 +27,13 @@ export const DialogWrapper = ({
       {...(onClose && {
         onClose
       })}
+      sx={{
+        ".MuiPaper-root": {
+          ...(contentSx?.maxWidth && {
+            maxWidth: contentSx.maxWidth
+          })
+        }
+      }}
     >
       <DialogContent
         sx={{
@@ -57,6 +67,25 @@ export const DialogWrapper = ({
           flexDirection: "column"
         }}
       >
+        {!!onClose && (
+          <IconButton
+            size="small"
+            aria-label="close"
+            onClick={() => {
+              onClose();
+            }}
+            type="button"
+            sx={{
+              color: "white",
+              position: "absolute",
+              right: pxToRem(15),
+              top: pxToRem(15)
+            }}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        )}
+
         {children}
 
         {actions && (

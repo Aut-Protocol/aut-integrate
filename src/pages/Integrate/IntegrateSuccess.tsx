@@ -46,20 +46,12 @@ const IntegrateSuccess = () => {
         title="Celebrate the new era of your DAO 🎉"
         description={
           <>
-            <Typography
-              marginBottom={pxToRem(15)}
-              fontSize={pxToRem(18)}
-              color="white"
-            >
+            <Typography color="white" variant="body" mb="12px">
               {community?.name} 2.0 is now live on @opt_aut - with on-chain
               Roles & Interactions for all our Members 🙌 <br />
             </Typography>
 
-            <Typography
-              marginBottom={pxToRem(15)}
-              fontSize={pxToRem(18)}
-              color="white"
-            >
+            <Typography color="white" variant="body" mb="12px">
               Let’s coordinate, change things - break things. Together 🫂
             </Typography>
           </>

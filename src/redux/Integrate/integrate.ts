@@ -13,6 +13,7 @@ export interface IntegrateState {
     commitment: number;
     contractType: number;
     daoAddr: string;
+    daoTweetUrl: string;
   };
   status: ResultState;
   errorMessage: string;
@@ -25,6 +26,7 @@ const initialState: IntegrateState = {
     image: null,
     description: null,
     market: null,
+    daoTweetUrl: null,
     roles: [
       {
         id: 1,
@@ -40,8 +42,8 @@ const initialState: IntegrateState = {
       }
     ],
     commitment: null,
-    contractType: 1,
-    daoAddr: "0x8eA20de15Db87Be1a8B20Da5ebD785a4a9BE9690"
+    contractType: null,
+    daoAddr: null
   },
   status: ResultState.Idle,
   errorMessage: null,
