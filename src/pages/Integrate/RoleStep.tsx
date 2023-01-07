@@ -8,8 +8,9 @@ import { useAppDispatch } from "@store/store.model";
 import { pxToRem } from "@utils/text-size";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { AutTextField, FormHelperText } from "@components/Fields";
+import { FormHelperText } from "@components/Fields";
 import { StepperButton } from "@components/Stepper";
+import { AutTextField } from "@theme/field-text-styles";
 
 const errorTypes = {
   maxLength: `Characters cannot be more than 280`
@@ -68,14 +69,19 @@ const RoleStep = (props: StepperChildProps) => {
                   placeholder="Role Name"
                   required
                   variant="standard"
+                  color="offWhite"
                   focused
                   id={name}
                   name={name}
                   value={value}
-                  width="450"
                   autoFocus={index === 0}
                   onChange={onChange}
                   sx={{
+                    width: {
+                      xs: "100%",
+                      sm: "400px",
+                      xxl: "800px"
+                    },
                     mb: pxToRem(45)
                   }}
                   inputProps={{ maxLength: 20 }}

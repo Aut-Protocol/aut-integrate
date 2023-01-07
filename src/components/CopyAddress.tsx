@@ -6,7 +6,7 @@ import { pxToRem } from "@utils/text-size";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
-export const CopyAddress = ({ address, textStyles = {}, iconStyles = {} }) => {
+export const CopyAddress = ({ address, textProps = {}, iconStyles = {} }) => {
   const [open, setOpen] = useState(false);
 
   const action = (
@@ -51,10 +51,7 @@ export const CopyAddress = ({ address, textStyles = {}, iconStyles = {} }) => {
       <CopyToClipboard text={address} onCopy={() => setOpen(true)}>
         <div style={{ color: "white" }}>
           <Tooltip title="Copy Address">
-            <Typography
-              sx={{ color: "white", fontSize: pxToRem(12), ...textStyles }}
-              component="div"
-            >
+            <Typography sx={{ color: "white" }} {...textProps}>
               {trimAddress(address)}
               <IconButton sx={{ color: "white", p: 0 }}>
                 <ContentCopyIcon

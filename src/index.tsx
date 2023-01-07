@@ -9,9 +9,9 @@ import { BrowserTracing } from "@sentry/tracing";
 import SentryRRWeb from "@sentry/rrweb";
 import { createRoot } from "react-dom/client";
 import { ensureVariablesExist } from "@utils/env";
-import { SwTheme } from "./theme";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
+import SwTheme from "./theme/theme";
 
 markerSDK.loadWidget({
   destination: `${process.env.REACT_APP_MARKER}`,

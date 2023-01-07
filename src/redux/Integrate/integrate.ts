@@ -42,7 +42,7 @@ const initialState: IntegrateState = {
       }
     ],
     commitment: null,
-    contractType: 1,
+    contractType: null,
     daoAddr: null
   },
   status: ResultState.Idle,

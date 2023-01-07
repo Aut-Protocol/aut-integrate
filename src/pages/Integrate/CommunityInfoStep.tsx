@@ -1,16 +1,17 @@
 /* eslint-disable max-len */
+import { FormHelperText } from "@components/Fields";
 import { AutButton } from "@components/buttons";
-import { AutTextField, FormHelperText } from "@components/Fields";
 import AFileUpload from "@components/FileUpload";
 import { StepperButton } from "@components/Stepper";
 import { StepperChildProps } from "@components/Stepper/model";
 import VerifySignature from "@components/VerifySignature";
-import { styled } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import {
   IntegrateCommunity,
   integrateUpdateCommunity
 } from "@store/Integrate/integrate";
 import { useAppDispatch } from "@store/store.model";
+import { AutTextField } from "@theme/field-text-styles";
 import { countWords } from "@utils/helpers";
 import { pxToRem } from "@utils/text-size";
 import { toBase64 } from "@utils/to-base-64";
@@ -31,6 +32,22 @@ const StepWrapper = styled("form")({
   justifyContent: "center",
   flexDirection: "column"
 });
+
+const FormStackWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "flex-end",
+  marginBottom: "45px",
+  gridGap: "20px",
+  [theme.breakpoints.up("xs")]: {
+    width: "100%"
+  },
+  [theme.breakpoints.up("sm")]: {
+    width: "400px"
+  },
+  [theme.breakpoints.up("xxl")]: {
+    width: "800px"
+  }
+}));
 
 const CommunityInfoStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
@@ -70,12 +87,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
           open={openVerify}
         />
       )}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-end"
-        }}
-      >
+      <FormStackWrapper>
         <Controller
           name="image"
           control={control}
@@ -84,10 +96,12 @@ const CommunityInfoStep = (props: StepperChildProps) => {
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column"
+                  flexDirection: "column",
+                  marginBottom: "3px"
                 }}
               >
                 <AFileUpload
+                  color="offWhite"
                   initialPreviewUrl={image}
                   fileChange={async (file) => {
                     if (file) {
@@ -114,14 +128,17 @@ const CommunityInfoStep = (props: StepperChildProps) => {
           render={({ field: { name, value, onChange } }) => {
             return (
               <AutTextField
-                width="330"
                 variant="standard"
+                color="offWhite"
                 required
                 autoFocus
                 name={name}
                 value={value || ""}
                 onChange={onChange}
                 placeholder="Community Name"
+                sx={{
+                  flex: 1
+                }}
                 helperText={
                   <FormHelperText
                     errorTypes={errorTypes}
@@ -139,7 +156,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
             );
           }}
         />
-      </div>
+      </FormStackWrapper>
 
       <Controller
         name="description"
@@ -148,15 +165,20 @@ const CommunityInfoStep = (props: StepperChildProps) => {
         render={({ field: { name, value, onChange } }) => {
           return (
             <AutTextField
-              width="450"
               name={name}
               value={value || ""}
               onChange={onChange}
-              color="primary"
+              variant="outlined"
+              color="offWhite"
               multiline
               rows={5}
               sx={{
-                mt: pxToRem(45)
+                width: {
+                  xs: "100%",
+                  sm: "400px",
+                  xxl: "800px"
+                },
+                mb: pxToRem(45)
               }}
               placeholder="Introduce your community to the world. It can be a one-liner, common values, goals, or even the story behind it!"
               helperText={
@@ -174,47 +196,41 @@ const CommunityInfoStep = (props: StepperChildProps) => {
         }}
       />
 
-      <div
-        style={{
-          display: "flex",
-          gridGap: pxToRem(20),
-          marginTop: pxToRem(45)
-        }}
-      >
+      <FormStackWrapper>
         <Controller
           name="daoTweetUrl"
           control={control}
           render={({ field: { name, value, onChange } }) => {
             return (
               <AutTextField
-                width="290"
                 variant="standard"
+                color="offWhite"
                 name={name}
                 value={value || ""}
+                sx={{
+                  flex: 1
+                }}
                 onChange={onChange}
                 placeholder="Add Twitter"
               />
             );
           }}
         />
-        <AutButton
+        <Button
           onClick={() => setOpenVerify(true)}
           sx={{
             width: pxToRem(140),
-            height: pxToRem(48),
-            "&.MuiButton-root": {
-              borderRadius: 0,
-              borderWidth: "1px"
-            }
+            height: pxToRem(48)
           }}
           type="button"
-          color="primary"
+          size="square"
+          color="offWhite"
           disabled={!values.daoTweetUrl}
           variant="outlined"
         >
           Verify
-        </AutButton>
-      </div>
+        </Button>
+      </FormStackWrapper>
       <StepperButton
         label="Next"
         disabled={!formState.isValid || !values.image}

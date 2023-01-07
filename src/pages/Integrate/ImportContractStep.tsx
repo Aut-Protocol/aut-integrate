@@ -1,14 +1,17 @@
 import { isMemberOfDao } from "@api/registry.api";
 import ErrorDialog from "@components/Dialog/ErrorPopup";
 import LoadingDialog from "@components/Dialog/LoadingPopup";
-import {
-  AutSelectField,
-  AutTextField,
-  FormHelperText
-} from "@components/Fields";
+import { FormHelperText } from "@components/Fields";
 import { StepperButton } from "@components/Stepper";
 import { StepperChildProps } from "@components/Stepper/model";
-import { Link, MenuItem, styled } from "@mui/material";
+import {
+  Link,
+  MenuItem,
+  Select,
+  styled,
+  TextField,
+  Typography
+} from "@mui/material";
 import {
   IntegrateCommunity,
   IntegrateErrorMessage,
@@ -18,11 +21,12 @@ import {
 } from "@store/Integrate/integrate";
 import { ResultState } from "@store/result-status";
 import { useAppDispatch } from "@store/store.model";
+import { AutSelectField } from "@theme/field-select-styles";
+import { AutTextField } from "@theme/field-text-styles";
 import { ContractTypes } from "@utils/misc";
 import { pxToRem } from "@utils/text-size";
 import { useWeb3React } from "@web3-react/core";
 import { isAddress } from "ethers/lib/utils";
-import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
@@ -105,7 +109,16 @@ const ImportContractStep = (props: StepperChildProps) => {
           return (
             <AutSelectField
               variant="standard"
+              color="offWhite"
               autoFocus
+              sx={{
+                width: {
+                  xs: "100%",
+                  sm: "400px",
+                  xxl: "800px"
+                },
+                mb: pxToRem(45)
+              }}
               renderValue={(selected) => {
                 if (!selected) {
                   return "DAO Type" as any;
@@ -113,9 +126,7 @@ const ImportContractStep = (props: StepperChildProps) => {
                 const type = ContractTypes.find((t) => t.value === selected);
                 return type?.label || selected;
               }}
-              width="450"
               name={name}
-              color="primary"
               value={value || ""}
               displayEmpty
               required
@@ -127,9 +138,12 @@ const ImportContractStep = (props: StepperChildProps) => {
                   errors={formState.errors}
                 >
                   <Link
-                    sx={{ color: "white" }}
+                    variant="caption"
                     target="_blank"
                     href="https://hackersdao.aut.id/"
+                    sx={{
+                      color: "offWhite.main"
+                    }}
                   >
                     Aren't you part of a DAO yet? Join one here
                   </Link>
@@ -139,7 +153,6 @@ const ImportContractStep = (props: StepperChildProps) => {
               {ContractTypes.map((type) => (
                 <MenuItem
                   key={`contract-type-${type.value}`}
-                  color="primary"
                   value={type.value}
                 >
                   {type.label}
@@ -161,14 +174,19 @@ const ImportContractStep = (props: StepperChildProps) => {
         render={({ field: { name, value, onChange } }) => {
           return (
             <AutTextField
-              width="450"
               variant="standard"
+              color="offWhite"
               required
               name={name}
               value={value || ""}
               onChange={onChange}
               placeholder="DAO Address"
               sx={{
+                width: {
+                  xs: "100%",
+                  sm: "400px",
+                  xxl: "800px"
+                },
                 mb: pxToRem(45)
               }}
               helperText={

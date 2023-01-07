@@ -6,35 +6,17 @@ import { useState, useRef, useMemo, useEffect } from "react";
 import AutLoading from "./AutLoading";
 import { AutButton } from "./buttons";
 import DialogWrapper from "./Dialog/DialogWrapper";
-import { AutTextField } from "./Fields";
-import { ReactComponent as CutLogo } from "@assets/aut/cut.svg";
-
-const Title = styled(Typography)`
-  letter-spacing: 5px;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: ${pxToRem(45)};
-  margin-bottom: ${pxToRem(10)};
-  margin-top: ${pxToRem(20)};
-`;
+import { AutTextField } from "@theme/field-text-styles";
+import AppTitle from "./AppTitle";
 
 const message = "I should own this tweet %40aut-labs";
-
-const Subtitle = styled(Typography)({
-  letterSpacing: "1.25px",
-  textAlign: "center",
-  color: "white",
-  fontSize: "1.125rem"
-  // textTransform: "uppercase"
-});
 
 const DialogInnerContent = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "space-around",
+  textAlign: "center",
   flex: 1
 });
 
@@ -94,7 +76,7 @@ const VerifySignature = ({ onClose = (_: boolean) => null, open }) => {
         setLoading(true);
         const res = await provider.provider.request({
           method: "personal_sign",
-          params: [message, account]
+          params: ["Āut Labs", account]
         });
         setSignature(res);
         setLoading(false);
@@ -119,17 +101,7 @@ const VerifySignature = ({ onClose = (_: boolean) => null, open }) => {
   }, []);
 
   return (
-    <DialogWrapper
-      open={open}
-      onClose={closeDialog}
-      contentSx={{
-        borderImage: null,
-        borderWidth: null,
-        maxWidth: pxToRem(780),
-        minWidth: pxToRem(780),
-        minHeight: pxToRem(550)
-      }}
-    >
+    <DialogWrapper open={open} onClose={closeDialog}>
       <>
         <>
           {loading ? (
@@ -144,15 +116,32 @@ const VerifySignature = ({ onClose = (_: boolean) => null, open }) => {
             <>
               {signature && !signed && !tweetPosted && (
                 <>
-                  <Title>Verify your Signature</Title>
-                  <CutLogo width="100%" />
+                  <AppTitle
+                    mb={{
+                      xs: "16px",
+                      lg: "24px",
+                      xxl: "32px"
+                    }}
+                    variant="h2"
+                  />
+                  <Typography color="white" variant="subtitle1">
+                    Verify your Signature
+                  </Typography>
                   <DialogInnerContent>
-                    <Subtitle>
-                      Tweet a message to prove that you control this address.
-                      <br />
-                      Return back to this page afterwards to complete
-                      verification.
-                    </Subtitle>
+                    <span
+                      style={{
+                        display: "flex",
+                        flexDirection: "column"
+                      }}
+                    >
+                      <Typography color="white" mb="10px" variant="body">
+                        Tweet a message to prove that you control this address.
+                      </Typography>
+                      <Typography color="white" variant="body">
+                        Return back to this page afterwards to complete
+                        verification.
+                      </Typography>
+                    </span>
                     <div
                       style={{
                         display: "flex",
@@ -164,12 +153,9 @@ const VerifySignature = ({ onClose = (_: boolean) => null, open }) => {
                     >
                       <AutButton
                         onClick={() => postTweet()}
-                        sx={{
-                          width: pxToRem(420),
-                          height: pxToRem(70)
-                        }}
                         type="submit"
-                        color="primary"
+                        color="offWhite"
+                        size="normal"
                         variant="outlined"
                       >
                         Post Proof on Twitter
@@ -191,43 +177,45 @@ const VerifySignature = ({ onClose = (_: boolean) => null, open }) => {
               )}
               {signature && !signed && tweetPosted && (
                 <>
-                  <Title>Verify your Tweet</Title>
-                  <CutLogo width="100%" />
+                  <AppTitle
+                    mb={{
+                      xs: "16px",
+                      lg: "24px",
+                      xxl: "32px"
+                    }}
+                    variant="h2"
+                  />
+                  <Typography color="white" variant="subtitle1">
+                    Verify your Tweet
+                  </Typography>
                   <DialogInnerContent>
-                    <div>
-                      <Subtitle
-                        sx={{
-                          marginBottom: pxToRem(50)
-                        }}
-                      >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column"
+                      }}
+                    >
+                      <Typography mb="20px" color="white" variant="body">
                         Paste the URL of the tweet you just posted
-                      </Subtitle>
+                      </Typography>
                       <AutTextField
                         required
                         variant="outlined"
+                        color="offWhite"
                         focused
                         inputRef={input}
                         defaultValue={tweetUrl || ""}
-                        width="450"
                         disabled={loading}
                         autoFocus
-                        sx={{
-                          ".MuiInputBase-root": {
-                            height: pxToRem(65)
-                          }
-                        }}
                         placeholder="twitter.com/username/status/123456"
                         onChange={debouncedChangeHandler}
                       />
                     </div>
                     <AutButton
                       onClick={() => verifyTweet()}
-                      sx={{
-                        width: pxToRem(420),
-                        height: pxToRem(70)
-                      }}
                       type="submit"
-                      color="primary"
+                      color="offWhite"
+                      size="normal"
                       variant="outlined"
                     >
                       Verify
@@ -237,22 +225,28 @@ const VerifySignature = ({ onClose = (_: boolean) => null, open }) => {
               )}
               {signed && (
                 <>
-                  <Title>Thank you</Title>
-                  <CutLogo width="100%" />
+                  <AppTitle
+                    mb={{
+                      xs: "16px",
+                      lg: "24px",
+                      xxl: "32px"
+                    }}
+                    variant="h2"
+                  />
+                  <Typography color="white" variant="subtitle1">
+                    Thank you
+                  </Typography>
                   <DialogInnerContent>
-                    <Subtitle>
+                    <Typography mb="20px" color="white" variant="body">
                       Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
                       sed diam <br /> nonumy eirmod tempor invidunt ut labore et
                       dolore magna
-                    </Subtitle>
+                    </Typography>
                     <AutButton
                       onClick={() => closeDialog()}
-                      sx={{
-                        width: pxToRem(320),
-                        height: pxToRem(70)
-                      }}
                       type="submit"
-                      color="primary"
+                      color="offWhite"
+                      size="normal"
                       variant="outlined"
                     >
                       Close window
