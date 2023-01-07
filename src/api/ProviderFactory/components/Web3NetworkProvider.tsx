@@ -9,12 +9,10 @@ import {
   setProviderIsOpen,
   setSigner
 } from "@store/WalletProvider/WalletProvider";
-import { pxToRem } from "@utils/text-size";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { styled, Typography } from "@mui/material";
-import { ReactComponent as AutLogo } from "@assets/aut/logo.svg";
 import AutLoading from "@components/AutLoading";
 import DialogWrapper from "@components/Dialog/DialogWrapper";
 import AutSDK from "@aut-labs-private/sdk";
@@ -24,31 +22,15 @@ import { NetworkSelectors } from "./NetworkSelectors";
 import { EnableAndChangeNetwork } from "../web3.network";
 import { SDKBiconomyWrapper } from "@aut-labs-private/sdk-biconomy";
 import { ethers } from "ethers";
-
-const Title = styled(Typography)({
-  mt: pxToRem(25),
-  letterSpacing: "3px",
-  fontSize: pxToRem(20),
-  fontWeight: "500",
-  color: "white",
-  textTransform: "uppercase"
-});
-
-const Subtitle = styled(Typography)({
-  mt: pxToRem(25),
-  letterSpacing: "1.25px",
-  fontSize: pxToRem(16),
-  textAlign: "center",
-  color: "white",
-  textTransform: "uppercase"
-});
+import AppTitle from "@components/AppTitle";
 
 const DialogInnerContent = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  flex: 1
+  flex: 1,
+  gridGap: "30px"
 });
 
 const Web3NetworkProvider = ({ fullScreen = false }: any) => {
@@ -205,24 +187,45 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
   return (
     <DialogWrapper open={isOpen} fullScreen={fullScreen}>
       <>
-        <AutLogo width="80" height="80" />
+        <AppTitle
+          mb={{
+            xs: "16px",
+            lg: "24px",
+            xxl: "32px"
+          }}
+          variant="h2"
+        />
 
         {networkConfig && provider?._network?.chainId !== chainId ? (
           <>
-            <Title>Waiting for confirmation</Title>
+            <Typography color="white" variant="subtitle1">
+              Waiting for confirmation
+            </Typography>
             <div style={{ position: "relative", flex: 1 }}>
               <AutLoading />
             </div>
           </>
         ) : (
           <>
-            {!wallet && <Title>Connect your wallet</Title>}
+            {!wallet && (
+              <Typography color="white" variant="subtitle1">
+                Connect your wallet
+              </Typography>
+            )}
             {wallet && (
               <>
-                <Title>Change Network</Title>
-                <Subtitle>
+                <Typography
+                  mb={{
+                    xs: "8px"
+                  }}
+                  color="white"
+                  variant="subtitle1"
+                >
+                  Change Network
+                </Typography>
+                <Typography color="white" variant="body">
                   You will need to switch your wallet’s network.
-                </Subtitle>
+                </Typography>
               </>
             )}
             <DialogInnerContent>

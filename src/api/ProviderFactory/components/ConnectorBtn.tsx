@@ -8,18 +8,18 @@ import {
 } from "@store/WalletProvider/WalletProvider";
 import { ReactComponent as WalletConnectLogo } from "@assets/aut/wallet-connect.svg";
 import { ReactComponent as MetamaskLogo } from "@assets/aut/metamask.svg";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { AutButton } from "@components/buttons";
 import { useSelector } from "react-redux";
 
 const btnConfig = {
   [ConnectorTypes.Metamask]: {
     label: "Metamask",
-    icon: <MetamaskLogo height="15px" />
+    icon: <MetamaskLogo />
   },
   [ConnectorTypes.WalletConnect]: {
     label: "WalletConnect",
-    icon: <WalletConnectLogo height="15px" />
+    icon: <WalletConnectLogo />
   }
 };
 
@@ -40,44 +40,26 @@ export default function ConnectorBtn({
   }, [connector]);
 
   return (
-    <AutButton
+    <Button
       onClick={async () => {
         await connector.connectEagerly();
         dispatch(setWallet(connectorType));
         setConnector(connector);
       }}
+      startIcon={btnConfig[connectorType].icon}
+      variant="outlined"
+      size="normal"
+      color="offWhite"
       sx={{
-        width: pxToRem(260),
-        height: pxToRem(55),
-        fontSize: pxToRem(16),
-        mb: pxToRem(25),
-        textTransform: "inherit",
-        "&.MuiButton-root": {
-          letterSpacing: "0px"
+        minWidth: {
+          xs: "260px",
+          md: "280px",
+          lg: "300px",
+          xxl: "440px"
         }
       }}
-      type="button"
-      color="primary"
-      variant="outlined"
     >
-      <span
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center"
-        }}
-      >
-        {btnConfig[connectorType].icon}
-        <Typography
-          sx={{
-            flex: 1,
-            fontSize: pxToRem(16),
-            color: "white"
-          }}
-        >
-          {btnConfig[connectorType].label}
-        </Typography>
-      </span>
-    </AutButton>
+      {btnConfig[connectorType].label}
+    </Button>
   );
 }
