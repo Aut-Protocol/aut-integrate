@@ -30,7 +30,18 @@ declare module "@mui/material/Button" {
     square: true;
   }
 
+  interface ButtonPropsVariantOverrides {
+    square: true;
+  }
+
   interface ButtonPropsColorOverrides {
+    offWhite?: true;
+    nightBlack?: true;
+  }
+}
+
+declare module "@mui/material/Slider" {
+  interface SliderPropsColorOverrides {
     offWhite?: true;
     nightBlack?: true;
   }

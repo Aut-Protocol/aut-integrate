@@ -1,14 +1,18 @@
-version: '3.7'
+version: "3.7"
 
 services:
-
-  aut-integrate-app:
-    container_name: aut-integrate-app
+  aut_expander_prod:
+    container_name: aut_expander_prod
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      - ".:/app"
+      - "/app/node_modules"
     ports:
-      - '4001:80'
+      - "4001:80"
+
+networks:
+  default:
+    name: aut-api
+    external: true

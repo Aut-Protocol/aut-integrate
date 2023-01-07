@@ -80,7 +80,7 @@ export const AutSlider = (props: AutSliderProps) => {
     >
       <CommitmentMessage value={props.value} />
       <div style={{ position: "relative" }}>
-        <StyledSlider {...props.sliderProps} />
+        <StyledSlider color="offWhite" {...props.sliderProps} />
       </div>
       <div
         style={{
