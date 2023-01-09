@@ -21,14 +21,14 @@ export function CommitmentMessage({ value, children = null }) {
       color="white"
       whiteSpace="nowrap"
       align="left"
+      variant="caption"
       component="span"
-      fontSize={pxToRem(18)}
       sx={{ display: "flex", mb: "4px" }}
     >
       {message}
     </Typography>
   );
-},
+}
 
 const errorTypes = {
   min: "Min 1 commitment level!"
@@ -54,8 +54,6 @@ export const AutCommitmentSlider = ({
   sliderProps,
   ...props
 }: AutSliderProps) => {
-  const theme = useTheme();
-
   return (
     <SliderWrapper sx={sx}>
       <CommitmentMessage value={value} />
@@ -75,7 +73,7 @@ export const AutCommitmentSlider = ({
           name={name}
           errors={errors}
         >
-          <Typography color="white" variant="body1">
+          <Typography color="white" variant="caption">
             No worries, you’ll be able to change this later.
           </Typography>
         </FormHelperText>
@@ -83,7 +81,7 @@ export const AutCommitmentSlider = ({
     </SliderWrapper>
   );
 };
- 
+
 const generateColors = (color: PaletteColor) => ({
   color: color.dark,
   ".MuiSlider-mark": {
@@ -93,13 +91,11 @@ const generateColors = (color: PaletteColor) => ({
     background: color.light
   },
   ".MuiSlider-thumb": {
-    background: color.main
-  },
-  ".MuiSlider-thumb:hover": {
+    background: color.main,
     boxShadow: `0px 0px 0px 0px`
   },
-  ".MuiSlider-thumb.Mui-focusVisible": {
-    boxShadow: `0px 0px 0px 0px`
+  ".MuiTypography-root": {
+    color: color.main
   }
 });
 
