@@ -1,4 +1,3 @@
-import { AutSlider } from "@components/CommitmentSlider";
 import { StepperButton } from "@components/Stepper";
 import { StepperChildProps } from "@components/Stepper/model";
 import { styled } from "@mui/material";

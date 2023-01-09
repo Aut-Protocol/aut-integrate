@@ -10,9 +10,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ReactComponent as GenesisImage } from "@assets/genesis.svg";
 import AppTitle from "@components/AppTitle";
-import { AutCommitmentSlider } from "@theme/commitment-slider-styles";
-import { Controller, useForm } from "react-hook-form";
-import { IntegrateCommunity } from "@store/Integrate/integrate";
 
 const Wrapper = styled(Container)({
   display: "flex",
@@ -50,19 +47,6 @@ const GetStarted = () => {
   const networkConfig = useSelector(SelectedNetworkConfig);
   const history = useHistory();
   const location = useLocation();
-  const { commitment } = useSelector(IntegrateCommunity);
-
-  const {
-    control,
-    handleSubmit,
-    getValues,
-    formState: { errors, isValid }
-  } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      commitment
-    }
-  });
 
   useEffect(() => {
     if (!connectInitiated) {
@@ -198,31 +182,6 @@ const GetStarted = () => {
         >
           Start from scratch
         </Button>
-        <Controller
-          name="commitment"
-          key="commitment"
-          control={control}
-          rules={{ min: 1, required: true }}
-          render={({ field: { name, value, onChange } }) => {
-            return (
-              <AutCommitmentSlider
-                value={value}
-                name={name}
-                errors={errors}
-                sliderProps={{
-                  defaultValue: 1,
-                  step: 1,
-                  marks: true,
-                  name,
-                  value: value || 0,
-                  onChange,
-                  min: 0,
-                  max: 10
-                }}
-              />
-            );
-          }}
-        />
       </Box>
     </Wrapper>
   );
