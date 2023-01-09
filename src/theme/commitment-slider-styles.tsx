@@ -23,7 +23,7 @@ export function CommitmentMessage({ value, children = null }) {
       align="left"
       variant="caption"
       component="span"
-      sx={{ display: "flex", mb: "4px" }}
+      sx={{ display: "flex", mb: "4px", height: "20px" }}
     >
       {message}
     </Typography>
