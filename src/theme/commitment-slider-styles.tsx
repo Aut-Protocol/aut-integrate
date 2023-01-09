@@ -7,14 +7,12 @@ import {
   styled,
   PaletteColor,
   Theme,
-  Breakpoint,
   ComponentsOverrides,
   ComponentsProps,
   ComponentsVariants
 } from "@mui/material";
 import { CommitmentMessages } from "@utils/misc";
 import { pxToRem } from "@utils/text-size";
-import { FieldErrors } from "react-hook-form";
 
 export function CommitmentMessage({ value, children = null }) {
   const message = CommitmentMessages(value);
@@ -30,15 +28,7 @@ export function CommitmentMessage({ value, children = null }) {
       {message}
     </Typography>
   );
-}
-
-const fontSize = {
-  xs: "16px",
-  sm: "16px",
-  md: "16px",
-  lg: "16px",
-  xxl: "24px"
-};
+},
 
 const errorTypes = {
   min: "Min 1 commitment level!"
@@ -93,12 +83,7 @@ export const AutCommitmentSlider = ({
     </SliderWrapper>
   );
 };
-
-const addOpacity = (color, opacity) => {
-  const colorWithOpacity = color.slice(0, 1) + opacity + color.slice(1);
-  return colorWithOpacity;
-};
-
+ 
 const generateColors = (color: PaletteColor) => ({
   color: color.dark,
   ".MuiSlider-mark": {
