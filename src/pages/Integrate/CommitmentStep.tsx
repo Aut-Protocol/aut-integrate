@@ -7,6 +7,7 @@ import {
   integrateUpdateCommunity
 } from "@store/Integrate/integrate";
 import { useAppDispatch } from "@store/store.model";
+import { AutCommitmentSlider } from "@theme/commitment-slider-styles";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
@@ -52,7 +53,7 @@ const CommitmentStep = (props: StepperChildProps) => {
         rules={{ min: 1, required: true }}
         render={({ field: { name, value, onChange } }) => {
           return (
-            <AutSlider
+            <AutCommitmentSlider
               value={value}
               name={name}
               errors={errors}
