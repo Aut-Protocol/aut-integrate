@@ -1,8 +1,13 @@
 /* eslint-disable max-len */
-import { StepperChildProps } from "@components/Stepper/model";
-import { Avatar, Box, Container, styled, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Container,
+  styled,
+  Typography,
+  useTheme
+} from "@mui/material";
 import { pxToRem } from "@utils/text-size";
-import { ReactComponent as CutLogo } from "@assets/aut/cut.svg";
 import { AutButton } from "@components/buttons";
 import { useParams } from "react-router-dom";
 import CopyAddress from "@components/CopyAddress";
@@ -19,14 +24,14 @@ const StepWrapper = styled(Container)({
   flexDirection: "column"
 });
 
-const IntegrateSuccess = (props: StepperChildProps) => {
+const IntegrateSuccess = () => {
   const [open, setOpen] = useState(false);
   const community = useSelector(IntegrateCommunity);
   const params = useParams<{ address: string }>();
+  const theme = useTheme();
   const shareMessage = `Hey there! We've just deployed ${community?.name} on Aut - choose your Role in our Community, and let's build something great together!`;
   return (
     <StepWrapper
-      maxWidth="lg"
       sx={{
         width: "100%",
         flexGrow: 1,
@@ -41,27 +46,12 @@ const IntegrateSuccess = (props: StepperChildProps) => {
         title="Celebrate the new era of your DAO 🎉"
         description={
           <>
-            <Typography
-              marginBottom={pxToRem(15)}
-              fontSize={pxToRem(18)}
-              color="white"
-            >
+            <Typography color="white" variant="body" mb="12px">
               {community?.name} 2.0 is now live on @opt_aut - with on-chain
               Roles & Interactions for all our Members 🙌 <br />
             </Typography>
 
-            {/* <Typography marginBottom={pxToRem(15)} fontSize={pxToRem(18)} color="white">
-              Have a look at the Contract {'—> '} <br />
-              <Link sx={{ color: 'white' }} target="_blank" href={`https://blockscout.com/xdai/mainnet/address/${params.address}`}>
-                https://blockscout.com/xdai/mainnet/address/${trimAddress(params.address)}
-              </Link>
-            </Typography> */}
-
-            <Typography
-              marginBottom={pxToRem(15)}
-              fontSize={pxToRem(18)}
-              color="white"
-            >
+            <Typography color="white" variant="body" mb="12px">
               Let’s coordinate, change things - break things. Together 🫂
             </Typography>
           </>
@@ -82,37 +72,34 @@ const IntegrateSuccess = (props: StepperChildProps) => {
           />
         }
       />
-      <Typography
-        letterSpacing="8px"
-        textTransform="uppercase"
-        marginTop={pxToRem(50)}
-        fontSize={pxToRem(50)}
-        color="white"
-      >
+      <Typography marginTop={pxToRem(50)} color="white" variant="subtitle1">
         You’ve now expanded your Community 🎉
       </Typography>
-      <CutLogo />
 
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          marginTop: pxToRem(100)
+          height: "60px",
+          marginTop: "80px",
+          padding: "0 20px",
+          borderTop: `1px solid ${theme.palette.offWhite.main}`,
+          borderBottom: `1px solid ${theme.palette.offWhite.main}`
         }}
       >
         <Typography
-          letterSpacing="1.25px"
           maxWidth="80%"
           marginRight={pxToRem(100)}
-          fontSize={pxToRem(25)}
           color="white"
+          variant="body"
+          fontWeight="bold"
         >
           Your expanded DAO Contract {"—> "}
         </Typography>
 
         <CopyAddress
-          textStyles={{
-            fontSize: pxToRem(25)
+          textProps={{
+            variant: "body"
           }}
           iconStyles={{
             width: pxToRem(50)
@@ -121,22 +108,30 @@ const IntegrateSuccess = (props: StepperChildProps) => {
         />
       </div>
       <Typography
-        letterSpacing="1.25px"
-        maxWidth="80%"
+        maxWidth={{
+          xs: "100%",
+          md: "400px",
+          lg: "480px",
+          xxl: "560px"
+        }}
         marginTop={pxToRem(40)}
-        fontSize={pxToRem(20)}
         color="white"
+        variant="body"
       >
         This contract already knows about the Roles and Interactions of your
         Community Members.
       </Typography>
 
       <Typography
-        letterSpacing="1.25px"
         marginTop={pxToRem(40)}
         marginBottom={pxToRem(100)}
-        maxWidth="80%"
-        fontSize={pxToRem(20)}
+        maxWidth={{
+          xs: "100%",
+          md: "400px",
+          lg: "480px",
+          xxl: "560px"
+        }}
+        variant="body"
         color="white"
       >
         Today begins the 2nd life of your DAO. <br /> Tweet to let everybody
@@ -147,25 +142,17 @@ const IntegrateSuccess = (props: StepperChildProps) => {
         className="right-box"
       >
         <AutButton
-          sx={{
-            width: pxToRem(360),
-            height: pxToRem(70)
-          }}
-          type="button"
-          color="primary"
-          onClick={() => setOpen(true)}
           variant="outlined"
+          size="normal"
+          color="offWhite"
+          onClick={() => setOpen(true)}
         >
           Share
         </AutButton>
         <AutButton
-          sx={{
-            width: pxToRem(360),
-            height: pxToRem(70)
-          }}
-          type="button"
-          color="primary"
           variant="outlined"
+          size="normal"
+          color="offWhite"
           disabled
           href="https://github.com/SkillWallet/web-component"
         >

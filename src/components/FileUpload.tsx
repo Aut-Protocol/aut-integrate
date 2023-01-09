@@ -1,4 +1,4 @@
-import { Avatar, styled } from "@mui/material";
+import { Avatar, SvgIcon, styled, useTheme } from "@mui/material";
 import { pxToRem } from "@utils/text-size";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -30,7 +30,7 @@ const UploadWrapper = styled("div")(({ theme, color }) => {
   };
 });
 
-const Action = styled("div")(({ theme }) => ({
+const Action = styled("div")(({ theme, color }) => ({
   opacity: 0,
   "&.show": {
     opacity: 1
@@ -43,13 +43,13 @@ const Action = styled("div")(({ theme }) => ({
   left: 0,
   alignItems: "center",
   justifyContent: "center",
-  transition: `${(theme.transitions as any).create(["opacity", "transform"])}`,
+  transition: theme.transitions.create(["opacity", "transform"]),
   ".MuiAvatar-fallback": {
-    fill: theme.palette.text.primary
+    fill: theme.palette[color].dark
   },
   ".MuiSvgIcon-root": {
-    width: "1.5em",
-    height: "1.5em",
+    width: "1.2em",
+    height: "1.2em",
     "&.remove": {
       color: theme.palette.error.main
     },
@@ -66,6 +66,7 @@ const AFileUpload = ({
 }) => {
   const [preview, setPreview] = useState(initialPreviewUrl);
   const [showAction, setShowAction] = useState(false);
+  const theme = useTheme();
   const { getRootProps, getInputProps, open } = useDropzone({
     noClick: true,
     multiple: false,
@@ -133,9 +134,15 @@ const AFileUpload = ({
             }
           }}
         >
-          <UploadIcon height={pxToRem(32)} />
+          <SvgIcon
+            sx={{
+              fill: theme.palette[color].dark
+            }}
+            component={UploadIcon}
+            inheritViewBox
+          />
         </Avatar>
-        <Action className={`${showAction ? "show" : ""}`}>
+        <Action color={color} className={`${showAction ? "show" : ""}`}>
           {preview ? <HighlightOffIcon className="remove" /> : null}
         </Action>
       </div>

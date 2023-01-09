@@ -14,6 +14,7 @@ import GetStarted from "./pages/GetStarted/GetStarted";
 import Integrate from "./pages/Integrate";
 import "./App.scss";
 import { getAppConfig } from "@api/aut.api";
+import PerfectScrollbar from "react-perfect-scrollbar";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -31,7 +32,16 @@ function App() {
   }, []);
 
   return (
-    <>
+    <PerfectScrollbar
+      options={{
+        suppressScrollX: true,
+        useBothWheelAxes: false,
+        swipeEasing: true
+      }}
+      style={{
+        height: "100vh"
+      }}
+    >
       {loading ? (
         <AutLoading />
       ) : (
@@ -51,7 +61,7 @@ function App() {
           </Box>
         </Web3AutProvider>
       )}
-    </>
+    </PerfectScrollbar>
   );
 }
 
