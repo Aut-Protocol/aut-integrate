@@ -3,6 +3,7 @@ import { Fade } from "@mui/material";
 import AutButtonStyles from "./button-styles";
 import AutTextFieldStyles from "./field-text-styles";
 import AutSelectFieldStyles from "./field-select-styles";
+import AutCommitmentSliderStyles from "./commitment-slider-styles";
 import AutTextStyles from "./text-styles";
 import AutMenuStyles from "./menu-styles";
 import AutPalette from "./palette";
@@ -52,6 +53,7 @@ AutTheme.components.MuiButton = AutButtonStyles(AutTheme);
 AutTheme.components.MuiDialog = AutDialogStyles(AutTheme);
 AutTheme.components.MuiTextField = AutTextFieldStyles(AutTheme);
 AutTheme.components.MuiSelect = AutSelectFieldStyles(AutTheme);
+AutTheme.components.MuiSlider = AutCommitmentSliderStyles(AutTheme);
 AutTheme.components.MuiMenu = AutMenuStyles(AutTheme);
 
 export default AutTheme;
