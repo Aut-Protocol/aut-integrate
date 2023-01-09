@@ -69,6 +69,7 @@ const RoleStep = (props: StepperChildProps) => {
                   placeholder="Role Name"
                   required
                   variant="standard"
+                  color="offWhite"
                   focused
                   id={name}
                   name={name}
@@ -76,6 +77,11 @@ const RoleStep = (props: StepperChildProps) => {
                   autoFocus={index === 0}
                   onChange={onChange}
                   sx={{
+                    width: {
+                      xs: "100%",
+                      sm: "400px",
+                      xxl: "800px"
+                    },
                     mb: pxToRem(45)
                   }}
                   inputProps={{ maxLength: 20 }}

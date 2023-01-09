@@ -1,14 +1,18 @@
-version: '3.7'
+version: "3.7"
 
 services:
-
-  playground:
-    container_name: playground
+  aut_expander_playground:
+    container_name: aut_expander_playground
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      - ".:/app"
+      - "/app/node_modules"
     ports:
-      - '5002:80'
+      - "5002:80"
+
+networks:
+  default:
+    name: aut-api
+    external: true

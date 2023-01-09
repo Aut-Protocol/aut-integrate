@@ -142,6 +142,17 @@ export default (theme: Theme) =>
           }
         }
       },
+      {
+        props: {
+          variant: "square"
+        },
+        style: {
+          "&.MuiButton-root": {
+            borderWidth: "3px",
+            borderStyle: "solid"
+          }
+        }
+      },
       ...Object.keys(buttonStyles).reduce((prev, curr) => {
         const {
           fontSize,
@@ -192,6 +203,8 @@ export default (theme: Theme) =>
             style: currStyle
           }
         ];
+
+        console.log(prev, "prev");
         return prev;
       }, [] as ComponentsVariants["MuiButton"])
     ]

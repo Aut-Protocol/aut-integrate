@@ -6,7 +6,7 @@ import CopyAddress from "@components/CopyAddress";
 import ErrorDialog from "@components/Dialog/ErrorPopup";
 import LoadingDialog from "@components/Dialog/LoadingPopup";
 import { StepperButton } from "@components/Stepper";
-import { Avatar, styled, Typography } from "@mui/material";
+import { Avatar, styled, Typography, useTheme } from "@mui/material";
 import {
   IntegrateCommunity,
   IntegrateErrorMessage,
@@ -35,6 +35,7 @@ const ConfirmStep = () => {
   const status = useSelector(IntegrateStatus);
   const errorMessage = useSelector(IntegrateErrorMessage);
   const location = useLocation();
+  const theme = useTheme();
 
   const onSubmit = async () => {
     const state = { ...data };
@@ -91,12 +92,7 @@ const ConfirmStep = () => {
           </>
         }
       />
-      <Typography
-        textTransform="uppercase"
-        marginTop={pxToRem(30)}
-        fontSize={pxToRem(25)}
-        color="white"
-      >
+      <Typography color="white" variant="h3">
         Confirm your information
       </Typography>
       <div
@@ -107,7 +103,7 @@ const ConfirmStep = () => {
         <div
           style={{
             display: "flex",
-            marginBottom: pxToRem(60)
+            marginBottom: pxToRem(30)
           }}
         >
           {data.image && (
@@ -115,13 +111,24 @@ const ConfirmStep = () => {
               <Avatar
                 alt="Avatar"
                 variant="square"
+                color="offWhite"
                 src={data.image as string}
                 sx={{
                   cursor: "pointer",
                   background: "transparent",
-                  height: pxToRem(110),
-                  width: pxToRem(110),
-                  border: "1px solid #439EDD",
+                  height: {
+                    xs: "60px",
+                    md: "70px",
+                    lg: "90px",
+                    xxl: "110px"
+                  },
+                  width: {
+                    xs: "60px",
+                    md: "70px",
+                    lg: "90px",
+                    xxl: "110px"
+                  },
+                  border: `1px solid ${theme.palette.offWhite.main}`,
                   mr: pxToRem(45),
                   "&.MuiAvatar-root": {
                     justifyContent: "center"
@@ -145,12 +152,12 @@ const ConfirmStep = () => {
             <Typography
               lineHeight="1"
               marginBottom={pxToRem(12)}
-              fontSize={pxToRem(28)}
+              variant="subtitle1"
               color="white"
             >
               {data.name}
             </Typography>
-            <Typography fontSize={pxToRem(20)} color="white">
+            <Typography variant="body" color="white">
               {MarketTemplates[data.market - 1]?.title}
             </Typography>
             <Typography
@@ -159,8 +166,8 @@ const ConfirmStep = () => {
                 maxWidth: pxToRem(400),
                 mt: pxToRem(15)
               }}
-              fontSize={pxToRem(18)}
               color="white"
+              variant="body1"
             >
               {data.description}
             </Typography>
@@ -174,19 +181,19 @@ const ConfirmStep = () => {
               style={{
                 display: "flex",
                 textAlign: "left",
-                marginBottom: pxToRem(25)
+                marginBottom: pxToRem(15)
               }}
             >
               <Typography
                 sx={{
                   width: pxToRem(220)
                 }}
-                fontSize={pxToRem(20)}
+                variant="body"
                 color="white"
               >
                 Role Name
               </Typography>
-              <Typography fontSize={pxToRem(20)} color="white">
+              <Typography variant="body" color="white">
                 {r.roleName}
               </Typography>
             </div>
@@ -195,14 +202,14 @@ const ConfirmStep = () => {
             style={{
               display: "flex",
               textAlign: "left",
-              marginBottom: pxToRem(25)
+              marginBottom: pxToRem(15)
             }}
           >
             <Typography
               sx={{
                 width: pxToRem(220)
               }}
-              fontSize={pxToRem(20)}
+              variant="body"
               color="white"
             >
               Pledged Commitment
@@ -215,22 +222,22 @@ const ConfirmStep = () => {
             style={{
               display: "flex",
               textAlign: "left",
-              marginBottom: pxToRem(25)
+              marginBottom: pxToRem(15)
             }}
           >
             <Typography
               sx={{
                 width: pxToRem(220)
               }}
-              fontSize={pxToRem(20)}
+              variant="body"
               color="white"
             >
               DAO Address
             </Typography>
 
             <CopyAddress
-              textStyles={{
-                fontSize: pxToRem(20)
+              textProps={{
+                variant: "body"
               }}
               address={data.daoAddr}
             />
