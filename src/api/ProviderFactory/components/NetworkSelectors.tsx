@@ -14,6 +14,7 @@ export const NetworkSelectors = ({ onSelect, networks }) => {
             variant="outlined"
             size="normal"
             color="offWhite"
+            disabled={network.disabled}
             sx={{
               minWidth: {
                 xs: "360px",
