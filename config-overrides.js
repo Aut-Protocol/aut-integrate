@@ -1,9 +1,27 @@
 const path = require("path");
 const { alias } = require("react-app-rewire-alias");
+const webpack = require("webpack");
 
 module.exports = {
   webpack: (config) => {
     config.ignoreWarnings = [/Failed to parse source map/];
+
+    const fallback = config.resolve.fallback || {};
+    Object.assign(fallback, {
+      stream: false,
+      assert: false,
+      https: false,
+      util: path.resolve(__dirname, "node_modules/util"),
+      os: false,
+      url: false,
+      http: false
+    });
+    config.plugins = (config.plugins || []).concat([
+      new webpack.ProvidePlugin({
+        Buffer: ["buffer", "Buffer"]
+      })
+    ]);
+    config.resolve.fallback = fallback;
 
     const modifiedConfig = alias({
       "@assets": path.resolve(__dirname, "./src/assets"),

@@ -21,4 +21,6 @@ export interface NetworkConfig {
   explorerUrls: string[];
   biconomyApiKey: string;
   contracts: NetworkContracts;
+  disabled: boolean;
+  nativeCurrency: any;
 }

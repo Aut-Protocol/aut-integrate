@@ -9,20 +9,20 @@ import {
   setProviderIsOpen,
   setSigner
 } from "@store/WalletProvider/WalletProvider";
-import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { styled, Typography } from "@mui/material";
-import AutLoading from "@components/AutLoading";
+import { Typography, styled } from "@mui/material";
 import DialogWrapper from "@components/Dialog/DialogWrapper";
-import AutSDK from "@aut-labs-private/sdk";
-import type { Connector } from "@web3-react/types";
+import AppTitle from "@components/AppTitle";
+import { useEthers, useConnector } from "@usedapp/core";
+import AutLoading from "@components/AutLoading";
 import ConnectorBtn from "./ConnectorBtn";
 import { NetworkSelectors } from "./NetworkSelectors";
-import { EnableAndChangeNetwork } from "../web3.network";
-import { SDKBiconomyWrapper } from "@aut-labs-private/sdk-biconomy";
 import { ethers } from "ethers";
-import AppTitle from "@components/AppTitle";
+import AutSDK from "@aut-labs-private/sdk";
+import { SDKBiconomyWrapper } from "@aut-labs-private/sdk-biconomy";
+import { useEffect, useMemo, useState } from "react";
+import { NetworkConfig } from "../network.config";
+import { Web3AllowListProvider } from "@aut-labs-private/abi-types";
 
 const DialogInnerContent = styled("div")({
   display: "flex",
@@ -39,150 +39,109 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
   const wallet = useSelector(SelectedWalletType);
   const networks = useSelector(NetworksConfig);
   const networkConfig = useSelector(SelectedNetworkConfig);
-  const { isActive, chainId, provider } = useWeb3React();
+  const [currentChainId, setCurrentChainId] = useState(null);
+  const [networkChanged, setNetworkChanged] = useState(false);
+  const [loadingNetwork, setIsLoadingNetwork] = useState(false);
+  const [allowListed, setAllowListed] = useState(false);
+  const [allowListedComplete, setAllowListedComplete] = useState(false);
+  const { connector, activate } = useConnector();
+  const { activateBrowserWallet, account, switchNetwork, chainId, active } =
+    useEthers();
 
-  const [connector, setConnector] = useState<Connector>(null);
-  const [switchingNetwork, setSwitchingNetwork] = useState(false);
-  const [connectedEagerly, setConnectEagerly] = useState(false);
-
-  const switchNetwork = async (c: Connector, chainId: number) => {
-    if (!c) {
-      return;
-    }
-    setSwitchingNetwork(true);
-    // await c.deactivate();
-    await c.activate(chainId);
+  const isActive = useMemo(() => {
     const config = networks.find(
       (n) => n.chainId?.toString() === chainId?.toString()
     );
-    try {
-      await EnableAndChangeNetwork(c.provider, config);
-      await dispatch(setNetwork(config.network));
-    } catch (error) {
-      // console.log(error);
+    if (chainId && chainId !== currentChainId) {
+      setCurrentChainId(chainId);
+      setNetworkChanged(true);
+      return !!active && !!config;
     }
-    setSwitchingNetwork(false);
+    return (
+      chainId === currentChainId &&
+      !!active &&
+      !!config &&
+      !!connector?.connector &&
+      !!wallet
+    );
+  }, [chainId, currentChainId, connector, active, wallet]);
+
+  const isAllowListed = async (signer: ethers.providers.JsonRpcSigner) => {
+    const contract = Web3AllowListProvider(
+      "0x3Aa3c3cd9361a39C651314261156bc7cdB52B618",
+      {
+        signer: () => signer
+      }
+    );
+    return contract.isAllowed(account);
   };
 
-  const changeConnector = async (c: Connector) => {
-    // @ts-ignore
-    const foundChainId = Number(c?.provider?.chainId);
-    const index = networks
-      .map((n) => n.chainId?.toString())
-      .indexOf(foundChainId?.toString());
-    const chainAllowed = index !== -1;
-    if (chainAllowed) {
+  useEffect(() => {
+    if (isActive && networkChanged) {
+      const signer = connector?.connector?.provider?.getSigner();
       const config = networks.find(
-        (n) => n.chainId?.toString() === foundChainId?.toString()
+        (n) => n.chainId?.toString() === chainId?.toString()
       );
-      dispatch(setNetwork(config.network));
-      setConnectEagerly(true);
+      (async () => {
+        try {
+          setAllowListedComplete(false);
+          setIsLoadingNetwork(true);
+          const isAllowed = await isAllowListed(signer);
+          if (isAllowed) {
+            initialiseSDK(config, signer as ethers.providers.JsonRpcSigner);
+            dispatch(setNetwork(config.network));
+            dispatch(setSigner(signer));
+            dispatch(setProviderIsOpen(false));
+            setAllowListed(true);
+          } else {
+            setAllowListed(false);
+            dispatch(setProviderIsOpen(true));
+          }
+        } catch (error) {
+          setAllowListed(false);
+          dispatch(setProviderIsOpen(true));
+        } finally {
+          setNetworkChanged(false);
+          setIsLoadingNetwork(false);
+          setAllowListedComplete(true);
+        }
+      })();
     }
-    setConnector(c);
+    if (!isActive && networkChanged && networkConfig) {
+      dispatch(setProviderIsOpen(true));
+    }
+  }, [isActive, networkChanged]);
+
+  const changeConnector = async (connectorType: string) => {
+    activateBrowserWallet({ type: connectorType });
   };
 
-  const initialiseSDK = async (signer: ethers.providers.JsonRpcSigner) => {
+  const initialiseSDK = async (
+    network: NetworkConfig,
+    signer: ethers.providers.JsonRpcSigner
+  ) => {
     const sdk = AutSDK.getInstance();
     const biconomy =
-      networkConfig.biconomyApiKey &&
+      network.biconomyApiKey &&
       new SDKBiconomyWrapper({
         enableDebugMode: true,
-        apiKey: networkConfig.biconomyApiKey,
+        apiKey: network.biconomyApiKey,
         contractAddresses: [
-          networkConfig.contracts.daoExpanderRegistryAddress,
-          networkConfig.contracts.autDaoRegistryAddress
+          network.contracts.daoExpanderRegistryAddress,
+          network.contracts.autDaoRegistryAddress
         ]
       });
     await sdk.init(
       signer,
       {
-        daoTypesAddress: networkConfig.contracts.daoTypesAddress,
-        autDaoRegistryAddress: networkConfig.contracts.autDaoRegistryAddress,
-        autIDAddress: networkConfig.contracts.autIDAddress,
-        daoExpanderRegistryAddress:
-          networkConfig.contracts.daoExpanderRegistryAddress
+        daoTypesAddress: network.contracts.daoTypesAddress,
+        autDaoRegistryAddress: network.contracts.autDaoRegistryAddress,
+        autIDAddress: network.contracts.autIDAddress,
+        daoExpanderRegistryAddress: network.contracts.daoExpanderRegistryAddress
       },
       biconomy
     );
   };
-
-  useEffect(() => {
-    const previousChainId = connectedEagerly
-      ? chainId
-      : provider?._network?.chainId;
-
-    const currentChainId = chainId;
-    const index = networks
-      .map((n) => n.chainId?.toString())
-      .indexOf(currentChainId?.toString());
-
-    const chainAllowed = index !== -1;
-    const hasNetworkConfig = !!networkConfig;
-    const isSameNetwork = previousChainId === chainId;
-    const shouldSelectCorrectNetwork = !chainAllowed && !!chainId;
-
-    if (switchingNetwork || !provider || !chainId || !isActive) {
-      const shouldActivateConnector =
-        !isActive && chainAllowed && previousChainId && chainId;
-      if (shouldActivateConnector) {
-        console.warn("Activating network...");
-        connector.activate(chainId);
-      } else if (shouldSelectCorrectNetwork && !isOpen) {
-        console.warn("Opening popup...");
-        dispatch(setProviderIsOpen(true));
-      }
-      return;
-    }
-
-    const shouldUpdateSigner = chainAllowed && isActive && isSameNetwork;
-    const shouldSwitchNetwork =
-      isActive &&
-      chainAllowed &&
-      hasNetworkConfig &&
-      previousChainId &&
-      currentChainId &&
-      !isSameNetwork;
-
-    console.log("connectedEagerly: ", connectedEagerly);
-    console.log("isSameNetwork: ", isSameNetwork);
-    console.log("isActive: ", isActive);
-    console.log("currentChainId: ", currentChainId);
-    console.log("previousChainId: ", previousChainId);
-    console.log("chainAllowed:", chainAllowed);
-    console.log("hasNetworkConfig:", hasNetworkConfig);
-    console.log("shouldUpdateSigner:", shouldUpdateSigner);
-    console.log("shouldSwitchNetwork:", shouldSwitchNetwork);
-    console.log("shouldSelectCorrectNetwork:", shouldSelectCorrectNetwork);
-
-    if (shouldSelectCorrectNetwork && !isOpen) {
-      console.warn("Opening popup...");
-      dispatch(setProviderIsOpen(true));
-    }
-
-    if (shouldUpdateSigner) {
-      console.warn("Updating signer...");
-      const signer = provider.getSigner();
-      dispatch(setSigner(signer));
-      dispatch(setProviderIsOpen(false));
-      initialiseSDK(signer as ethers.providers.JsonRpcSigner);
-    }
-
-    if (shouldSwitchNetwork) {
-      console.warn("Switching network...");
-      switchNetwork(connector, chainId);
-    }
-
-    if (connectedEagerly) {
-      setConnectEagerly(false);
-    }
-  }, [
-    chainId,
-    provider,
-    switchingNetwork,
-    isActive,
-    networkConfig,
-    connectedEagerly
-  ]);
 
   return (
     <DialogWrapper open={isOpen} fullScreen={fullScreen}>
@@ -195,64 +154,81 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
           }}
           variant="h2"
         />
-
-        {networkConfig && provider?._network?.chainId !== chainId ? (
-          <>
+        {loadingNetwork && (
+          <div style={{ position: "relative", flex: 1 }}>
+            <AutLoading />
+          </div>
+        )}
+        {allowListedComplete && !allowListed && (
+          <Typography
+            mb="12px"
+            textAlign="center"
+            color="error"
+            variant="subtitle2"
+          >
+            Aw shucks, it looks like you’re not on the Allowlist for this round.
+          </Typography>
+        )}
+        <>
+          {!wallet && (
             <Typography color="white" variant="subtitle1">
-              Waiting for confirmation
+              Connect your wallet
             </Typography>
-            <div style={{ position: "relative", flex: 1 }}>
-              <AutLoading />
-            </div>
-          </>
-        ) : (
-          <>
-            {!wallet && (
-              <Typography color="white" variant="subtitle1">
-                Connect your wallet
+          )}
+          {wallet && (
+            <>
+              <Typography
+                mb={{
+                  xs: "8px"
+                }}
+                color="white"
+                variant="subtitle1"
+              >
+                Change Network
               </Typography>
-            )}
-            {wallet && (
-              <>
-                <Typography
-                  mb={{
-                    xs: "8px"
-                  }}
-                  color="white"
-                  variant="subtitle1"
-                >
-                  Change Network
-                </Typography>
+
+              {!allowListedComplete && (
                 <Typography color="white" variant="body">
                   You will need to switch your wallet’s network.
                 </Typography>
+              )}
+              {allowListedComplete && !allowListed && (
+                <Typography color="white" variant="body">
+                  Try on a different network.
+                </Typography>
+              )}
+            </>
+          )}
+          <DialogInnerContent>
+            {!wallet && (
+              <>
+                <ConnectorBtn
+                  setConnector={changeConnector}
+                  connectorType={ConnectorTypes.Metamask}
+                />
+                <ConnectorBtn
+                  setConnector={changeConnector}
+                  connectorType={ConnectorTypes.WalletConnect}
+                />
               </>
             )}
-            <DialogInnerContent>
-              {!wallet && (
-                <>
-                  <ConnectorBtn
-                    setConnector={changeConnector}
-                    connectorType={ConnectorTypes.Metamask}
-                  />
-                  <ConnectorBtn
-                    setConnector={changeConnector}
-                    connectorType={ConnectorTypes.WalletConnect}
-                  />
-                </>
-              )}
 
-              {wallet && (
-                <NetworkSelectors
-                  networks={networks}
-                  onSelect={async (foundChainId: number) => {
-                    switchNetwork(connector, foundChainId);
-                  }}
-                />
-              )}
-            </DialogInnerContent>
-          </>
-        )}
+            {wallet && (
+              <NetworkSelectors
+                networks={networks}
+                onSelect={async (foundChainId: number) => {
+                  const config = networks.find(
+                    (n) => n.chainId?.toString() === foundChainId?.toString()
+                  );
+                  if (config) {
+                    await activate(connector.connector);
+                    switchNetwork(foundChainId);
+                  }
+                }}
+              />
+            )}
+          </DialogInnerContent>
+        </>
       </>
     </DialogWrapper>
   );

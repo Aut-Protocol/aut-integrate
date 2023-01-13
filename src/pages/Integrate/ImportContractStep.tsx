@@ -25,7 +25,6 @@ import { AutSelectField } from "@theme/field-select-styles";
 import { AutTextField } from "@theme/field-text-styles";
 import { ContractTypes } from "@utils/misc";
 import { pxToRem } from "@utils/text-size";
-import { useWeb3React } from "@web3-react/core";
 import { isAddress } from "ethers/lib/utils";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -47,7 +46,6 @@ const ImportContractStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
   const status = useSelector(IntegrateStatus);
   const errorMessage = useSelector(IntegrateErrorMessage);
-  const { account } = useWeb3React();
   const { contractType, daoAddr } = useSelector(IntegrateCommunity);
   const { control, handleSubmit, getValues, formState } = useForm({
     mode: "onChange",

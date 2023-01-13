@@ -17,7 +17,6 @@ import {
 } from "@store/Integrate/integrate";
 import { ResultState } from "@store/result-status";
 import { useAppDispatch } from "@store/store.model";
-import { useWeb3React } from "@web3-react/core";
 import {
   SelectedNetworkConfig,
   setProviderIsOpen
@@ -25,12 +24,13 @@ import {
 import { useSelector } from "react-redux";
 import IntegrateSuccess from "./IntegrateSuccess";
 import IntegrateStepper from "./IntegrateStepper";
+import { useEthers } from "@usedapp/core";
 import AppTitle from "@components/AppTitle";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 
 const Integrate = () => {
   const dispatch = useAppDispatch();
-  const { isActive } = useWeb3React();
+  const { active } = useEthers();
   const { path } = useRouteMatch();
   const history = useHistory();
   const location = useLocation();
@@ -60,10 +60,10 @@ const Integrate = () => {
   }, []);
 
   useEffect(() => {
-    if (!isActive && !networkConfig) {
+    if (!active && !networkConfig) {
       dispatch(setProviderIsOpen(true));
     }
-  }, [isActive, networkConfig]);
+  }, [active, networkConfig]);
 
   return (
     <>

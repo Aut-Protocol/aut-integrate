@@ -1,13 +1,13 @@
 import { verifyTweetRequest } from "@api/aut.api";
 import { Alert, debounce, Link, styled, Typography } from "@mui/material";
 import { pxToRem } from "@utils/text-size";
-import { useWeb3React } from "@web3-react/core";
 import { useState, useRef, useMemo, useEffect } from "react";
 import AutLoading from "./AutLoading";
 import { AutButton } from "./buttons";
 import DialogWrapper from "./Dialog/DialogWrapper";
 import { AutTextField } from "@theme/field-text-styles";
 import AppTitle from "./AppTitle";
+import { useEthers, useConnector } from "@usedapp/core";
 
 const message = "I should own this tweet %40aut-labs";
 
@@ -30,12 +30,13 @@ function truncate(input) {
 const VerifySignature = ({ onClose = (_: boolean) => null, open }) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { provider, account } = useWeb3React();
   const [signature, setSignature] = useState(null);
   const [tweetUrl, setTweetUrl] = useState("");
   const [tweetPosted, setTweetPosted] = useState(null);
   const [signed, setSigned] = useState(null);
   const input = useRef();
+  const { connector } = useConnector();
+  const { account } = useEthers();
 
   const postTweet = () => {
     window.open(
@@ -74,7 +75,8 @@ const VerifySignature = ({ onClose = (_: boolean) => null, open }) => {
     if (!signature) {
       try {
         setLoading(true);
-        const res = await provider.provider.request({
+        const provider: any = connector.connector.provider;
+        const res = await provider.request({
           method: "personal_sign",
           params: ["Āut Labs", account]
         });

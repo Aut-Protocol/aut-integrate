@@ -5,11 +5,18 @@ import {
   SelectedNetworkConfig,
   setProviderIsOpen
 } from "@store/WalletProvider/WalletProvider";
-import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ReactComponent as GenesisImage } from "@assets/genesis.svg";
 import AppTitle from "@components/AppTitle";
+import {
+  Mainnet,
+  DAppProvider,
+  useEtherBalance,
+  useEthers,
+  Config,
+  Goerli
+} from "@usedapp/core";
 
 const Wrapper = styled(Container)({
   display: "flex",
@@ -43,7 +50,7 @@ const GetStarted = () => {
   const dispatch = useAppDispatch();
   const [connectInitiated, setConnectInitiated] = useState(false);
   const [canStartFromScratch, setCanStartFromScratch] = useState(false);
-  const { isActive } = useWeb3React();
+  const { active } = useEthers();
   const networkConfig = useSelector(SelectedNetworkConfig);
   const history = useHistory();
   const location = useLocation();
@@ -52,15 +59,15 @@ const GetStarted = () => {
     if (!connectInitiated) {
       return;
     }
-    if (isActive && networkConfig) {
+    if (active && networkConfig) {
       start(canStartFromScratch);
     }
-  }, [isActive, networkConfig, canStartFromScratch]);
+  }, [active, networkConfig, canStartFromScratch]);
 
   const goToIntegrate = (startFromScratch = false) => {
     setConnectInitiated(true);
     setCanStartFromScratch(startFromScratch);
-    if (!isActive || !networkConfig) {
+    if (!active || !networkConfig) {
       dispatch(setProviderIsOpen(true));
     } else {
       start(startFromScratch);
@@ -171,7 +178,7 @@ const GetStarted = () => {
           color="offWhite"
           onClick={() => goToIntegrate()}
         >
-          Integrate Āut
+          Expand
         </Button>
         <Button
           type="submit"

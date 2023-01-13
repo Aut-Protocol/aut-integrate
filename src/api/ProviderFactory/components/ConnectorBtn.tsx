@@ -1,16 +1,11 @@
-import { useEffect } from "react";
 import { useAppDispatch } from "@store/store.model";
-import { pxToRem } from "@utils/text-size";
 import {
   ConnectorTypes,
-  NetworkConnector,
   setWallet
 } from "@store/WalletProvider/WalletProvider";
 import { ReactComponent as WalletConnectLogo } from "@assets/aut/wallet-connect.svg";
 import { ReactComponent as MetamaskLogo } from "@assets/aut/metamask.svg";
-import { Button, Typography } from "@mui/material";
-import { AutButton } from "@components/buttons";
-import { useSelector } from "react-redux";
+import { Button } from "@mui/material";
 
 const btnConfig = {
   [ConnectorTypes.Metamask]: {
@@ -31,20 +26,12 @@ export default function ConnectorBtn({
   setConnector: any;
 }) {
   const dispatch = useAppDispatch();
-  const [connector] = useSelector(NetworkConnector(connectorType));
-
-  useEffect(() => {
-    if (connector) {
-      // connector.connectEagerly();
-    }
-  }, [connector]);
 
   return (
     <Button
       onClick={async () => {
-        await connector.connectEagerly();
         dispatch(setWallet(connectorType));
-        setConnector(connector);
+        setConnector(connectorType);
       }}
       startIcon={btnConfig[connectorType].icon}
       variant="outlined"
