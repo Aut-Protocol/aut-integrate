@@ -21,6 +21,8 @@ import { WalletConnectConnector } from "@usedapp/wallet-connect-connector";
 
 import { Network } from "@ethersproject/networks";
 import { NetworkConfig } from "@api/ProviderFactory/network.config";
+// import { OAuthPopup } from "@tasoskakour/react-use-oauth2";
+import Callback from "./pages/GetStarted/Callback";
 
 const generateConfig = (networks: NetworkConfig[]): Config => {
   const readOnlyUrls = networks.reduce((prev, curr) => {
@@ -99,6 +101,7 @@ function App() {
             <Switch>
               <Route exact component={GetStarted} path="/" />
               <Route path="/integrate" component={Integrate} />
+              <Route path="/callback" component={Callback} />
               <Route component={NotFound} />
             </Switch>
           </Box>
