@@ -128,10 +128,10 @@ const GetStarted = () => {
 
   const twitter = () => {
     const popup = getAuth();
+
     setInterval(() => {
-      console.log(popup);
+      console.warn(window.localStorage.getItem("code"));
     }, 2000);
-    setPopup(popup);
     // console.warn(result);
     console.log("TWEET");
   };

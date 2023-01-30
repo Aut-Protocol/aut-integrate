@@ -98,7 +98,7 @@ export const useOAuth2 = (props = null) => {
 
     // 3. Open popup
     const popWindow = openPopup(
-      getTwitterOAuthUrl("https://playground.aut.id/callback")
+      getTwitterOAuthUrl("http://localhost:3000/callback")
     );
 
     setInterval(() => {

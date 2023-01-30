@@ -34,7 +34,7 @@ const TWITTER_STATEclientSecret =
 export const TWITTER_STATE = "twitter-state";
 const TWITTER_CODE_CHALLENGE = "challenge";
 const TWITTER_AUTH_URL = "https://twitter.com/i/oauth2/authorize";
-const TWITTER_SCOPE = ["tweet.read", "users.read", "offline.access"].join(" ");
+const TWITTER_SCOPE = ["tweet.read"].join(" ");
 const OAUTH_RESPONSE = "react-use-oauth2-response";
 
 export const getTwitterOAuthUrl = (redirectUri: string) =>
@@ -73,19 +73,19 @@ const queryToObject = (query) => {
 
 const Callback = (props) => {
   const { Component = <div>Loading...</div> } = props;
-  console.warn(window.location);
-  console.warn(window);
-  console.warn(window.opener);
 
   // On mount
   useEffect(() => {
     const payload = queryToObject(window.location.search.split("?")[1]);
     const state = payload && payload.state;
     const error = payload && payload.error;
-    console.warn(window.location);
-    console.warn(window);
+    window.localStorage.setItem("code", JSON.stringify(payload));
+    // console.warn(window.location);
+    // console.warn(window);
+    window.close();
     console.warn(window.opener);
-    console.warn(payload);
+
+    // console.warn(payload);
     // console.warn(!window.opener);
     // console.warn(typeof this);
     // console.warn(this);
