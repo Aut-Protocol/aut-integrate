@@ -1,4 +1,5 @@
 import { BaseNFTModel } from "./api.model";
+import { AutSocial, DefaultSocials } from "./social.model";
 
 export interface Role {
   roleName: string;
@@ -14,15 +15,19 @@ export class CommunityProperties {
 
   rolesSets: RoleSet[];
 
+  socials: AutSocial[];
+
   commitment: number;
 
   constructor(data: CommunityProperties) {
     if (!data) {
       this.rolesSets = [];
+      this.socials = DefaultSocials;
     } else {
       this.market = data.market;
       this.commitment = data.commitment;
       this.rolesSets = data.rolesSets;
+      this.socials = data.socials;
     }
   }
 }

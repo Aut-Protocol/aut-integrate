@@ -52,6 +52,7 @@ const ConfirmStep = () => {
           description: state.description,
           properties: new CommunityProperties({
             market: state.market,
+            socials: state.socials,
             commitment: state.commitment,
             rolesSets: [
               {

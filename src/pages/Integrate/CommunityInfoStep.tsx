@@ -18,6 +18,7 @@ import { toBase64 } from "@utils/to-base-64";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { socialUrls } from "@api/social.model";
 
 const errorTypes = {
   maxWords: `Words cannot be more than 3`,
@@ -53,22 +54,32 @@ const CommunityInfoStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
   const [openVerify, setOpenVerify] = useState(false);
   const [verified, setVerified] = useState(false);
-  const { name, image, description, daoTweetUrl } =
-    useSelector(IntegrateCommunity);
+  const { name, image, description, socials } = useSelector(IntegrateCommunity);
   const { control, handleSubmit, getValues, watch, formState } = useForm({
     mode: "onChange",
     defaultValues: {
       name,
       image,
       description,
-      daoTweetUrl
+      daoTweetUrl: ""
     }
   });
 
   const values = watch();
 
   const updateState = () => {
-    return dispatch(integrateUpdateCommunity(getValues()));
+    const { daoTweetUrl, ...rest } = getValues();
+    return dispatch(
+      integrateUpdateCommunity({
+        ...rest,
+        socials: JSON.parse(JSON.stringify(socials)).map((s) => {
+          if (s.type === "twitter") {
+            s.link = `${socialUrls[s.type].prefix}${daoTweetUrl}`;
+          }
+          return s;
+        })
+      })
+    );
   };
 
   const onSubmit = async () => {
