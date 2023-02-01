@@ -18,7 +18,7 @@ import { toBase64 } from "@utils/to-base-64";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { socialUrls } from "@api/social.model";
+import { AutSocial, socialUrls } from "@api/social.model";
 
 const errorTypes = {
   maxWords: `Words cannot be more than 3`,
@@ -50,6 +50,11 @@ const FormStackWrapper = styled("div")(({ theme }) => ({
   }
 }));
 
+const getSocialLink = (socials: AutSocial[]) => {
+  const social = socials.find((s) => s.type === "twitter");
+  return social?.link.replace(socialUrls[social.type].prefix, "");
+};
+
 const CommunityInfoStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
   const [openVerify, setOpenVerify] = useState(false);
@@ -61,20 +66,20 @@ const CommunityInfoStep = (props: StepperChildProps) => {
       name,
       image,
       description,
-      daoTweetUrl: ""
+      tweetHandle: getSocialLink(socials)
     }
   });
 
   const values = watch();
 
   const updateState = () => {
-    const { daoTweetUrl, ...rest } = getValues();
+    const { tweetHandle, ...rest } = getValues();
     return dispatch(
       integrateUpdateCommunity({
         ...rest,
         socials: JSON.parse(JSON.stringify(socials)).map((s) => {
           if (s.type === "twitter") {
-            s.link = `${socialUrls[s.type].prefix}${daoTweetUrl}`;
+            s.link = `${socialUrls[s.type].prefix}${tweetHandle}`;
           }
           return s;
         })
@@ -209,7 +214,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
 
       <FormStackWrapper>
         <Controller
-          name="daoTweetUrl"
+          name="tweetHandle"
           control={control}
           render={({ field: { name, value, onChange } }) => {
             return (
@@ -236,7 +241,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
           type="button"
           size="square"
           color="offWhite"
-          disabled={!values.daoTweetUrl}
+          disabled={!values.tweetHandle}
           variant="outlined"
         >
           Verify
