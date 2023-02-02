@@ -13,7 +13,8 @@ export interface IntegrateState {
     commitment: number;
     contractType: number;
     daoAddr: string;
-    daoTweetUrl: string;
+    daoTwitter: string;
+    handleVerified: boolean;
   };
   status: ResultState;
   errorMessage: string;
@@ -26,7 +27,8 @@ const initialState: IntegrateState = {
     image: null,
     description: null,
     market: null,
-    daoTweetUrl: null,
+    daoTwitter: null,
+    handleVerified: false,
     roles: [
       {
         id: 1,

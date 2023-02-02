@@ -18,9 +18,13 @@ import { toBase64 } from "@utils/to-base-64";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { useOAuth2 } from "../GetStarted/oauth2";
+import AutLoading from "@components/AutLoading";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const errorTypes = {
   maxWords: `Words cannot be more than 3`,
+  validationFailed: `Twitter account doesn't match the provided handle`,
   maxNameChars: `Characters cannot be more than 24`,
   maxLength: `Characters cannot be more than 280`
 };
@@ -51,24 +55,31 @@ const FormStackWrapper = styled("div")(({ theme }) => ({
 
 const CommunityInfoStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
-  const [openVerify, setOpenVerify] = useState(false);
-  const [verified, setVerified] = useState(false);
-  const { name, image, description, daoTweetUrl } =
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [validating, setValidating] = useState(false);
+  const [inTimeout, setInTimeout] = useState(false);
+  const { getAuth } = useOAuth2();
+  const { name, image, description, daoTwitter, handleVerified } =
     useSelector(IntegrateCommunity);
-  const { control, handleSubmit, getValues, watch, formState } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      name,
-      image,
-      description,
-      daoTweetUrl
-    }
-  });
+  const { control, handleSubmit, getValues, watch, setError, formState } =
+    useForm({
+      mode: "onChange",
+      defaultValues: {
+        name,
+        image,
+        description,
+        daoTwitter
+      }
+    });
 
   const values = watch();
 
   const updateState = () => {
-    return dispatch(integrateUpdateCommunity(getValues()));
+    return dispatch(
+      integrateUpdateCommunity({
+        ...getValues()
+      })
+    );
   };
 
   const onSubmit = async () => {
@@ -76,17 +87,39 @@ const CommunityInfoStep = (props: StepperChildProps) => {
     props?.stepper?.nextStep();
   };
 
+  const authenticateTwitter = () => {
+    if (!inTimeout) {
+      setValidating(true);
+      getAuth(
+        (data) => {
+          setValidating(false);
+          if (data.username === getValues("daoTwitter")) {
+            dispatch(
+              integrateUpdateCommunity({
+                handleVerified: true
+              })
+            );
+          } else {
+            setError("daoTwitter", {
+              type: "validationFailed",
+              message: `Twitter handle doesn't match the one used to validate.`
+            });
+          }
+        },
+        (e) => {
+          setValidating(false);
+          console.log(e);
+        }
+      );
+      setInTimeout(true);
+      setTimeout(() => {
+        setInTimeout(false);
+      }, 5000);
+    }
+  };
+
   return (
     <StepWrapper autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-      {openVerify && (
-        <VerifySignature
-          onClose={(ver) => {
-            setVerified(ver);
-            setOpenVerify(false);
-          }}
-          open={openVerify}
-        />
-      )}
       <FormStackWrapper>
         <Controller
           name="image"
@@ -198,7 +231,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
 
       <FormStackWrapper>
         <Controller
-          name="daoTweetUrl"
+          name="daoTwitter"
           control={control}
           render={({ field: { name, value, onChange } }) => {
             return (
@@ -212,12 +245,20 @@ const CommunityInfoStep = (props: StepperChildProps) => {
                 }}
                 onChange={onChange}
                 placeholder="Add Twitter"
+                helperText={
+                  <FormHelperText
+                    errorTypes={errorTypes}
+                    value={value}
+                    name={name}
+                    errors={formState.errors}
+                  ></FormHelperText>
+                }
               />
             );
           }}
         />
         <Button
-          onClick={() => setOpenVerify(true)}
+          onClick={() => authenticateTwitter()}
           sx={{
             width: pxToRem(140),
             height: pxToRem(48)
@@ -225,15 +266,21 @@ const CommunityInfoStep = (props: StepperChildProps) => {
           type="button"
           size="square"
           color="offWhite"
-          disabled={!values.daoTweetUrl}
+          disabled={!values.daoTwitter || handleVerified}
           variant="outlined"
         >
-          Verify
+          {handleVerified ? (
+            "VERIFIED"
+          ) : validating ? (
+            <CircularProgress />
+          ) : (
+            "Verify"
+          )}
         </Button>
       </FormStackWrapper>
       <StepperButton
         label="Next"
-        disabled={!formState.isValid || !values.image}
+        disabled={!formState.isValid || !values.image || !handleVerified}
       />
     </StepWrapper>
   );

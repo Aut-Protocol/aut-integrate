@@ -88,7 +88,7 @@ export const useOAuth2 = () => {
                 codeVerifier: "challenge"
               }
             );
-            onSuccess(response);
+            onSuccess(response.data);
           } catch (e) {
             onFailure(e);
           }
