@@ -9,10 +9,11 @@ services:
     volumes:
       - ".:/app"
       - "/app/node_modules"
+    networks:
+      - query-server_aut-api
     ports:
       - "5002:80"
 
 networks:
-  default:
-    name: aut-api
+  query-server_aut-api:
     external: true
