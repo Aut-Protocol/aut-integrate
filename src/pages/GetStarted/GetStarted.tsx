@@ -17,7 +17,6 @@ import {
   Config,
   Goerli
 } from "@usedapp/core";
-import { useOAuth2 } from "./oauth2";
 
 const Wrapper = styled(Container)({
   display: "flex",
@@ -90,7 +89,6 @@ const GetStarted = () => {
   const networkConfig = useSelector(SelectedNetworkConfig);
   const history = useHistory();
   const location = useLocation();
-  const { getAuth } = useOAuth2();
 
   useEffect(() => {
     if (!connectInitiated) {
@@ -109,31 +107,6 @@ const GetStarted = () => {
     } else {
       start(startFromScratch);
     }
-  };
-
-  // const POPUP_HEIGHT = 700;
-  // const POPUP_WIDTH = 600;
-
-  // const openPopup = (url) => {
-  //   // To fix issues with window.screen in multi-monitor setups, the easier option is to
-  //   // center the pop-up over the parent window.
-  //   const top = window.outerHeight / 2 + window.screenY - POPUP_HEIGHT / 2;
-  //   const left = window.outerWidth / 2 + window.screenX - POPUP_WIDTH / 2;
-  //   return window.open(
-  //     url,
-  //     "OAuth2 Popup",
-  //     `height=${POPUP_HEIGHT},width=${POPUP_WIDTH},top=${top},left=${left}`
-  //   );
-  // };
-
-  const twitter = () => {
-    const popup = getAuth();
-
-    setInterval(() => {
-      console.warn(window.localStorage.getItem("code"));
-    }, 2000);
-    // console.warn(result);
-    console.log("TWEET");
   };
 
   const start = (startFromScratch: boolean) => {
@@ -250,15 +223,6 @@ const GetStarted = () => {
           onClick={() => goToIntegrate(true)}
         >
           Start from scratch
-        </Button>
-        <Button
-          type="submit"
-          variant="outlined"
-          size="normal"
-          color="offWhite"
-          onClick={() => twitter()}
-        >
-          TWITT
         </Button>
       </Box>
     </Wrapper>
