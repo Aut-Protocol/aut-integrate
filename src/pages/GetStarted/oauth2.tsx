@@ -86,15 +86,15 @@ export const useOAuth2 = () => {
     window.localStorage.removeItem("twitter-auth-response");
     const interval = setInterval(async () => {
       const authResponse = window.localStorage.getItem("twitter-auth-response");
-      console.warn(state);
+      // console.warn(state);
       if (authResponse) {
         const objectAuthResponse = JSON.parse(authResponse);
-        console.warn(objectAuthResponse);
+        // console.warn(objectAuthResponse);
         if (objectAuthResponse.error) {
           onFailure(objectAuthResponse.error);
         } else if (objectAuthResponse.state !== state) {
-          console.warn(objectAuthResponse.state);
-          console.warn(state);
+          // console.warn(objectAuthResponse.state);
+          // console.warn(state);
           onFailure("Validation miss-match something went wrong.");
         } else {
           try {
@@ -117,6 +117,10 @@ export const useOAuth2 = () => {
     }, 2000);
     // intervalRefs.push(state, interval);
     intervalRef = { state, interval };
+
+    return () => {
+      clearInterval(intervalRef.interval);
+    };
     // Remove listener(s) on unmount
   }, []);
 
