@@ -46,45 +46,10 @@ const GenesisImageWrapper = styled(GenesisImage)(({ theme }) => ({
   }
 }));
 
-const TWITTER_STATEconsumerKey = "Y6DvFzusISLM3nUlQXUvrcAfr";
-const TWITTER_STATEconsumerSecret =
-  "FIqv1yHtM1RnaNiwzSJscIv6rojHbTbkakITiUUmqvejZftoZd";
-const TWITTER_STATEclientId = "YWRmaEY4LU9aSkRXd2NoZlpiLVU6MTpjaQ";
-const TWITTER_STATEclientSecret =
-  "Ib7bxg7_5hIK9xatq5ZfVf_Gx_ew9pmORS_c4xYKeW7GUIIFY1";
-export const TWITTER_STATE = "twitter-state";
-const TWITTER_CODE_CHALLENGE = "challenge";
-const TWITTER_AUTH_URL = "https://twitter.com/i/oauth2/authorize";
-const TWITTER_SCOPE = ["tweet.read"].join(" ");
-
-export const getTwitterOAuthUrl = (redirectUri: string) =>
-  getURLWithQueryParams(TWITTER_AUTH_URL, {
-    response_type: "code",
-    client_id: TWITTER_STATEclientId,
-    redirect_uri: redirectUri,
-    scope: TWITTER_SCOPE,
-    state: TWITTER_STATE,
-
-    code_challenge: TWITTER_CODE_CHALLENGE,
-    code_challenge_method: "plain"
-  });
-
-const getURLWithQueryParams = (
-  baseUrl: string,
-  params: Record<string, any>
-) => {
-  const query = Object.entries(params)
-    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-    .join("&");
-
-  return `${baseUrl}?${query}`;
-};
-
 const GetStarted = () => {
   const dispatch = useAppDispatch();
   const [connectInitiated, setConnectInitiated] = useState(false);
   const [canStartFromScratch, setCanStartFromScratch] = useState(false);
-  const [popup, setPopup] = useState(null);
   const { active } = useEthers();
   const networkConfig = useSelector(SelectedNetworkConfig);
   const history = useHistory();

@@ -18,8 +18,7 @@ import { toBase64 } from "@utils/to-base-64";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { useOAuth2 } from "../GetStarted/oauth2";
-import AutLoading from "@components/AutLoading";
+import { useOAuth } from "../../api/oauth";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const errorTypes = {
@@ -58,7 +57,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [validating, setValidating] = useState(false);
   const [inTimeout, setInTimeout] = useState(false);
-  const { getAuth } = useOAuth2();
+  const { getAuth, authenticating } = useOAuth();
   const { name, image, description, daoTwitter, handleVerified } =
     useSelector(IntegrateCommunity);
   const { control, handleSubmit, getValues, watch, setError, formState } =
@@ -88,34 +87,26 @@ const CommunityInfoStep = (props: StepperChildProps) => {
   };
 
   const authenticateTwitter = () => {
-    if (!inTimeout) {
-      setValidating(true);
-      getAuth(
-        (data) => {
-          setValidating(false);
-          if (data.username === getValues("daoTwitter")) {
-            dispatch(
-              integrateUpdateCommunity({
-                handleVerified: true
-              })
-            );
-          } else {
-            setError("daoTwitter", {
-              type: "validationFailed",
-              message: `Twitter handle doesn't match the one used to validate.`
-            });
-          }
-        },
-        (e) => {
-          setValidating(false);
-          console.log(e);
+    getAuth(
+      (data) => {
+        console.log(data.screen_name);
+        if (data.screen_name === getValues("daoTwitter")) {
+          dispatch(
+            integrateUpdateCommunity({
+              handleVerified: true
+            })
+          );
+        } else {
+          setError("daoTwitter", {
+            type: "validationFailed",
+            message: `Twitter handle doesn't match the one used to validate.`
+          });
         }
-      );
-      setInTimeout(true);
-      setTimeout(() => {
-        setInTimeout(false);
-      }, 5000);
-    }
+      },
+      (e) => {
+        console.log(e);
+      }
+    );
   };
 
   return (
@@ -271,7 +262,7 @@ const CommunityInfoStep = (props: StepperChildProps) => {
         >
           {handleVerified ? (
             "VERIFIED"
-          ) : validating ? (
+          ) : authenticating ? (
             <CircularProgress />
           ) : (
             "Verify"

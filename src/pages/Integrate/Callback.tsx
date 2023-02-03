@@ -15,10 +15,24 @@ const queryToObject = (query) => {
 const Callback = () => {
   useEffect(() => {
     const payload = queryToObject(window.location.search.split("?")[1]);
-    window.localStorage.setItem(
-      "twitter-auth-response",
-      JSON.stringify(payload)
-    );
+    const error = payload && payload.error;
+    // https://antonio-georgiev.eu-1.sharedwithexpose.com/callback?oauth_token=Qh_FbAAAAAABbKnGAAABhhSsKGA&oauth_verifier=BvuePyKOCuuTF6MVN7vhhX8DXFrwKdrU
+
+    if (!window.opener) {
+      throw new Error("No window opener");
+    }
+
+    if (error) {
+      window.opener.postMessage({
+        type: "OAUTH_RESPONSE",
+        error: decodeURI(error) || "OAuth error: An error has occured."
+      });
+    } else {
+      window.opener.postMessage({
+        type: "OAUTH_RESPONSE",
+        payload
+      });
+    }
     window.close();
   }, []);
 
