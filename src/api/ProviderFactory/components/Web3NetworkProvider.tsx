@@ -45,8 +45,14 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
   const [allowListed, setAllowListed] = useState(false);
   const [allowListedComplete, setAllowListedComplete] = useState(false);
   const { connector, activate } = useConnector();
-  const { activateBrowserWallet, account, switchNetwork, chainId, active } =
-    useEthers();
+  const {
+    activateBrowserWallet,
+    account,
+    switchNetwork,
+    chainId,
+    active,
+    isLoading
+  } = useEthers();
 
   const isActive = useMemo(() => {
     const config = networks.find(
@@ -169,66 +175,68 @@ const Web3NetworkProvider = ({ fullScreen = false }: any) => {
             Aw shucks, it looks like you’re not on the Allowlist for this round.
           </Typography>
         )}
-        <>
-          {!wallet && (
-            <Typography color="white" variant="subtitle1">
-              Connect your wallet
-            </Typography>
-          )}
-          {wallet && (
-            <>
-              <Typography
-                mb={{
-                  xs: "8px"
-                }}
-                color="white"
-                variant="subtitle1"
-              >
-                Change Network
-              </Typography>
-
-              {!allowListedComplete && (
-                <Typography color="white" variant="body">
-                  You will need to switch your wallet’s network.
-                </Typography>
-              )}
-              {allowListedComplete && !allowListed && (
-                <Typography color="white" variant="body">
-                  Try on a different network.
-                </Typography>
-              )}
-            </>
-          )}
-          <DialogInnerContent>
+        {!loadingNetwork && (
+          <>
             {!wallet && (
+              <Typography color="white" variant="subtitle1">
+                Connect your wallet
+              </Typography>
+            )}
+            {wallet && (
               <>
-                <ConnectorBtn
-                  setConnector={changeConnector}
-                  connectorType={ConnectorTypes.Metamask}
-                />
-                <ConnectorBtn
-                  setConnector={changeConnector}
-                  connectorType={ConnectorTypes.WalletConnect}
-                />
+                <Typography
+                  mb={{
+                    xs: "8px"
+                  }}
+                  color="white"
+                  variant="subtitle1"
+                >
+                  Change Network
+                </Typography>
+
+                {!allowListedComplete && (
+                  <Typography color="white" variant="body">
+                    You will need to switch your wallet’s network.
+                  </Typography>
+                )}
+                {allowListedComplete && !allowListed && (
+                  <Typography color="white" variant="body">
+                    Try on a different network.
+                  </Typography>
+                )}
               </>
             )}
+            <DialogInnerContent>
+              {!wallet && (
+                <>
+                  <ConnectorBtn
+                    setConnector={changeConnector}
+                    connectorType={ConnectorTypes.Metamask}
+                  />
+                  <ConnectorBtn
+                    setConnector={changeConnector}
+                    connectorType={ConnectorTypes.WalletConnect}
+                  />
+                </>
+              )}
 
-            {wallet && (
-              <NetworkSelectors
-                networks={networks}
-                onSelect={async (foundChainId: number) => {
-                  const config = networks.find(
-                    (n) => n.chainId?.toString() === foundChainId?.toString()
-                  );
-                  if (config) {
-                    await activate(connector.connector);
-                    switchNetwork(foundChainId);
-                  }
-                }}
-              />
-            )}
-          </DialogInnerContent>
-        </>
+              {wallet && !isLoading && (
+                <NetworkSelectors
+                  networks={networks}
+                  onSelect={async (foundChainId: number) => {
+                    const config = networks.find(
+                      (n) => n.chainId?.toString() === foundChainId?.toString()
+                    );
+                    if (config) {
+                      await activate(connector.connector);
+                      switchNetwork(foundChainId);
+                    }
+                  }}
+                />
+              )}
+            </DialogInnerContent>
+          </>
+        )}
       </>
     </DialogWrapper>
   );

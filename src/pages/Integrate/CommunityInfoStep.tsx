@@ -20,6 +20,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useOAuth } from "../../api/oauth";
 import CircularProgress from "@mui/material/CircularProgress";
+import { AutSocial, socialUrls } from "@api/social.model";
 
 const errorTypes = {
   maxWords: `Words cannot be more than 3`,
@@ -52,13 +53,15 @@ const FormStackWrapper = styled("div")(({ theme }) => ({
   }
 }));
 
+const getSocialLink = (socials: AutSocial[]) => {
+  const social = socials.find((s) => s.type === "twitter");
+  return social?.link.replace(socialUrls[social.type].prefix, "");
+};
+
 const CommunityInfoStep = (props: StepperChildProps) => {
   const dispatch = useAppDispatch();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [validating, setValidating] = useState(false);
-  const [inTimeout, setInTimeout] = useState(false);
   const { getAuth, authenticating } = useOAuth();
-  const { name, image, description, daoTwitter, handleVerified } =
+  const { name, image, description, daoTwitter, handleVerified, socials } =
     useSelector(IntegrateCommunity);
   const { control, handleSubmit, getValues, watch, setError, formState } =
     useForm({
@@ -67,16 +70,28 @@ const CommunityInfoStep = (props: StepperChildProps) => {
         name,
         image,
         description,
-        daoTwitter
+        daoTwitter: getSocialLink(socials)
       }
     });
 
   const values = watch();
 
   const updateState = () => {
-    return dispatch(
+    dispatch(
       integrateUpdateCommunity({
         ...getValues()
+      })
+    );
+    const { daoTwitter, ...rest } = getValues();
+    return dispatch(
+      integrateUpdateCommunity({
+        ...rest,
+        socials: JSON.parse(JSON.stringify(socials)).map((s) => {
+          if (s.type === "twitter") {
+            s.link = `${socialUrls[s.type].prefix}${daoTwitter}`;
+          }
+          return s;
+        })
       })
     );
   };

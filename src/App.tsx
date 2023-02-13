@@ -21,8 +21,7 @@ import { WalletConnectConnector } from "@usedapp/wallet-connect-connector";
 
 import { Network } from "@ethersproject/networks";
 import { NetworkConfig } from "@api/ProviderFactory/network.config";
-// import { OAuthPopup } from "@tasoskakour/react-use-oauth2";
-import Callback from "./pages/GetStarted/Callback";
+import Callback from "./pages/Integrate/Callback";
 
 const generateConfig = (networks: NetworkConfig[]): Config => {
   const readOnlyUrls = networks.reduce((prev, curr) => {

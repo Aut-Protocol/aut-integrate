@@ -2,6 +2,7 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { ResultState } from "@store/result-status";
 import { DefaultRoles, Role } from "@api/community.model";
 import { createCommunity, isMemberOfDao } from "@api/registry.api";
+import { AutSocial, DefaultSocials } from "@api/social.model";
 
 export interface IntegrateState {
   community: {
@@ -15,6 +16,7 @@ export interface IntegrateState {
     daoAddr: string;
     daoTwitter: string;
     handleVerified: boolean;
+    socials: AutSocial[];
   };
   status: ResultState;
   errorMessage: string;
@@ -43,6 +45,7 @@ const initialState: IntegrateState = {
         roleName: ""
       }
     ],
+    socials: DefaultSocials,
     commitment: null,
     contractType: null,
     daoAddr: null
