@@ -63,6 +63,31 @@ export const MarketTemplates = [
   }
 ];
 
+import ENSImage from "@assets/ethereum-name-service-ens-logo.png";
+import TwitterImage from "@assets/icons8-twitter-48.png";
+import GithubImage from "@assets/github-mark-white.png";
+
+export const VerificationSocials = [
+  {
+    title: <>ENS</>,
+    icon: ENSImage,
+    type: "ENS",
+    description: "Connect to verify your ENS"
+  },
+  {
+    title: <>Twitter</>,
+    icon: TwitterImage,
+    type: "TWITTER",
+    description: "Connect to verify your Twitter(X)"
+  },
+  {
+    title: <>Github</>,
+    icon: GithubImage,
+    type: "GITHUB",
+    description: "Connect to verify your Github"
+  }
+];
+
 export const CommitmentMessages = (value: number) => {
   switch (+value) {
     case 1:

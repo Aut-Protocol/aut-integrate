@@ -10,6 +10,7 @@ import CommitmentStep from "./CommitmentStep";
 import ConfirmStep from "./ConfirmStep";
 import { StartFromScratch } from "@store/WalletProvider/WalletProvider";
 import { useSelector } from "react-redux";
+import VerifySocialsStep from "./VerifySocialsStep";
 
 const defaultSteps: Step[] = [
   {
@@ -22,6 +23,11 @@ const defaultSteps: Step[] = [
         deserves ✨
       </>
     )
+  },
+  {
+    component: VerifySocialsStep,
+    title: "Connect to your socials",
+    description: <>Connect to yours socials.</>
   },
   {
     component: CommunityInfoStep,

@@ -3,6 +3,7 @@ import { ResultState } from "@store/result-status";
 import { DefaultRoles, Role } from "@api/community.model";
 import { createCommunity, isMemberOfDao } from "@api/registry.api";
 import { AutSocial, DefaultSocials } from "@api/social.model";
+import { verifySocial } from "@api/social-verifications/verify";
 
 export interface IntegrateState {
   community: {
@@ -68,6 +69,16 @@ export const integrateSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(verifySocial.pending, (state) => {
+        state.status = ResultState.Loading;
+      })
+      .addCase(verifySocial.fulfilled, (state) => {
+        state.status = ResultState.Idle;
+      })
+      .addCase(verifySocial.rejected, (state, action) => {
+        state.status = ResultState.Failed;
+        state.errorMessage = action.payload as string;
+      })
       .addCase(createCommunity.pending, (state) => {
         state.status = ResultState.Loading;
       })

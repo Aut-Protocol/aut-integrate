@@ -4,11 +4,15 @@ export interface AutSocial {
 }
 
 export const socialUrls = {
-  discord: {
+  ens: {
     prefix: "",
     placeholder: ""
   },
-  website: {
+  twitter: {
+    prefix: "",
+    placeholder: ""
+  },
+  github: {
     prefix: "",
     placeholder: ""
   }
@@ -16,11 +20,15 @@ export const socialUrls = {
 
 export const DefaultSocials: AutSocial[] = [
   {
-    type: "discord",
+    type: "ens",
     link: ""
   },
   {
-    type: "website",
+    type: "twitter",
+    link: ""
+  },
+  {
+    type: "github",
     link: ""
   }
 ];
