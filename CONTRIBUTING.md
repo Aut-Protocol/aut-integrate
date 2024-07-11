@@ -1,6 +1,6 @@
-# Contributing to The Āut Pad
+# Contributing to Launchpad
 
-We would love for you to contribute to The Āut Pad and help make it ever better!
+We would love for you to contribute to Launchpad and help make it ever better!
 As a contributor, here are the guidelines we would like you to follow:
 
 - [Code of Conduct](#coc)
