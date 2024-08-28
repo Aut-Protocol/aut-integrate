@@ -1,8 +1,8 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { ResultState } from "@store/result-status";
-import { DefaultRoles, Role } from "@api/community.model";
-import { createCommunity, isMemberOfDao } from "@api/registry.api";
+import { createHub, isMemberOfDao } from "@api/registry.api";
 import { AutSocial, DefaultSocials } from "@api/social.model";
+import { DefaultRoles, Role } from "@aut-labs/sdk/dist/models/role";
 
 export interface IntegrateState {
   community: {
@@ -68,13 +68,13 @@ export const integrateSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createCommunity.pending, (state) => {
+      .addCase(createHub.pending, (state) => {
         state.status = ResultState.Loading;
       })
-      .addCase(createCommunity.fulfilled, (state) => {
+      .addCase(createHub.fulfilled, (state) => {
         state.status = ResultState.Idle;
       })
-      .addCase(createCommunity.rejected, (state, action) => {
+      .addCase(createHub.rejected, (state, action) => {
         state.status = ResultState.Failed;
         state.errorMessage = action.payload as string;
       })

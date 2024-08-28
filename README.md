@@ -3,7 +3,7 @@
 The Launchpad is the main product of our product suite.
 
 By integrating it, you can expand your DAO contract - adding the concepts of Members Roles & Interactions directly on-chain, at contract level.
-Assign Roles to your Community - and kick off role-based working routines and role-weighted governance in seconds.
+Assign Roles to your Hub - and kick off role-based working routines and role-weighted governance in seconds.
 
 The Āut team is currently using the following packages for development of web apps
 

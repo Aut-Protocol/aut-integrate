@@ -1,6 +1,5 @@
-import AutSDK, { SDKContractGenericResponse } from "@aut-labs/sdk";
+import AutSDK, { HubNFT, SDKContractGenericResponse } from "@aut-labs/sdk";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Community } from "./community.model";
 import { getCache, updateCache } from "./cache.api";
 
 export const isMemberOfDao = createAsyncThunk(
@@ -21,12 +20,12 @@ export const isMemberOfDao = createAsyncThunk(
   }
 );
 
-export const createCommunity = createAsyncThunk(
-  "integrate/create/community",
+export const createHub = createAsyncThunk(
+  "integrate/create/hub",
   async (
     requestBody: {
       skipBiconomy: boolean;
-      metadata: Community;
+      metadata: HubNFT;
       contractType: number;
       daoAddr: string;
       userAddress: string;
@@ -36,7 +35,7 @@ export const createCommunity = createAsyncThunk(
     const sdk = await AutSDK.getInstance();
     let response: SDKContractGenericResponse<string>;
 
-    sdk.novaRegistry.contract.skipBiconomy = true;
+    sdk.hubRegistry.contract.skipBiconomy = true;
 
     if (requestBody.daoAddr) {
       sdk.daoExpanderRegistry.contract.skipBiconomy = true;
@@ -44,14 +43,14 @@ export const createCommunity = createAsyncThunk(
         requestBody.contractType,
         requestBody.daoAddr,
         requestBody.metadata.properties.market as number,
-        requestBody.metadata.properties.commitment,
+        requestBody.metadata.properties.minCommitment,
         requestBody.metadata
       );
     } else {
       // start from scratch
-      response = await sdk.novaRegistry.deployNova(
+      response = await sdk.hubRegistry.deployHub(
         requestBody.metadata.properties.market as number,
-        requestBody.metadata.properties.commitment,
+        requestBody.metadata.properties.minCommitment,
         requestBody.metadata
       );
     }

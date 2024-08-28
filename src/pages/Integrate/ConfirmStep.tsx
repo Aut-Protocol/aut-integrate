@@ -1,8 +1,7 @@
 /* eslint-disable max-len */
 
-import { Community, CommunityProperties } from "@api/community.model";
-import { createCommunity } from "@api/registry.api";
-import { AutButton } from "@components/buttons";
+import { createHub } from "@api/registry.api";
+import { HubNFT } from "@aut-labs/sdk";
 import CopyAddress from "@components/CopyAddress";
 import ErrorDialog from "@components/Dialog/ErrorPopup";
 import LoadingDialog from "@components/Dialog/LoadingPopup";
@@ -48,26 +47,28 @@ const ConfirmStep = () => {
 
     const skipBiconomy = actionType === "pay";
     const result = await dispatch(
-      createCommunity({
+      createHub({
         skipBiconomy,
         userAddress: address,
         contractType: state.contractType,
         daoAddr: state.daoAddr,
-        metadata: new Community({
+        metadata: new HubNFT({
           name: state.name,
           image: state.image,
           description: state.description,
-          properties: new CommunityProperties({
+          properties: {
             market: state.market,
             socials: state.socials,
-            commitment: state.commitment,
+            minCommitment: state.commitment,
+            deployer: address,
+            timestamp: Date.now(),
             rolesSets: [
               {
-                roleSetName: "First",
+                roleSetName: "Default",
                 roles: state.roles
               }
             ]
-          })
+          }
         })
       })
     );

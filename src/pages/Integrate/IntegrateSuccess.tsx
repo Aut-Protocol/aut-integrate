@@ -230,7 +230,7 @@ const IntegrateSuccess = () => {
           endIcon={<OpenInNewIcon />}
           href="http://176.34.149.248:4002"
         >
-          Nova Showcase
+          Hub Explorer
         </Button> */}
         {/* <Button
           variant="outlined"
