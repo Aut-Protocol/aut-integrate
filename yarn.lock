@@ -61,10 +61,10 @@
     "@web3auth/wallet-services-plugin" "^8.0.1"
     "@web3auth/web3auth-wagmi-connector" "^6.0.0"
 
-"@aut-labs/sdk@^0.0.167-dev":
-  version "0.0.167-dev"
-  resolved "https://registry.npmjs.org/@aut-labs/sdk/-/sdk-0.0.167-dev.tgz"
-  integrity sha512-wiMgd+LerNVVHHAtfg+2wJzcQZ0CP3qUh/fkxvJGmdKrfyg7DUOS8hpkRswDqu0Ror1opB86fA/BIhaJZnNSrw==
+"@aut-labs/sdk@^0.0.169-dev":
+  version "0.0.169-dev"
+  resolved "https://registry.npmjs.org/@aut-labs/sdk/-/sdk-0.0.169-dev.tgz"
+  integrity sha512-rcdIswuAVyQf2U/VsAfyj6S4YokeKiNnRJNce0AmGNZ+5k3vJa+s2e669jkr2s47gANR269CW1VtxglNwY9jQw==
   dependencies:
     "@aut-labs/abi-types" "^0.0.77-dev"
     date-fns "^2.29.3"
