@@ -3,12 +3,26 @@ version: "3.7"
 services:
   launchpad_mainnet:
     container_name: launchpad_mainnet
-    image: autlabs/launchpad:mainnet
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_NETWORK_ENV: "mainnet"
+        REACT_APP_API_URL: "https://mainnet-api.aut.id/api"
+        REACT_APP_NODE_ENV: "production"
+        REACT_APP_DEFAULT_CHAIN_ID: "137"
     ports:
       - "5001:80"
 
   launchpad_main:
     container_name: launchpad_main
-    image: autlabs/launchpad:main
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_NETWORK_ENV: "testnet"
+        REACT_APP_API_URL: "https://testnet-api.aut.id/api"
+        REACT_APP_NODE_ENV: "development"
+        REACT_APP_DEFAULT_CHAIN_ID: "80002"
     ports:
       - "5001:80"

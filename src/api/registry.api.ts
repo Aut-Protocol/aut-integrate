@@ -1,6 +1,5 @@
 import AutSDK, { HubNFT, SDKContractGenericResponse } from "@aut-labs/sdk";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getCache, updateCache } from "./cache.api";
 
 export const isMemberOfDao = createAsyncThunk(
   "membership-checker/is-member",
@@ -55,36 +54,6 @@ export const createHub = createAsyncThunk(
       );
     }
     if (response?.isSuccess) {
-      try {
-        const cache = await getCache("UserPhases", requestBody?.userAddress);
-        if (cache) {
-          cache.list[0].status = 1;
-          await updateCache(cache);
-        } else {
-          await updateCache({
-            cacheKey: "UserPhases",
-            address: requestBody.userAddress,
-            daoAddress: response.data,
-            startDate: new Date().getTime(),
-            list: [
-              {
-                phase: 1,
-                status: 1
-              },
-              {
-                phase: 2,
-                status: 0
-              },
-              {
-                phase: 3,
-                status: 0
-              }
-            ]
-          });
-        }
-      } catch (error) {
-        // handle error
-      }
       return response.data;
     }
     return rejectWithValue(response?.errorMessage);

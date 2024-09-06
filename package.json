@@ -6,10 +6,10 @@
     "build": "react-app-rewired build",
     "deploy": "gh-pages -d build",
     "eject": "react-app-rewired eject",
-    "start": "react-app-rewired start",
-    "test": "react-app-rewired test",
     "lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
-    "prettier-format": "prettier --config .prettierrc.json \"src/**/*.{js,jsx,ts,tsx}\" --write"
+    "prettier-format": "prettier --config .prettierrc.json \"src/**/*.{js,jsx,ts,tsx}\" --write",
+    "start": "react-app-rewired start",
+    "test": "react-app-rewired test"
   },
   "browserslist": {
     "production": [
