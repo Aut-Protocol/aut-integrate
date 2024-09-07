@@ -53,7 +53,6 @@ function App() {
   const location = useLocation();
   const ps = useRef<HTMLElement>();
   const scrollRestorationState = useSelector(ScrollRestorationState);
-  // const isAllowListed = useSelector(IsAllowListed);
 
   useEffect(() => {
     getAppConfig()
