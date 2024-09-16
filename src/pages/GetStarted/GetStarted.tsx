@@ -7,18 +7,14 @@ import {
   useTheme
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "@store/store.model";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import AppTitle from "@components/AppTitle";
 import BubbleBottomLeft from "@assets/bubble2.svg";
 import BubbleTopRight from "@assets/bubble.svg";
 import GenesisImage from "@assets/genesis.png";
-import { useAutConnector, useWalletConnector } from "@aut-labs/connector";
-import { useAccount } from "wagmi";
+import { useWalletConnector } from "@aut-labs/connector";
+import { useAccount, useConnect } from "wagmi";
 import ErrorDialog from "@components/Dialog/ErrorPopup";
-import { NetworksConfig } from "@store/WalletProvider/WalletProvider";
-import { environment } from "@api/environment";
 
 const BottomLeftBubble = styled("img")(({ theme }) => ({
   zIndex: -1,
@@ -82,15 +78,10 @@ const GenesisImageWrapper = styled("img")(({ theme }) => ({
 }));
 
 const GetStarted = () => {
-  const dispatch = useAppDispatch();
   const [errorMsg, setErrorMessage] = useState(false);
   const navigate = useNavigate();
-  const { open } = useWalletConnector();
   const { address } = useAccount();
-  const state = useAutConnector({
-    defaultChainId: +environment.defaultChainId
-  });
-  const networks = useSelector(NetworksConfig);
+  const { open, state } = useWalletConnector();
   const theme = useTheme();
 
   const goToIntegrate = async (startFromScratch = false) => {

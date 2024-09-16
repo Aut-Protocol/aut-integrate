@@ -33,7 +33,10 @@ const root = createRoot(container);
 root.render(
   <WagmiProvider config={wagmiConfig}>
     <QueryClientProvider client={queryClient}>
-      <WalletConnectorProvider>
+      <WalletConnectorProvider
+        defaultChainId={+environment.defaultChainId}
+        requestSig={false}
+      >
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={SwTheme}>
             <CssBaseline />

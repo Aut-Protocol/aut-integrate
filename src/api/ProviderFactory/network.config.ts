@@ -2,9 +2,9 @@ export interface NetworkContracts {
   autIDAddress: string;
   daoExpanderRegistryAddress: string;
   daoExpanderFactoryAddress: string;
-  novaRegistryAddress: string;
+  hubRegistryAddress: string;
   allowListAddress: string;
-  novaFactoryAddress: string;
+  hubFactoryAddress: string;
   hackerDaoAddress: string;
   daoTypesAddress: string;
 }

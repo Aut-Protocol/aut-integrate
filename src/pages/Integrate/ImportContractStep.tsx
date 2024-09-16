@@ -1,4 +1,3 @@
-import { isMemberOfDao } from "@api/registry.api";
 import ErrorDialog from "@components/Dialog/ErrorPopup";
 import LoadingDialog from "@components/Dialog/LoadingPopup";
 import { FormHelperText } from "@components/Fields";
@@ -56,20 +55,20 @@ const ImportContractStep = (props: StepperChildProps) => {
     await updateState();
 
     const values = getValues();
-    const result = await dispatch(
-      isMemberOfDao({
-        daoType: values.contractType,
-        daoAddr: values.daoAddr
-      })
-    );
+    // const result = await dispatch(
+    //   isMemberOfDao({
+    //     daoType: values.contractType,
+    //     daoAddr: values.daoAddr
+    //   })
+    // );
 
-    if (
-      result.meta.requestStatus === "fulfilled" &&
-      typeof result.payload === "boolean" &&
-      result.payload
-    ) {
-      props?.stepper?.nextStep();
-    }
+    // if (
+    //   result.meta.requestStatus === "fulfilled" &&
+    //   typeof result.payload === "boolean" &&
+    //   result.payload
+    // ) {
+    //   props?.stepper?.nextStep();
+    // }
   };
 
   const handleDialogClose = () => {

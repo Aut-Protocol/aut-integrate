@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useWalletClient } from "wagmi";
-import { MultiSigner } from "@aut-labs/sdk/dist/models/models";
 import { BrowserProvider } from "ethers";
+import { MultiSigner } from "@aut-labs/sdk";
 
 export async function walletClientToSigner(walletClient): Promise<MultiSigner> {
   const { account, chain, transport } = walletClient;

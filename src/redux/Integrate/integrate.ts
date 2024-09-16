@@ -1,8 +1,8 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { ResultState } from "@store/result-status";
-import { createHub, isMemberOfDao } from "@api/registry.api";
+import { createHub } from "@api/registry.api";
 import { AutSocial, DefaultSocials } from "@api/social.model";
-import { DefaultRoles, Role } from "@aut-labs/sdk/dist/models/role";
+import { DefaultRoles, Role } from "@aut-labs/sdk";
 
 export interface IntegrateState {
   community: {
@@ -77,20 +77,6 @@ export const integrateSlice = createSlice({
       .addCase(createHub.rejected, (state, action) => {
         state.status = ResultState.Failed;
         state.errorMessage = action.payload as string;
-      })
-      .addCase(isMemberOfDao.pending, (state) => {
-        state.status = ResultState.Loading;
-      })
-      .addCase(isMemberOfDao.fulfilled, (state, action) => {
-        state.status = ResultState.Idle;
-        state.errorMessage = action.payload
-          ? null
-          : "You are not a member of this DAO";
-      })
-      .addCase(isMemberOfDao.rejected, (state, action) => {
-        state.status = ResultState.Failed;
-        console.log(action, "action");
-        state.errorMessage = "You are not a member of this DAO";
       });
   }
 });

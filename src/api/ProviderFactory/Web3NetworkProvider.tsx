@@ -6,19 +6,15 @@ import {
 import { useSelector } from "react-redux";
 import AppTitle from "@components/AppTitle";
 import AutLoading from "@components/AutLoading";
-import AutSDK from "@aut-labs/sdk";
-import { useEffect } from "react";
+import AutSDK, { MultiSigner } from "@aut-labs/sdk";
+import { memo, useEffect } from "react";
 import { NetworkConfig } from "./network.config";
-import { MultiSigner } from "@aut-labs/sdk/dist/models/models";
 import { AutWalletConnector, useAutConnector } from "@aut-labs/connector";
-import { environment } from "@api/environment";
 
 function Web3DautConnect() {
   const dispatch = useAppDispatch();
   const networks = useSelector(NetworksConfig);
-  const { connect, multiSigner, multiSignerId, chainId } = useAutConnector({
-    defaultChainId: +environment.defaultChainId
-  });
+  const { connect, multiSigner, multiSignerId, chainId } = useAutConnector();
 
   const initialiseSDK = async (
     network: NetworkConfig,
@@ -26,11 +22,8 @@ function Web3DautConnect() {
   ) => {
     const sdk = await AutSDK.getInstance(false);
     await sdk.init(multiSigner, {
-      daoTypesAddress: network.contracts.daoTypesAddress,
-      hubRegistryAddress: network.contracts.novaRegistryAddress,
-      autIDAddress: network.contracts.autIDAddress,
-      daoExpanderRegistryAddress: network.contracts.daoExpanderRegistryAddress,
-      allowListAddress: network.contracts.allowListAddress
+      hubRegistryAddress: network.contracts.hubRegistryAddress,
+      autIDAddress: network.contracts.autIDAddress
     });
   };
 
@@ -70,4 +63,4 @@ function Web3DautConnect() {
   );
 }
 
-export default Web3DautConnect;
+export default memo(Web3DautConnect);
