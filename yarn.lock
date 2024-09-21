@@ -44,10 +44,10 @@
     jsonpointer "^5.0.0"
     leven "^3.1.0"
 
-"@aut-labs/abi-types@^0.0.79-dev":
-  version "0.0.79-dev"
-  resolved "https://registry.npmjs.org/@aut-labs/abi-types/-/abi-types-0.0.79-dev.tgz"
-  integrity sha512-2mRxlKoJBVuUghaWCc3B3kJUmkRTtuLL3lXjVAFjYAEHFlP4ACKfn+jwT3sGlL3bNr0TfrMYtgblRNol2AWeyA==
+"@aut-labs/abi-types@^0.0.81-dev":
+  version "0.0.81-dev"
+  resolved "https://registry.npmjs.org/@aut-labs/abi-types/-/abi-types-0.0.81-dev.tgz"
+  integrity sha512-/I+6aL353cYrp220yASBHM9KONRd7NFWutonAoRIkZnEzh2fixEHEskkEYB9+3jAAN4LnwKt+/tnKheja8uv9g==
 
 "@aut-labs/connector@^0.0.190":
   version "0.0.190"
@@ -62,12 +62,12 @@
     "@web3auth/web3auth-wagmi-connector" "^6.0.0"
     siwe "^2.3.2"
 
-"@aut-labs/sdk@^0.0.182-dev":
-  version "0.0.182-dev"
-  resolved "https://registry.npmjs.org/@aut-labs/sdk/-/sdk-0.0.182-dev.tgz"
-  integrity sha512-g7zVjaJ6/KlitXtILhGdh8xFGBpJWvGd2Xcw2LPrFkolIcpkkxJfOfKXi5v9vhmNqGJVbXgMKIZI2VjpbG4abQ==
+"@aut-labs/sdk@^0.0.202-dev":
+  version "0.0.202-dev"
+  resolved "https://registry.npmjs.org/@aut-labs/sdk/-/sdk-0.0.202-dev.tgz"
+  integrity sha512-e7GK257fmXEq62g3NYvo5ve9O6lVXsRUvw3SCLBKeyh8y7E5C6jn+/tMC1n8glq1x0q0+SAZIq8QUcUXvAPSKg==
   dependencies:
-    "@aut-labs/abi-types" "^0.0.79-dev"
+    "@aut-labs/abi-types" "^0.0.81-dev"
     date-fns "^2.29.3"
     ethers "^6.10.0"
 

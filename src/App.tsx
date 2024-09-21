@@ -2,7 +2,7 @@ import { Route, Navigate, Routes, useLocation } from "react-router-dom";
 import { Box, styled } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Web3DautConnect from "@api/ProviderFactory/Web3NetworkProvider";
-import { environment } from "@api/environment";
+import { environment, EnvMode } from "@api/environment";
 import AutSDK from "@aut-labs/sdk";
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "@store/store.model";
@@ -63,6 +63,7 @@ function App() {
           })
         );
         const sdk = new AutSDK({
+          enableDebug: environment.env === EnvMode.Development,
           ipfs: {
             apiKey: environment.ipfsApiKey,
             secretApiKey: environment.ipfsApiSecret,

@@ -1,4 +1,4 @@
-import AutSDK, { HubNFT } from "@aut-labs/sdk";
+import AutSDK, { getOverrides, HubNFT } from "@aut-labs/sdk";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const createHub = createAsyncThunk(
@@ -18,11 +18,13 @@ export const createHub = createAsyncThunk(
     const roleIds = requestBody.metadata.properties.rolesSets[0].roles.map(
       (role) => role.id
     );
+    const overrides = await getOverrides(sdk.signer);
     const response = await sdk.hubRegistry.deployHub(
       roleIds,
       requestBody.metadata.properties.market as number,
       requestBody.metadata.properties.minCommitment,
-      requestBody.metadata
+      requestBody.metadata,
+      overrides
     );
     if (response?.isSuccess) {
       return response.data;
