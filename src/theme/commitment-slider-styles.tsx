@@ -79,7 +79,7 @@ export const AutCommitmentSlider = ({
           errors={errors}
         >
           <Typography className="text-secondary" variant="caption">
-            {!!value ? `${value}/10` : "Slide to select commitment level."}
+            {value ? `${value}/10` : "Slide to select commitment level."}
           </Typography>
         </FormHelperText>
       </div>

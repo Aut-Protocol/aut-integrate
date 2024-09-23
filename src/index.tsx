@@ -14,7 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WalletConnectorProvider, wagmiConfig } from "@aut-labs/connector";
 
 // markerSDK.loadWidget({
-//   project: `${process.env.REACT_APP_MARKER}`,
+//   project: `${process.env.VITE_MARKER}`,
 //   reporter: {
 //     email: "frontend@aut.id",
 //     fullName: "Launchpad"
@@ -22,7 +22,7 @@ import { WalletConnectorProvider, wagmiConfig } from "@aut-labs/connector";
 // });
 
 // Sentry.init({
-//   dsn: `https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/${process.env.REACT_APP_SENTRY}`,
+//   dsn: `https://e8018550ad7742088d62be4084909caf@o1432500.ingest.sentry.io/${process.env.VITE_SENTRY}`,
 //   integrations: [new BrowserTracing(), new SentryRRWeb({})],
 //   tracesSampleRate: 1.0
 // });
@@ -35,7 +35,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <WalletConnectorProvider
         defaultChainId={+environment.defaultChainId}
-        requestSig={false}
+        requestSig={true}
       >
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={SwTheme}>

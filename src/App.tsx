@@ -1,6 +1,5 @@
-import { Route, Navigate, Routes, useLocation } from "react-router-dom";
-import { Box, styled } from "@mui/material";
-import MuiAppBar from "@mui/material/AppBar";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { Box } from "@mui/material";
 import Web3DautConnect from "@api/ProviderFactory/Web3NetworkProvider";
 import { environment, EnvMode } from "@api/environment";
 import AutSDK from "@aut-labs/sdk";
@@ -12,38 +11,9 @@ import GetStarted from "./pages/GetStarted/GetStarted";
 import { getAppConfig } from "@api/aut.api";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { useSelector } from "react-redux";
-import "./App.scss";
-import {
-  IsAllowListed,
-  ScrollRestorationState,
-  updateScrollState
-} from "@store/ui-reducer";
+import { ScrollRestorationState, updateScrollState } from "@store/ui-reducer";
 import { updateWalletProviderState } from "@store/WalletProvider/WalletProvider";
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) =>
-    prop !== "open" && prop !== "drawerWidth" && prop !== "toolbarHeight"
-})<any>(({ theme, open, drawerWidth, toolbarHeight }) => ({
-  border: 0,
-  minHeight: `${toolbarHeight}px`,
-  ".MuiToolbar-root": {
-    minHeight: `${toolbarHeight}px`
-  },
-  [theme.breakpoints.up("md")]: {
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    ...(open && {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
-      transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen
-      })
-    })
-  }
-}));
+import "./App.scss";
 
 const Integrate = lazy(() => import("./pages/Integrate"));
 
@@ -62,7 +32,7 @@ function App() {
             networksConfig: networks
           })
         );
-        const sdk = new AutSDK({
+        new AutSDK({
           enableDebug: environment.env === EnvMode.Development,
           ipfs: {
             apiKey: environment.ipfsApiKey,

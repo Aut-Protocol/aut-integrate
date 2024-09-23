@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+ 
 import { StepperButton } from "@components/Stepper";
 import { StepperChildProps } from "@components/Stepper/model";
 import {

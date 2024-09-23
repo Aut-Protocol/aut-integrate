@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+ 
 
 import { createHub } from "@api/registry.api";
 import { HubNFT } from "@aut-labs/sdk";

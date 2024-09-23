@@ -7,10 +7,10 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        REACT_APP_NETWORK_ENV: "mainnet"
-        REACT_APP_API_URL: "https://mainnet-api.aut.id/api"
-        REACT_APP_NODE_ENV: "production"
-        REACT_APP_DEFAULT_CHAIN_ID: "137"
+        VITE_NETWORK_ENV: "mainnet"
+        VITE_API_URL: "https://mainnet-api.aut.id/api"
+        VITE_NODE_ENV: "production"
+        VITE_DEFAULT_CHAIN_ID: "137"
     ports:
       - "5001:80"
 
@@ -20,9 +20,9 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        REACT_APP_NETWORK_ENV: "testnet"
-        REACT_APP_API_URL: "https://testnet-api.aut.id/api"
-        REACT_APP_NODE_ENV: "development"
-        REACT_APP_DEFAULT_CHAIN_ID: "80002"
+        VITE_NETWORK_ENV: "testnet"
+        VITE_API_URL: "https://testnet-api.aut.id/api"
+        VITE_NODE_ENV: "development"
+        VITE_DEFAULT_CHAIN_ID: "80002"
     ports:
       - "5001:80"

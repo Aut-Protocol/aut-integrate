@@ -2,7 +2,8 @@ export const envionmentGenerator = (envVariables: any) =>
   Object.keys(envVariables).reduce(
     (prev, curr) => ({
       ...prev,
-      [curr]: process.env[envVariables[curr]]
+      // @ts-ignore
+      [curr]: import.meta.env[envVariables[curr]]
     }),
     {} as typeof envVariables
   );

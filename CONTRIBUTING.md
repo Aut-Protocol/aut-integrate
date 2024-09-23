@@ -29,24 +29,24 @@ Before you submit your Pull Request (PR) consider the following guidelines:
   that relates to your submission. You don't want to duplicate effort.
 - Make your changes in a new git branch:
 
-     ```shell
-     git checkout -b my-new-branch
-     ```
+  ```shell
+  git checkout -b my-new-branch
+  ```
 
 - Create your patch.
 - Follow [React Standarts](https://github.com/pillarstudio/standards/blob/master/reactjs-guidelines.md).
 - Test your changes.
 - Commit your changes using a descriptive commit message.
 
-     ```shell
-     git commit -m
-     ```
+  ```shell
+  git commit -m
+  ```
 
 - Push your branch to GitHub:
 
-    ```shell
-    git push my-fork my-new-branch
-    ```
+  ```shell
+  git push my-fork my-new-branch
+  ```
 
 - In GitHub, send a pull request.
 

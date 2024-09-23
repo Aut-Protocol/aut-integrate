@@ -1,11 +1,10 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import Skeleton from "@mui/material/Skeleton";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import "cropperjs/dist/cropper.css";
-import DialogWrapper from "./Dialog/DialogWrapper";
 import { Dialog, DialogContent, IconButton, styled } from "@mui/material";
 import { pxToRem } from "@utils/text-size";
 import CloseIcon from "@mui/icons-material/Close";

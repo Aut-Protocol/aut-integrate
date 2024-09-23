@@ -7,13 +7,13 @@ Assign Roles to your Hub - and kick off role-based working routines and role-wei
 
 The Āut team is currently using the following packages for development of web apps
 
-| Package                   | Description                                                                         | Docs             |
-| ------------------------- | ----------------------------------------------------------------------------------- | ---------------- |
-| `@aut-labs/sdk`            | Integration layer with Āut Smart Contracts  | [Docs](https://github.com/Aut-Labs/sdk) |
-| `@mui/material`            | Material Design UI components | [Docs](https://mui.com/material-ui/getting-started/overview/) |
-| `@reduxjs/toolkit`       | For state management which helps reduce complexities of using only redux | [Docs](https://redux-toolkit.js.org/introduction/getting-started) |
-| `@web3-react`    | For managing multiple wallet connectors | [Docs](https://github.com/Uniswap/web3-react) |
-| `ethers` | For interacting with tools such as `@aut-labs/sdk` and `@web3-react` | [Docs](https://docs.ethers.io/v5/) |
+| Package            | Description                                                              | Docs                                                              |
+| ------------------ | ------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| `@aut-labs/sdk`    | Integration layer with Āut Smart Contracts                               | [Docs](https://github.com/Aut-Labs/sdk)                           |
+| `@mui/material`    | Material Design UI components                                            | [Docs](https://mui.com/material-ui/getting-started/overview/)     |
+| `@reduxjs/toolkit` | For state management which helps reduce complexities of using only redux | [Docs](https://redux-toolkit.js.org/introduction/getting-started) |
+| `@web3-react`      | For managing multiple wallet connectors                                  | [Docs](https://github.com/Uniswap/web3-react)                     |
+| `ethers`           | For interacting with tools such as `@aut-labs/sdk` and `@web3-react`     | [Docs](https://docs.ethers.io/v5/)                                |
 
 ## Quick links
 
