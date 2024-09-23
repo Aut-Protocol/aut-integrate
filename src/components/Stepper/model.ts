@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import { StepWizardChildProps, StepWizardProps } from "react-step-wizard";
 
 export interface StepperChildProps extends Partial<StepWizardProps> {
@@ -6,7 +7,7 @@ export interface StepperChildProps extends Partial<StepWizardProps> {
 }
 
 interface StepComponent {
-  (props: StepperChildProps): React.ReactElement<StepperChildProps> | null;
+  (props: StepperChildProps): ReactElement<StepperChildProps> | null;
 }
 
 export interface Step {

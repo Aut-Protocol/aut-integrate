@@ -1,13 +1,4 @@
-export interface NetworkContracts {
-  autIDAddress: string;
-  daoExpanderRegistryAddress: string;
-  daoExpanderFactoryAddress: string;
-  hubRegistryAddress: string;
-  allowListAddress: string;
-  hubFactoryAddress: string;
-  hackerDaoAddress: string;
-  daoTypesAddress: string;
-}
+import { DeployedContracts } from "@aut-labs/sdk";
 
 export interface NetworkConfig {
   network: string;
@@ -16,7 +7,7 @@ export interface NetworkConfig {
   rpcUrls: string[];
   explorerUrls: string[];
   biconomyApiKey: string;
-  contracts: NetworkContracts;
+  contracts: DeployedContracts;
   disabled: boolean;
   nativeCurrency: any;
 }
