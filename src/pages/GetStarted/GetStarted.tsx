@@ -87,9 +87,7 @@ const GetStarted = () => {
   const navigate = useNavigate();
   const { open } = useWalletConnector();
   const { address } = useAccount();
-  const state = useAutConnector({
-    defaultChainId: +environment.defaultChainId
-  });
+  const state = useAutConnector();
   const networks = useSelector(NetworksConfig);
   const theme = useTheme();
 

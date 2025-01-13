@@ -11,14 +11,11 @@ import { useEffect } from "react";
 import { NetworkConfig } from "./network.config";
 import { MultiSigner } from "@aut-labs/sdk/dist/models/models";
 import { AutWalletConnector, useAutConnector } from "@aut-labs/connector";
-import { environment } from "@api/environment";
 
 function Web3DautConnect() {
   const dispatch = useAppDispatch();
   const networks = useSelector(NetworksConfig);
-  const { connect, multiSigner, multiSignerId, chainId } = useAutConnector({
-    defaultChainId: +environment.defaultChainId
-  });
+  const { connect, multiSigner, multiSignerId, chainId } = useAutConnector();
 
   const initialiseSDK = async (
     network: NetworkConfig,
