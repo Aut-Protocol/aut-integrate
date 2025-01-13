@@ -1,9 +1,9 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Badge, Box, Button, Tooltip } from "@mui/material";
 import Web3DautConnect from "@api/ProviderFactory/Web3NetworkProvider";
 import { environment, EnvMode } from "@api/environment";
 import AutSDK from "@aut-labs/sdk";
-import { Suspense, lazy, useEffect, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useMemo, useRef, useState } from "react";
 import { useAppDispatch } from "@store/store.model";
 import AutLoading from "@components/AutLoading";
 import SWSnackbar from "./components/snackbar";
@@ -13,16 +13,43 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { useSelector } from "react-redux";
 import { ScrollRestorationState, updateScrollState } from "@store/ui-reducer";
 import { updateWalletProviderState } from "@store/WalletProvider/WalletProvider";
+import ErrorIcon from '@mui/icons-material/Error';
+import { useWalletConnector } from "@aut-labs/connector";
+import { useDisconnect } from "wagmi";
+
 import "./App.scss";
 
 const Integrate = lazy(() => import("./pages/Integrate"));
 
 function App() {
   const dispatch = useAppDispatch();
+  const { open, state } = useWalletConnector();
+  const { disconnect } = useDisconnect();
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const ps = useRef<HTMLElement>();
   const scrollRestorationState = useSelector(ScrollRestorationState);
+  // const isAllowListed = useSelector(IsAllowListed);
+  const isConnected = useMemo(() => {
+    return state.status === "connected";
+  }, [state.status]);
+
+  const wrongNetwork = useMemo(() => {
+    return (
+      (state.address && state.chainId !== +environment.defaultChainId) ||
+      state.isReadOnly
+    );
+  }, [state]);
+
+  console.log(isConnected, wrongNetwork);
+
+  const connectDisconnectToggle = async () => {
+    if (isConnected) {
+      disconnect();
+    } else {
+      open();
+    }
+  };
 
   useEffect(() => {
     getAppConfig()
@@ -85,25 +112,56 @@ function App() {
               // marginTop: "50px"
             }}
           >
-            {/* <AppBar
+            <Box
               sx={{
-                boxShadow: 2
+                position: "absolute",
+                display: "flex",
+                zIndex: 9999,
+                justifyContent: "flex-end",
+                right: "30px",
+                top: "20px"
               }}
-              toolbarHeight="50"
-              drawerWidth="50"
-              position="fixed"
-              open={open}
             >
-              <Toolbar
-                sx={{
-                  minHeight: "50px",
-                  backgroundColor: "transparent",
-                  border: 0
+              <Badge
+                color="error"
+                invisible={!wrongNetwork || !isConnected}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right"
                 }}
+                sx={{
+                  ".MuiBadge-badge": {
+                    borderRadius: "12px",
+                    width: "30px",
+                    height: "30px"
+                  }
+                }}
+                badgeContent={
+                  <Tooltip
+                    title="Wrong Network"
+                    placement="bottom"
+                    sx={{
+                      width: "25px",
+                      height: "25px"
+                    }}
+                  >
+                    <ErrorIcon />
+                  </Tooltip>
+                }
               >
-                Test
-              </Toolbar>
-            </AppBar> */}
+                <Button
+                  onClick={connectDisconnectToggle}
+                  sx={{
+                    width: "200px",
+                    height: "50px"
+                  }}
+                  color="offWhite"
+                  variant="outlined"
+                >
+                  {isConnected ? "Disconnect" : "Connect"}
+                </Button>
+              </Badge>
+            </Box>
             <Suspense fallback={<AutLoading width="130px" height="130px" />}>
               <Routes>
                 <Route path="/" element={<GetStarted />} />
