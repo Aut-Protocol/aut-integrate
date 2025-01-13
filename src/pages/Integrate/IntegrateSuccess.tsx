@@ -75,7 +75,7 @@ const IntegrateSuccess = () => {
   const params = useParams<{ address: string }>();
   const selectedNetworkConfig = useSelector(SelectedNetwork);
   const blockExplorer = useSelector(BlockExplorerUrl);
-  const shareMessage = `${community?.name} is now live on @opt_aut - with on-chain Roles & Interactions for all our Members. Have a look and join us! ${autUrls().hub}${community?.name} Let’s coordinate, change things - break things. Together 🫂`;
+  const shareMessage = `${community?.name} is now live on @aut_foundation - with on-chain Roles & Interactions for all our Members. Have a look and join us! ${autUrls().hub}${community?.name} Let’s coordinate, change things - break things. Together 🫂`;
   const urls = autUrls();
   return (
     <StepWrapper
@@ -94,7 +94,7 @@ const IntegrateSuccess = () => {
         description={
           <>
             <Typography color="white" variant="body" mb="12px">
-              {community?.name} is now live on @opt_aut - with on-chain Roles &
+              {community?.name} is now live on @aut_foundation - with on-chain Roles &
               Interactions for all our Members
               <br />
             </Typography>
